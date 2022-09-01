@@ -9,7 +9,7 @@ void main() {
     /// Nothing to do here.
     setUp(() {});
 
-    test('Porter2Stemmer stem', () {
+    test('Porter2Stemmer: extension', () {
       final failed = _stem(_vocabulary);
       expect(failed.isEmpty, true);
       if (failed.isNotEmpty) {
@@ -18,6 +18,45 @@ void main() {
         print('SUCCESS! All tests passed.');
       }
     });
+  });
+
+  test('Porter2Stemmer: instance with custom exceptions', () {
+    //
+
+    /// Collection of terms/words for which stems are printed.
+    final terms = {
+      'sky’s': 'sky',
+      'skis': 'ski',
+      'TSLA': 'tesla',
+      'APPLE:NASDAQ': 'APPLE:NASDAQ',
+      'apple.com': 'apple.com',
+      'consolatory': 'consolatori',
+      '"news"': 'news',
+      "mother's": 'mother',
+      'generally': 'general',
+      'consignment': 'consign'
+    };
+
+    // Preserve the default exceptions.
+    final exceptions = Map<String, String>.from(Porter2Stemmer.kExceptions);
+
+    // Add a custom exception for "TSLA".
+    exceptions['TSLA'] = 'tesla';
+
+    // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
+    final stemmer = Porter2Stemmer(exceptions: exceptions);
+
+    /// Iterate through the [terms] and print the stem for each term.
+    for (final entry in terms.entries) {
+      // get the term
+      final term = entry.key;
+      // Get the stem for the [term].
+      final stem = stemmer.stem(term);
+      // Print the [stem].
+      print('$term => $stem');
+      // prints "generically => generic"
+      expect(stem, entry.value);
+    }
   });
 }
 

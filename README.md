@@ -1,3 +1,11 @@
+<!-- 
+BSD 3-Clause License
+Copyright (c) 2022, GM Consult Pty Ltd
+Copyright (c) 2001, Dr Martin Porter,
+Copyright (c) 2002, Richard Boulton.
+All rights reserved. 
+-->
+
 # porter_2_stemmer
 DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/), used for reducing a word to its word stem, base or root form.
 
@@ -26,21 +34,92 @@ import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
 ## Usage
 
-After importing the package simply use the extension method as follows:
+A string extension is provided, and is the simplest way to get stemming:
 
 ```dart
-// A term that has a stem.
-final term = 'generically';
-// Call the extension method.
-final stem = term.stemPorter2();
-// Print the result.
-print('$term => $stem'); // prints "generically => generic"
+import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+/// Iterate through a collection of terms/words and print the stem for each 
+/// term.
+void main() {
+  //
+
+  /// Collection of terms/words for which stems are printed.
+  final terms = [
+    'sky’s',
+    'skis',
+    'TSLA',
+    'APPLE:NASDAQ',
+    'consolatory',
+    '"news"',
+    "mother's",
+    'generally',
+    'consignment'
+  ];
+
+  /// Iterate through the [terms] and print the stem for each term.
+  for (final term in terms) {
+
+    // Get the stem for the [term].
+    final stem = term.stemPorter2();
+
+    // Print the [stem].
+    print('$term => $stem'); // prints "generically => generic"
+  }
+}
 ```
 
-To implement custom exceptions to the algorithm, provide a hashmap of String:String that provides the
-term (key) and its stem (value). The default exceptions are:
+Alternatively, instantiate a Porter2Stemmer instance, optionally passing your preferred exceptions,
+and call the stem method.
+
 ```dart
-/// Default exceptions used by [Porter2Stemmer].
+import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+/// Instantiates a [Porter2Stemmer] instance using custom a exception for
+/// the term "TSLA".
+///
+/// Prints the terms and their stems.
+void main() {
+  //
+
+  // collection of terms/words for which stems are printed.
+  final terms = [
+    'sky’s',
+    'skis',
+    'TSLA',
+    'APPLE:NASDAQ',
+    'apple.com',
+    'consolatory',
+    '"news"',
+    "mother's",
+    'generally',
+    'consignment'
+  ];
+
+  // Preserve the default exceptions.
+  final exceptions = Map<String, String>.from(Porter2Stemmer.kExceptions);
+
+  // Add a custom exception for "TSLA".
+  exceptions['TSLA'] = 'tesla';
+
+  // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
+  final stemmer = Porter2Stemmer(exceptions: exceptions);
+
+  /// Iterate through the [terms] and print the stem for each term.
+  for (final term in terms) {
+    // Get the stem for the [term].
+    final stem = stemmer.stem(term);
+
+    // Print the [stem].
+    print('$term => $stem'); // prints "generically => generic"
+  }
+}
+
+```
+
+To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value). The default exceptions are:
+```dart
+Default exceptions used by [Porter2Stemmer].
 static const kExceptions = {
   'skis': 'ski',
   'skies': 'sky',
@@ -62,17 +141,16 @@ This implementation:
 * converts all quotation marks and apostrophies to a standard single quote character U+0027 (also ASCII hex 27); and
 * strips all leading and trailing quotation marks from the term before processing begins.
 
-The following terms are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:
-* terms that are in all-capitals, e.g. TSLA;
-* terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.
+  Terms that match the following criteria (after stripping quotation marks   and possessive apostrophy "s") re returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:
+  - terms that are in all-capitals, e.g. TSLA;
+  - terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys
 
 Terms may be converted to lowercase before processing if stemming of the all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.
 
 ## Contributions
 
-Feel free to contribute to this project.
-
-If you find a bug or want a feature, but don't know how to fix/implement it, please fill an [issue](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues).  
-If you fixed a bug or implemented a feature, please send a [pull request](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls). 
+Feel free to contribute to this project:
+* If you find a bug or want a feature, but don't know how to fix/implement it, please fill an [issue](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues).  
+* If you fixed a bug or implemented a feature, please send a [pull request](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls). 
 
 This project is a supporting package for a revenue project that has priority call on resources, so please be patient if we don't respond immediately to issues or pull requests.

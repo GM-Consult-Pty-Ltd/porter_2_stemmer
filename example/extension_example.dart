@@ -1,6 +1,9 @@
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
-/// Eaxmple usage of [Porter2Stemmer.stem]
+/// Example usage of [Porter2StemmerExtension.stemPorter2] extension.
+///
+/// Iterate through a collection of terms/words and print the stem for each
+/// term.
 void main() {
   //
 
@@ -21,7 +24,8 @@ void main() {
   for (final term in terms) {
     // Get the stem for the [term].
     final stem = term.stemPorter2();
+
     // Print the [stem].
-    print('$term => $stem');
+    print('$term => $stem'); // prints "generically => generic"
   }
 }

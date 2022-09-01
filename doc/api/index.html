@@ -44,7 +44,14 @@
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
-  <h1 id="porter_2_stemmer">porter_2_stemmer</h1>
+  <!-- 
+BSD 3-Clause License
+Copyright (c) 2022, GM Consult Pty Ltd
+Copyright (c) 2001, Dr Martin Porter,
+Copyright (c) 2002, Richard Boulton.
+All rights reserved. 
+-->
+<h1 id="porter_2_stemmer">porter_2_stemmer</h1>
 <p>DART implementation of the <a href="https://snowballstem.org/algorithms/">Porter Stemming Algorithm</a>, used for reducing a word to its word stem, base or root form.</p>
 <h2 id="what-is-the-porter-stemming-algorithm">What is the Porter Stemming Algorithm?</h2>
 <p>The Porter Stemming Algorithm (or 'Porter stemmer') is a process for removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up information retrieval systems.</p>
@@ -59,17 +66,85 @@
 <pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 </code></pre>
 <h2 id="usage">Usage</h2>
-<p>After importing the package simply use the extension method as follows:</p>
-<pre class="language-dart"><code class="language-dart">// A term that has a stem.
-final term = 'generically';
-// Call the extension method.
-final stem = term.stemPorter2();
-// Print the result.
-print('$term =&gt; $stem'); // prints "generically =&gt; generic"
+<p>A string extension is provided, and is the simplest way to get stemming:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+/// Iterate through a collection of terms/words and print the stem for each 
+/// term.
+void main() {
+  //
+
+  /// Collection of terms/words for which stems are printed.
+  final terms = [
+    'sky’s',
+    'skis',
+    'TSLA',
+    'APPLE:NASDAQ',
+    'consolatory',
+    '"news"',
+    "mother's",
+    'generally',
+    'consignment'
+  ];
+
+  /// Iterate through the [terms] and print the stem for each term.
+  for (final term in terms) {
+
+    // Get the stem for the [term].
+    final stem = term.stemPorter2();
+
+    // Print the [stem].
+    print('$term =&gt; $stem'); // prints "generically =&gt; generic"
+  }
+}
 </code></pre>
-<p>To implement custom exceptions to the algorithm, provide a hashmap of String:String that provides the
-term (key) and its stem (value). The default exceptions are:</p>
-<pre class="language-dart"><code class="language-dart">/// Default exceptions used by [Porter2Stemmer].
+<p>Alternatively, instantiate a Porter2Stemmer instance, optionally passing your preferred exceptions,
+and call the stem method.</p>
+<pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+/// Instantiates a [Porter2Stemmer] instance using custom a exception for
+/// the term "TSLA".
+///
+/// Prints the terms and their stems.
+void main() {
+  //
+
+  // collection of terms/words for which stems are printed.
+  final terms = [
+    'sky’s',
+    'skis',
+    'TSLA',
+    'APPLE:NASDAQ',
+    'apple.com',
+    'consolatory',
+    '"news"',
+    "mother's",
+    'generally',
+    'consignment'
+  ];
+
+  // Preserve the default exceptions.
+  final exceptions = Map&lt;String, String&gt;.from(Porter2Stemmer.kExceptions);
+
+  // Add a custom exception for "TSLA".
+  exceptions['TSLA'] = 'tesla';
+
+  // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
+  final stemmer = Porter2Stemmer(exceptions: exceptions);
+
+  /// Iterate through the [terms] and print the stem for each term.
+  for (final term in terms) {
+    // Get the stem for the [term].
+    final stem = stemmer.stem(term);
+
+    // Print the [stem].
+    print('$term =&gt; $stem'); // prints "generically =&gt; generic"
+  }
+}
+
+</code></pre>
+<p>To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value). The default exceptions are:</p>
+<pre class="language-dart"><code class="language-dart">Default exceptions used by [Porter2Stemmer].
 static const kExceptions = {
   'skis': 'ski',
   'skies': 'sky',
@@ -87,19 +162,25 @@ static const kExceptions = {
 <h2 id="quotation-marks-apostrophes-and-non-language-terms">Quotation Marks, apostrophes and non-language terms</h2>
 <p>This implementation:</p>
 <ul>
-<li>converts all quotation marks and apostrophies to a standard single quote character U+0027 (also ASCII hex 27); and</li>
-<li>strips all leading and trailing quotation marks from the term before processing begins.</li>
-</ul>
-<p>The following terms are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
+<li>
+<p>converts all quotation marks and apostrophies to a standard single quote character U+0027 (also ASCII hex 27); and</p>
+</li>
+<li>
+<p>strips all leading and trailing quotation marks from the term before processing begins.</p>
+<p>Terms that match the following criteria (after stripping quotation marks   and possessive apostrophy "s") re returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
 <ul>
 <li>terms that are in all-capitals, e.g. TSLA;</li>
-<li>terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.</li>
+<li>terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys</li>
+</ul>
+</li>
 </ul>
 <p>Terms may be converted to lowercase before processing if stemming of the all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.</p>
 <h2 id="contributions">Contributions</h2>
-<p>Feel free to contribute to this project.</p>
-<p>If you find a bug or want a feature, but don't know how to fix/implement it, please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.<br>
-If you fixed a bug or implemented a feature, please send a <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls">pull request</a>.</p>
+<p>Feel free to contribute to this project:</p>
+<ul>
+<li>If you find a bug or want a feature, but don't know how to fix/implement it, please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.</li>
+<li>If you fixed a bug or implemented a feature, please send a <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls">pull request</a>.</li>
+</ul>
 <p>This project is a supporting package for a revenue project that has priority call on resources, so please be patient if we don't respond immediately to issues or pull requests.</p>
 </section>
 
@@ -149,7 +230,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.1
+      0.0.2
   </span>
 
   

@@ -61,17 +61,22 @@
     </section>
     
 <section class="desc markdown">
-  <p>Reduces the String to its word stem, base or root form.
-using the <a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> English language stemming algorithm.</p>
-<p>The following returned unchanged as they are considered to be
-acronyms, identifiers or non-language terms that have a specific meaning:</p>
+  <p>Reduces the String to its word stem, base or root form using the
+<a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> English language stemming algorithm.</p>
+<p>Terms that match the following criteria (after stripping quotation marks
+and possessive apostrophy "s") are returned unchanged as they are
+considered to be acronyms, identifiers or non-language terms that have
+a specific meaning:</p>
 <ul>
 <li>terms that are in all-capitals, e.g. TSLA;</li>
 <li>terms that contain any non-word characters (anything other than letters,
 apostrophes and hyphens), e.g. apple.com, alibaba:xnys</li>
 </ul>
+<p>Terms that match a key in <a href="../../porter_2_stemmer/Porter2Stemmer/exceptions.html">exceptions</a> (after stripping quotation marks
+and possessive apostrophy "s") are stemmed by returning the corresponding
+value from <a href="../../porter_2_stemmer/Porter2Stemmer/exceptions.html">exceptions.</a></p>
 <p>Terms may be converted to lowercase before processing if stemming of
-the all-capitals terms is desired. Split terms that contain non-word
+all-capitals terms is desired. Split terms that contain non-word
 characters to stem the term parts separately.</p>
 </section>
 
@@ -80,33 +85,38 @@ characters to stem the term parts separately.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String stem(String term) {
-  &#47;&#47;
-
   &#47;&#47; change all forms of apostrophes and quotation marks to [&#39;]
   term = term.normalizeQuotesAndApostrophes();
+
   &#47;&#47; remove all enclosing quotation marks.
   term = term.removeEnclosingQuotes();
+
   &#47;&#47; remove trailing &quot;&#39;s&quot; (apostrophied s&#39;s).
   term = term.stepZero();
-  &#47;&#47; return words in all caps unchanged.
-  &#47;&#47; return words with non-word characters  (not [a-z, A-Z, &#39;, and -])
-  &#47;&#47; unchanged
-  if (term.isIdentifier) {
-    return term;
-  }
-  &#47;&#47; convert the term to lowercase for processing
-  term = term.toLowerCase();
+
   &#47;&#47; look up any rule exceptions and return it if found.
   &#47;&#47; return terms with no stem unchanged
   final exception = term.exception(exceptions);
   if (exception != null) {
     return exception;
   }
+
+  &#47;&#47; return words in all caps unchanged.
+  &#47;&#47; return words with non-word characters  (not [a-z, A-Z, &#39;, and -])
+  &#47;&#47; unchanged
+  if (term.isIdentifier) {
+    return term;
+  }
+
+  &#47;&#47; convert the term to lowercase for processing
   term = term.toLowerCase();
+
   &#47;&#47; start Porter2 algorithm.
   term = term.replaceYs().step1A();
+
   &#47;&#47; check for alghorithm exceptions at end of Step 1(a)
   return term.step1AException() ??
+
       &#47;&#47; continue with Step 1(b) through to to Step 5 and return result.
       term.step1B().step1C().step2().step3().step4().step5();
 }</code></pre>
@@ -169,7 +179,7 @@ characters to stem the term parts separately.</p>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.1
+      0.0.2
   </span>
 
   

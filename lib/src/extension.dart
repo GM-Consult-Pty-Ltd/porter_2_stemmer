@@ -7,7 +7,7 @@
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
 /// Extends [String] to provide the [stemPorter2] method.
-extension PorterStemmerExtensionOnString on String {
+extension Porter2StemmerExtension on String {
   //
 
   /// Reduces the String to its word stem, base or root form.

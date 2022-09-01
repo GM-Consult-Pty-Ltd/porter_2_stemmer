@@ -32,7 +32,7 @@ extension _StemmerExtension on String {
   /// hashmaps and the value (or null) is returned as an exception to
   /// the algorithm.
   String? exception(Map<String, String> exceptions) =>
-      isIdentifier ? this : kInvariantExceptions[this] ?? exceptions[this];
+      kInvariantExceptions[this] ?? exceptions[this];
 
 //Iterable<String> invariantExceptions,
 
