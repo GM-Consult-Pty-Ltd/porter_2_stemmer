@@ -11,6 +11,7 @@ void main() {
 
     test('Porter2Stemmer stem', () {
       final failed = _stem(_vocabulary);
+      expect(failed.isEmpty, true);
       if (failed.isNotEmpty) {
         _stem(failed);
       } else {
@@ -26,7 +27,7 @@ Map<String, String> _stem(Map<String, String> terms) {
   int passed = 0;
   final failedStems = <String, String>{};
   for (final entry in terms.entries) {
-    final stem = Porter2Stemmer.stem(entry.key);
+    final stem = entry.key.stemPorter2();
     final result = stem == entry.value ? 'pass' : 'fail';
     print('${entry.key} => $stem ($result)');
     failed += stem == entry.value ? 0 : 1;

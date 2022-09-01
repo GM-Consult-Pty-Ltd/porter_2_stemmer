@@ -1,8 +1,5 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+// Copyright ©2022, GM Consult (Pty) Ltd. All rights reserved
+
 library porter_2_stemmer;
 
-export 'src/porter_2_stemmer.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/_index.dart';

@@ -1,136 +1,15 @@
-// Copyright ©2022, GM Consult (Pty) Ltd. All rights reserved
-// End user is granted a non-exclusive non-transferable license the ("License")
-// to use GM Consult's proprietary software (the "Software").
+// BSD 3-Clause License
+// Copyright (c) 2022, GM Consult Pty Ltd
+// Copyright (c) 2001, Dr Martin Porter,
+// Copyright (c) 2002, Richard Boulton.
+// All rights reserved.
 
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-/// The Porter stemming algorithm (or 'Porter stemmer') is a process for
-/// removing the commoner morphological and inflexional endings from words
-/// in English. Its main use is as part of a term normalisation process
-/// that is usually done when setting up information retrieval systems.
-///
-/// The English (Porter2) stemming algorithm was developed as part of
-/// "Snowball", a small string processing language designed for creating
-/// stemming algorithms for use in information retrieval.
-///
-/// See https://snowballstem.org/algorithms/.
-///
-/// This implementation strips all leading and trailing quotation marks
-/// [ " , ' ] from the term before processing begins.
-///
-/// The following terms are returned unchanged as they are considered to be
-/// acronyms, identifiers or non-language terms that have a specific meaning:
-/// - terms that are in all-capitals, e.g. TSLA;
-/// - terms that contain any non-word characters (anything other than letters,
-///   apostrophes and hyphens), e.g. apple.com, alibaba:xnys
-///
-/// To overcome this restriction, terms can be converted to lowercase before
-/// processing and/or a tokenizer applied to split terms that contain
-/// non-word characters.
-abstract class Porter2Stemmer {
-  //
-
-  /// Provide a const default constructor for inheriting classes.
-  const Porter2Stemmer();
-
-  /// Reduces the String to its word stem, base or root form.
-  /// using the [Porter2Stemmer] English language stemming algorithm.
-  ///
-  /// The following returned unchanged as they are considered to be
-  /// acronyms, identifiers or non-language terms that have a specific meaning:
-  /// - terms that are in all-capitals, e.g. TSLA;
-  /// - terms that contain any non-word characters (anything other than letters,
-  ///   apostrophes and hyphens), e.g. apple.com, alibaba:xnys
-  ///
-  /// To overcome this restriction, terms can be converted to lowercase before
-  /// processing and/or a tokenizer applied to split terms that contain
-  /// non-word characters
-  static String stem(String term) {
-    //
-
-    // change all forms of apostrophes and quotation marks to [']
-    term = term.normalizeQuotesAndApostrophes();
-    // remove all enclosing single quotation marks.
-    term = term.removeEnclosingQuotes();
-    // remove trailing "'s" (apostrophied s's).
-    term = term.stepZero();
-    // return words in all caps unchanged.
-    // return words with non-word characters  (not [a-z, A-Z, ', and -])
-    // unchanged
-    // return terms with no stem unchanged
-    if (term.isIdentifier || term.hasNoStem) {
-      return term;
-    }
-    // convert the term to lowercase for processing
-    term = term.toLowerCase();
-    // look up any rule exceptions and return it if found.
-    final exception = term.exception();
-    if (exception != null) {
-      return exception;
-    }
-    // start Porter2 algorithm.
-    term = term.replaceYs().step1A();
-    // check for exceptions at end of Step 1(a)
-    return term.step1AException() ??
-        // continue with Step 1(b) through to to Step 5 and return result.
-        term.step1B().step1C().step2().step3().step4().step5();
-  }
-
-  //
-}
-
-/// Extends [String] to provide the [stemPorter2] method.
-extension PorterStemmerExtensionOnString on String {
-  //
-
-  /// Reduces the String to its word stem, base or root form.
-  /// using the [Porter2Stemmer] English language stemming algorithm.
-  ///
-  /// This is a shortcut to the static function [Porter2Stemmer.stem].
-  String stemPorter2() => Porter2Stemmer.stem(this);
-
-  //
-}
+part of 'stemmer.dart';
 
 extension _StemmerExtension on String {
   //
-
-  /// A list of exceptions that do not follow the stemming algorithm.
-  static const kExceptions = {
-    'skis': 'ski',
-    'skies': 'sky',
-    'dying': 'die',
-    'lying': 'lie',
-    'tying': 'tie',
-    'idly': 'idl',
-    'gently': 'gentl',
-    'ugly': 'ugli',
-    'early': 'earli',
-    'only': 'onli',
-    'singly': 'singl',
-  };
-
-  static const kStep1AExceptions = {
-    'inning': 'inning',
-    'proceed': 'proceed',
-    'herring': 'herring',
-    'earring': 'earring',
-    'outing': 'outing',
-    'exceed': 'exceed',
-    'canning': 'canning',
-    'succeed': 'succeed',
-  };
-
-  /// Collection of terms that have no stem but do not fit the algorithm.
-  static const kInvariantExceptions = {
-    'sky': 'sky',
-    'news': 'news',
-    'howe': 'howe',
-    'atlas': 'atlas',
-    'cosmos': 'cosmos',
-    'bias': 'bias',
-    'andes': 'andes',
-  };
 
   /// Words starting with any of the following have a different [r1] to
   /// the algorithm.
@@ -145,14 +24,16 @@ extension _StemmerExtension on String {
   /// [kStep1AExceptions.keys].
   String? step1AException() => kStep1AExceptions[this];
 
-  /// The String is converted to lower case and leading apostrophe removed.
+  /// If the String [isIdentifier], it is returned as an exception to
+  /// the algorithm.
   ///
-  /// If the String [hasNoStem], it is returned as is.
-  ///
-  /// The String is looked up in the [kExceptions] hashmap and the value
-  /// (or null) is returned.
-  String? exception() =>
-      toUpperCase() == this || hasNoStem ? this : kExceptions[this];
+  /// The String is looked up in the [kInvariantExceptions] and [exceptions]
+  /// hashmaps and the value (or null) is returned as an exception to
+  /// the algorithm.
+  String? exception(Map<String, String> exceptions) =>
+      isIdentifier ? this : kInvariantExceptions[this] ?? exceptions[this];
+
+//Iterable<String> invariantExceptions,
 
   /// Selector that matches any character not a letter, a hyphen
   /// or apostrophe.
@@ -183,7 +64,7 @@ extension _StemmerExtension on String {
         ?.group(0);
   }
 
-  bool get hasNoStem => kInvariantExceptions.keys.contains(toLowerCase());
+  // bool get hasNoStem => kStep1AExceptions.keys.contains(toLowerCase());
 
   /// R2 is the region after the first non-vowel following a vowel in R1,
   /// or the end of the word if there is no such non-vowel.
@@ -311,58 +192,9 @@ extension _StemmerExtension on String {
           ? replaceAll(RegExp(r'(y|Y)(?=$)'), 'i')
           : this;
 
-  /// Suffix hasmap for Step 2.
-  static const kStep2Suffixes = {
-    'ization': 'ize',
-    'ational': 'ate',
-    'fulness': 'ful',
-    'ousness': 'ous',
-    'iveness': 'ive',
-    'tional': 'tion',
-    'biliti': 'ble',
-    'lessli': 'less',
-    'entli': 'ent',
-    'ation': 'ate',
-    'alism': 'al',
-    'aliti': 'al',
-    'ousli': 'ous',
-    'iviti': 'ive',
-    'fulli': 'ful',
-    'enci': 'ence',
-    'anci': 'ance',
-    'abli': 'able',
-    'izer': 'ize',
-    'ator': 'ate',
-    'alli': 'al',
-    'logi': 'log',
-    'bli': 'ble',
-    'cli': 'c',
-    'dli': 'd',
-    'eli': 'e',
-    'gli': 'g',
-    'hli': 'h',
-    'kli': 'k',
-    'mli': 'm',
-    'nli': 'n',
-    'rli': 'r',
-    'tli': 't',
-  };
-
   /// Search for the longest among [kStep2Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep2Suffixes].
   String step2() => r1 != null ? replaceSuffixes(kStep2Suffixes, r1) : this;
-
-  /// Suffix hasmap for Step 3.
-  static const kStep3Suffixes = {
-    'ational': 'ate',
-    'tional': 'tion',
-    'alize': 'al',
-    'icate': 'ic',
-    'iciti': 'ic',
-    'ical': 'ic',
-    'ness': '',
-    'ful': '',
-  };
 
   /// Search for the longest among [kStep3Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep3Suffixes].
@@ -373,29 +205,6 @@ extension _StemmerExtension on String {
       : r1 != null
           ? replaceSuffixes(kStep3Suffixes, r1)
           : this;
-
-  /// Suffix hasmap for Step 4.
-  static const kStep4Suffixes = {
-    'al': '',
-    'ance': '',
-    'ence': '',
-    'er': '',
-    'ic': '',
-    'able': '',
-    'ible': '',
-    'ant': '',
-    'ement': '',
-    'ment': '',
-    'ent': '',
-    'ism': '',
-    'ate': '',
-    'iti': '',
-    'ous': '',
-    'ive': '',
-    'ize': '',
-    'sion': '',
-    'tion': '',
-  };
 
   /// Search for the longest among [kStep4Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep4Suffixes].
@@ -447,18 +256,6 @@ extension _StemmerExtension on String {
   String replaceSuffix(String suffix, String replacement) =>
       replaceAll(RegExp('$suffix\$'), replacement);
 
-  /// Regular expression selector for characters that are vowels.
-  static const rVowels = '[aeiouy]';
-
-  /// Regular expression selector for charactyers that are NOT vowels.
-  ///
-  /// As the term is in lowercase, this also selects all uppercase letters and,
-  /// for that matter, any character not in ['a', 'e', 'i', 'o', 'u', 'y'].
-  static const rNotVowels = '[^aeiouy]';
-
-  /// Regular expression selector for double consonants.
-  static const rDoubles = 'bb|dd|ff|gg|mm|nn|pp|rr|tt';
-
   /// Returns true if the String's last syllable:
   /// - is a vowel followed by a non-vowel other than w, x or Y and preceded
   ///   by a non-vowel, or
@@ -485,6 +282,113 @@ extension _StemmerExtension on String {
   /// Returns true if the String ends with any of [rDoubles].
   bool get endsWithDouble => RegExp(rDoubleEnd).allMatches(this).isNotEmpty;
 
+  /// Regular expression selector for characters that are vowels.
+  static const rVowels = '[aeiouy]';
+
+  /// Regular expression selector for charactyers that are NOT vowels.
+  ///
+  /// As the term is in lowercase, this also selects all uppercase letters and,
+  /// for that matter, any character not in ['a', 'e', 'i', 'o', 'u', 'y'].
+  static const rNotVowels = '[^aeiouy]';
+
+  /// Regular expression selector for double consonants.
+  static const rDoubles = 'bb|dd|ff|gg|mm|nn|pp|rr|tt';
+
   /// Regex string to match String that ends with [rDoubles].
   static const rDoubleEnd = r'(' + rDoubles + r')(?=$)';
+
+  /// Suffix hasmap for Step 2.
+  static const kStep2Suffixes = {
+    'ization': 'ize',
+    'ational': 'ate',
+    'fulness': 'ful',
+    'ousness': 'ous',
+    'iveness': 'ive',
+    'tional': 'tion',
+    'biliti': 'ble',
+    'lessli': 'less',
+    'entli': 'ent',
+    'ation': 'ate',
+    'alism': 'al',
+    'aliti': 'al',
+    'ousli': 'ous',
+    'iviti': 'ive',
+    'fulli': 'ful',
+    'enci': 'ence',
+    'anci': 'ance',
+    'abli': 'able',
+    'izer': 'ize',
+    'ator': 'ate',
+    'alli': 'al',
+    'logi': 'log',
+    'bli': 'ble',
+    'cli': 'c',
+    'dli': 'd',
+    'eli': 'e',
+    'gli': 'g',
+    'hli': 'h',
+    'kli': 'k',
+    'mli': 'm',
+    'nli': 'n',
+    'rli': 'r',
+    'tli': 't',
+  };
+
+  /// Suffix hasmap for Step 3.
+  static const kStep3Suffixes = {
+    'ational': 'ate',
+    'tional': 'tion',
+    'alize': 'al',
+    'icate': 'ic',
+    'iciti': 'ic',
+    'ical': 'ic',
+    'ness': '',
+    'ful': '',
+  };
+
+  /// Suffix hasmap for Step 4.
+  static const kStep4Suffixes = {
+    'al': '',
+    'ance': '',
+    'ence': '',
+    'er': '',
+    'ic': '',
+    'able': '',
+    'ible': '',
+    'ant': '',
+    'ement': '',
+    'ment': '',
+    'ent': '',
+    'ism': '',
+    'ate': '',
+    'iti': '',
+    'ous': '',
+    'ive': '',
+    'ize': '',
+    'sion': '',
+    'tion': '',
+  };
+
+  /// Collection of terms that have no stem but do not fit the algorithm.
+  static const kStep1AExceptions = {
+    'inning': 'inning',
+    'proceed': 'proceed',
+    'herring': 'herring',
+    'earring': 'earring',
+    'outing': 'outing',
+    'exceed': 'exceed',
+    'canning': 'canning',
+    'succeed': 'succeed',
+  };
+
+  /// Collection of terms that have no stem but do not fit the algorithm.
+  static const kInvariantExceptions = {
+    'sky': 'sky',
+    'news': 'news',
+    'howe': 'howe',
+    'atlas': 'atlas',
+    'cosmos': 'cosmos',
+    'bias': 'bias',
+    'andes': 'andes',
+  };
 }

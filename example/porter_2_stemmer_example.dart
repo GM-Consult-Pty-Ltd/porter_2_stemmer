@@ -4,7 +4,7 @@ import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 void main() {
   //
 
-  /// Collection of terms/words for which stems are required
+  /// Collection of terms/words for which stems are printed.
   final terms = [
     'sky’s',
     'skis',
@@ -20,7 +20,7 @@ void main() {
   /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
     // Get the stem for the [term].
-    final stem = Porter2Stemmer.stem(term);
+    final stem = term.stemPorter2();
     // Print the [stem].
     print('$term => $stem');
   }
