@@ -3,7 +3,7 @@ import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 void main() {
   //
 
-  // collection of terms/words for which stems are printed.
+  // the collection of terms/words for which stems are printed.
   final terms = [
     'sky’s',
     'skis',
