@@ -66,11 +66,11 @@ The following terms are returned unchanged as they are considered to be acronyms
 * terms that are in all-capitals, e.g. TSLA;
 * terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.
 
-Terms can be converted to lowercase before processing and/or a tokenizer applied to split terms that contain non-word characters if stemming of the all-capitals terms of terms containing non-word characters is desired.
+Terms should be converted to lowercase before processing and/or a tokenizer applied to split terms that contain non-word characters if stemming of the all-capitals terms or terms containing non-word characters is desired.
 
 ## Contributions
 
 Feel free to contribute to this project.
 
-If you find a bug or want a feature, but don't know how to fix/implement it, please fill an [issue][issue].  
-If you fixed a bug or implemented a feature, please send a [pull request][pr]
+If you find a bug or want a feature, but don't know how to fix/implement it, please fill an [issue](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues).  
+If you fixed a bug or implemented a feature, please send a [pull request](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls). 
