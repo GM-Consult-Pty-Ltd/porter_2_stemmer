@@ -13,7 +13,12 @@ extension PorterStemmerExtensionOnString on String {
   /// Reduces the String to its word stem, base or root form.
   /// using the [Porter2Stemmer] English language stemming algorithm.
   ///
-  /// This is a shortcut to the static function [Porter2Stemmer.stem].
+  /// To implement custom exceptions to the algorithm, provide [exceptions]
+  /// where the key is the term and the value is its stem (value).
+  ///
+  /// The default exceptions are [Porter2Stemmer.kExceptions].
+  ///
+  /// This is a shortcut to [Porter2Stemmer.stem] function.
   String stemPorter2([Map<String, String>? exceptions]) =>
       Porter2Stemmer(exceptions: exceptions).stem(this);
 

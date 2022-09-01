@@ -31,9 +31,9 @@ class Porter2Stemmer {
   /// - terms that contain any non-word characters (anything other than letters,
   ///   apostrophes and hyphens), e.g. apple.com, alibaba:xnys
   ///
-  /// To overcome this restriction, terms can be converted to lowercase before
-  /// processing and/or a tokenizer applied to split terms that contain
-  /// non-word characters
+  /// Terms may be converted to lowercase before processing if stemming of
+  /// the all-capitals terms is desired. Split terms that contain non-word
+  /// characters to stem the term parts separately.
   String stem(String term) {
     //
 
@@ -66,7 +66,7 @@ class Porter2Stemmer {
         term.step1B().step1C().step2().step3().step4().step5();
   }
 
-  /// A list of exceptions that do not follow the stemming algorithm.
+  /// Default exceptions used by [Porter2Stemmer].
   static const kExceptions = {
     'skis': 'ski',
     'skies': 'sky',

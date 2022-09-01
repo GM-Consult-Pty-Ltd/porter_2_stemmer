@@ -8,13 +8,14 @@
 
 part of 'stemmer.dart';
 
+/// Private extension functions on [String] called by [Porter2Stemmer].
 extension _StemmerExtension on String {
   //
 
   /// Words starting with any of the following have a different [r1] to
   /// the algorithm.
   ///
-  /// If the words begins gener, commun or arsen, R1 is the remainder of the
+  /// If the words begins with  (gener, commun or arsen), R1 is the remainder of the
   /// word after gener, commun or arsen is removed from the beginning.
   static const kRegion1Exceptions = ['gener', 'commun', 'arsen'];
 
@@ -46,10 +47,10 @@ extension _StemmerExtension on String {
       toUpperCase() == this ||
       RegExp(rEnglishNonWordChars).allMatches(this).isNotEmpty;
 
-  /// R1 is the region after the first non-vowel following a vowel,
-  /// or the end of the word if there is no such non-vowel.
+  /// The region after the first non-vowel following a vowel, or the end of
+  /// the word if there is no such non-vowel.
   ///
-  /// If the words begins gener, commun or arsen, R1 is the remainder of the
+  /// If the words begins gener, commun or arsen, [r1] is the remainder of the
   /// word after gener, commun or arsen is removed from the beginning.
   ///
   /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
@@ -64,10 +65,8 @@ extension _StemmerExtension on String {
         ?.group(0);
   }
 
-  // bool get hasNoStem => kStep1AExceptions.keys.contains(toLowerCase());
-
-  /// R2 is the region after the first non-vowel following a vowel in R1,
-  /// or the end of the word if there is no such non-vowel.
+  /// The region after the first non-vowel following a vowel in [r1], or the
+  /// end of the word if there is no such non-vowel.
   ///
   /// Is equivalent to [r1?.r1].
   ///
@@ -91,9 +90,6 @@ extension _StemmerExtension on String {
 
   /// Replace all forms of apostrophe or quotation mar with U+0027.
   String normalizeQuotesAndApostrophes() => replaceAll(RegExp(rQuotes), "'");
-
-  // /// Remove leading quote marks. Includes all 4 forms of aprostrophe
-  // String removeLeadingQuotes() => replaceAll(RegExp('^$rApostrophe'), '');
 
   /// Remove longest of "'", "'s" or "'s'" from end of term.
   ///
@@ -140,9 +136,6 @@ extension _StemmerExtension on String {
           ? this
           : substring(0, length - 1);
     }
-    // if (endsWith('ss') || endsWith('us')) {
-    //   return this;
-    // }
     return this;
   }
 
@@ -269,15 +262,6 @@ extension _StemmerExtension on String {
           r'$)')
       .allMatches(this)
       .isNotEmpty;
-
-  // bool get isShortWord {
-  //   if (length < 3) {
-  //     return true;
-  //   }
-  //   final region1 = r1;
-  //   if (region1 != null) return false;
-  //   return true;
-  // }
 
   /// Returns true if the String ends with any of [rDoubles].
   bool get endsWithDouble => RegExp(rDoubleEnd).allMatches(this).isNotEmpty;

@@ -40,7 +40,7 @@ print('$term => $stem'); // prints "generically => generic"
 To implement custom exceptions to the algorithm, provide a hashmap of String:String that provides the
 term (key) and its stem (value). The default exceptions are:
 ```dart
-/// Default exceptions used by Porter2Stemmer.
+/// Default exceptions used by [Porter2Stemmer].
 static const kExceptions = {
   'skis': 'ski',
   'skies': 'sky',
