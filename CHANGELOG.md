@@ -14,3 +14,7 @@ All rights reserved.
 
 - Minor change to handling of exceptions to algorithm.
 - Updated documentation.
+
+## 0.0.3
+
+- Updated examples.

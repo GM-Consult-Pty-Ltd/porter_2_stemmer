@@ -90,11 +90,12 @@ void main() {
   /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
 
-    // Get the stem for the [term].
+    // Get the stem for the [term] by calling the stem2Porter() extension 
+    method.
     final stem = term.stemPorter2();
 
-    // Print the [stem].
-    print('$term =&gt; $stem'); // prints "generically =&gt; generic"
+    // Print the [term =&gt; stem].
+    print('$term =&gt; $stem'); 
   }
 }
 </code></pre>
@@ -134,11 +135,12 @@ void main() {
 
   /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
+
     // Get the stem for the [term].
     final stem = stemmer.stem(term);
 
-    // Print the [stem].
-    print('$term =&gt; $stem'); // prints "generically =&gt; generic"
+    Print the [term =&gt; stem].
+    print('$term =&gt; $stem');
   }
 }
 
@@ -230,7 +232,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.2
+      0.0.3
   </span>
 
   

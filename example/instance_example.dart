@@ -37,7 +37,7 @@ void main() {
     // Get the stem for the [term].
     final stem = stemmer.stem(term);
 
-    // Print the [stem].
-    print('$term => $stem'); // prints "generically => generic"
+    // Print the [term => stem].
+    print('$term => $stem');
   }
 }

@@ -60,11 +60,12 @@ void main() {
   /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
 
-    // Get the stem for the [term].
+    // Get the stem for the [term] by calling the stem2Porter() extension 
+    method.
     final stem = term.stemPorter2();
 
-    // Print the [stem].
-    print('$term => $stem'); // prints "generically => generic"
+    // Print the [term => stem].
+    print('$term => $stem'); 
   }
 }
 ```
@@ -107,11 +108,12 @@ void main() {
 
   /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
+
     // Get the stem for the [term].
     final stem = stemmer.stem(term);
 
-    // Print the [stem].
-    print('$term => $stem'); // prints "generically => generic"
+    Print the [term => stem].
+    print('$term => $stem');
   }
 }
 
