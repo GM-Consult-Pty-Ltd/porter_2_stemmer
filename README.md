@@ -7,9 +7,9 @@ The Porter stemming algorithm (or 'Porter stemmer') is a process for removing th
 
 The English (Porter2) stemming algorithm was developed as part of "Snowball", a small string processing language designed for creating stemming algorithms for use in information retrieval.
 
-The Porter 2 algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause). 
+The Porter 2 algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). 
 
-You can read more about the Porter Stemming Algorithm [[here](https://snowballstem.org/algorithms/)].
+You can read more about the Porter Stemming Algorithm [[here](https://snowballstem.org/algorithms/).
 
 ## Installation
 
