@@ -34,7 +34,8 @@ void main() {
       '"news"': 'news',
       "mother's": 'mother',
       'generally': 'general',
-      'consignment': 'consign'
+      'consignment': 'consign',
+      'Monday': 'monday'
     };
 
     // Preserve the default exceptions.
@@ -151,6 +152,7 @@ const _vocabulary = {
   'knavish': 'knavish',
   'kneaded': 'knead',
   'kneading': 'knead',
+  'monday': 'monday',
   'knee': 'knee',
   'kneel': 'kneel',
   'kneeled': 'kneel',

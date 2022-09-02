@@ -227,7 +227,7 @@ extension _StemmerExtension on String {
       }
       return ((r2 ?? '').endsWith('l') && stub.endsWith('l')) ? stub : this;
     }
-    return this;
+    return replaceAll(RegExp(r'(?<=[a-zY])(Y)'), 'y');
   }
 
   /// If the String ends with any of [suffixes.keys], replace the ending with

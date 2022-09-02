@@ -22,3 +22,7 @@ All rights reserved.
 ## 0.0.4
 
 - Updated examples.
+
+## 0.0.5
+
+- Bug fix, replaced "Y" with "y"
