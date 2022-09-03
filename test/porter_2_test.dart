@@ -50,7 +50,7 @@ void main() {
     final stemmer = Porter2Stemmer(exceptions: exceptions);
 
     /// Iterate through the [terms] and print the stem for each term.
-    for (final entry in terms.entries) {
+    for (final entry in kTerms.entries) {
       // get the term
       final term = entry.key;
       // Get the stem for the [term].
@@ -63,9 +63,6 @@ void main() {
       } else {
         print('${entry.key} => $stem ($result)');
       }
-
-      // prints "generically => generic"
-      // expect(stem, entry.value);
     }
   });
 }
@@ -73,14 +70,14 @@ void main() {
 /// Global function that returns the failed stems
 Map<String, String> _stem(Map<String, String> terms) {
   int failed = 0;
-  int passed = 0;
+  // int passed = 0;
   final failedStems = <String, String>{};
   for (final entry in terms.entries) {
     final stem = entry.key.stemPorter2();
     final result = stem == entry.value ? 'pass' : 'fail';
     // print('${entry.key} => $stem ($result)');
     failed += stem == entry.value ? 0 : 1;
-    passed += stem == entry.value ? 1 : 0;
+    // passed += stem == entry.value ? 1 : 0;
     if (result == 'fail') {
       failedStems[entry.key] = stem;
     }
@@ -93,7 +90,7 @@ Map<String, String> _stem(Map<String, String> terms) {
 }
 
 /// Collection of terms/words for which stems are printed.
-const terms = {
+const kTerms = {
   'wearying': 'weari',
   'vehemently': 'vehement',
   'varying': 'vari',
@@ -114,7 +111,8 @@ const terms = {
   'Monday': 'monday'
 };
 
-const _vocabulary = {
+/// Sample vocabulary from
+const kVocabulary = {
   'sky’s': 'sky',
   '"news"': 'news',
   "'howe'": 'howe',

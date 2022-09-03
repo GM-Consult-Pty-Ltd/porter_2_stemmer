@@ -9,8 +9,7 @@ All rights reserved.
 # porter_2_stemmer
 DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/), used for reducing a word to its word stem, base or root form.
 
-This implementation achieves 98.7% success rate when applied to the
-sample [vocabulary](http://snowball.tartarus.org/algorithms/english/diffs.txt) of 29,417 terms. We are aiming to improve on this with each version.
+This implementation achieves 98.7% success rate on the sample [vocabulary](http://snowball.tartarus.org/algorithms/english/diffs.txt) (29,417 terms), improving with each version.
 
 ## What is the Porter Stemming Algorithm?
 

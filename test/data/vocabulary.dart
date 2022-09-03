@@ -1,3 +1,4 @@
+/// Sample vocabulary from http://snowball.tartarus.org/algorithms/english/diffs.txt
 const vocabulary = {
   "'": '',
   "''": '',
