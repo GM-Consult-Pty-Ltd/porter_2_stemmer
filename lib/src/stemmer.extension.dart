@@ -131,6 +131,9 @@ extension _StemmerExtension on String {
       final stub = substring(0, length - 3);
       return stub.length > 1 ? '${stub}i' : '${stub}ie';
     }
+    // if (endsWith('oes')) {
+    //   return replaceAll(r'oes(?=$)', 'o');
+    // }
     if (endsWith('us') || endsWith('ss')) {
       return this;
     }
@@ -175,13 +178,16 @@ extension _StemmerExtension on String {
         endsWith('ingly')) {
       final stub = replaceSuffixes(kStep1BSuffixes);
       if (RegExp('$rVowels+').allMatches(stub).isNotEmpty) {
-        if (stub.endsWith('at') || stub.endsWith('bl') || stub.endsWith('iz')) {
+        if (stub.endsWith('at') ||
+            stub.endsWith('bl') ||
+            stub.endsWith('iz') ||
+            isShortWord) {
           return '${stub}e';
         }
         if (stub.endsWithDouble) {
           return stub.substring(0, stub.length - 1);
         }
-        if (stub.endsWithShortSyllable) {
+        if (stub.r1 == null && stub.endsWithShortSyllable) {
           return '${stub}e';
         }
         return stub;
@@ -189,6 +195,8 @@ extension _StemmerExtension on String {
     }
     return this;
   }
+
+  bool get isShortWord => r1 == null && endsWithShortSyllable;
 
   static const kStep1BSuffixes = {
     'ingly': '',
@@ -199,18 +207,22 @@ extension _StemmerExtension on String {
 
   /// Replace suffix y or Y by i if preceded by a non-vowel which is not the
   /// first letter of the word (so cry -> cri, by -> by, say -> say
-  String step1C() =>
-      RegExp(r'(?<=\w)' + rNotVowels + r'(?=[yY]$)').allMatches(this).isNotEmpty
-          ? replaceAll(RegExp(r'(y|Y)(?=$)'), 'i')
-          : this;
+  String step1C() => RegExp(r'(?<=\w)' + rNotVowels + r'(?=(ye|y|Y)$)')
+          .allMatches(this)
+          .isNotEmpty
+      ? replaceAll(RegExp(r'(y|Y|ye)(?=$)'), 'i')
+      : this;
 
   /// Search for the longest among [kStep2Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep2Suffixes].
   String step2() {
     final region1 = r1;
     if (region1 != null) {
+      if (region1.endsWith('ogi') && endsWith('logi')) {
+        return replaceAll(RegExp(r'(logi)(?=$)'), 'log');
+      }
       final stub = replaceSuffixes(kStep2Suffixes, r1);
-      if (stub.endsWith('li')) {
+      if (stub.endsWith('li') && (stub.r1?.endsWith('li') ?? false)) {
         return stub.replaceAll(RegExp(r'(?<=[cdeghkmnrt])(li)(?=$)'), '');
       }
       return stub;
@@ -249,12 +261,16 @@ extension _StemmerExtension on String {
   ///   syllable; or
   /// - "l": delete if in [r2] and preceded by an "l".
   String step5() {
-    if (r1 != null && (endsWith('e') || endsWith('l'))) {
+    final region1 = r1;
+    final region2 = r2;
+    if (region1 != null && (endsWith('e') || endsWith('l'))) {
       final stub = substring(0, length - 1);
-      if (endsWith('e')) {
-        return (r2 != null || !stub.endsWithShortSyllable) ? stub : this;
+      if (endsWith('e') && !endsWith('ue')) {
+        return (region2 != null || !stub.endsWithShortSyllable) ? stub : this;
       }
-      return ((r2 ?? '').endsWith('l') && stub.endsWith('l')) ? stub : this;
+      return ((region2 ?? '').endsWith('l') && stub.endsWith('l'))
+          ? stub
+          : this;
     }
     return this;
   }
@@ -264,10 +280,13 @@ extension _StemmerExtension on String {
   String replaceSuffixes(Map<String, String> suffixes, [String? region]) {
     for (final entry in suffixes.entries) {
       final suffix = entry.key;
-      if ((region ?? this).endsWith(suffix)) {
-        final replacement = entry.value;
-        final regex = RegExp('$suffix\$');
-        return replaceAll(regex, replacement);
+      if (endsWith(suffix)) {
+        if (region?.endsWith(suffix) ?? true) {
+          final replacement = entry.value;
+          final regex = RegExp('$suffix\$');
+          return replaceAll(regex, replacement);
+        }
+        return this;
       }
     }
     return this;
@@ -282,16 +301,12 @@ extension _StemmerExtension on String {
   /// - is a vowel followed by a non-vowel other than w, x or Y and preceded
   ///   by a non-vowel, or
   /// - is a vowel at the beginning of the word followed by a non-vowel.
-  bool get endsWithShortSyllable => RegExp('(?<=$rNotVowels)' +
-          rVowels +
-          r'(?=[^aeiouywxY]$|$)|^' +
-          rVowels +
-          r'(?=' +
-          rNotVowels +
-          r'$)')
-      .allMatches(this)
-      .isNotEmpty;
-
+  bool get endsWithShortSyllable =>
+      RegExp('(?<=$rNotVowels)$rVowels(?=[^aeiouywxY]\$)')
+          .allMatches(this)
+          .isNotEmpty ||
+      RegExp('^$rVowels(?=[^aeiouy]\$)').allMatches(this).isNotEmpty;
+// '^' + rVowels + r'(?=' + rNotVowels + r'$)'
   /// Returns true if the String ends with any of [rDoubles].
   bool get endsWithDouble => RegExp(rDoubleEnd).allMatches(this).isNotEmpty;
 
@@ -376,17 +391,21 @@ extension _StemmerExtension on String {
   static const kStep1AExceptions = {
     'inning': 'inning',
     'proceed': 'proceed',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
     'herring': 'herring',
     'earring': 'earring',
     'outing': 'outing',
     'exceed': 'exceed',
     'canning': 'canning',
     'succeed': 'succeed',
+    'doing': 'do'
   };
 
   /// Collection of terms that have no stem but do not fit the algorithm.
   static const kInvariantExceptions = {
     'sky': 'sky',
+    'skye': 'skye',
     'news': 'news',
     'howe': 'howe',
     'atlas': 'atlas',

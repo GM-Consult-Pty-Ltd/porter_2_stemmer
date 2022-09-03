@@ -87,22 +87,22 @@ class Porter2Stemmer {
       return exception;
     }
 
-    // call Step 1(a)
+    // call Step 1ba)
     term = term.exception(exceptions) ?? term.step1B();
 
-    // call Step 1(a)
+    // call Step 1(c)
     term = term.exception(exceptions) ?? term.step1C();
 
-    // call Step 1(a)
+    // call Step 2
     term = term.exception(exceptions) ?? term.step2();
 
-    // call Step 1(a)
+    // call Step 3
     term = term.exception(exceptions) ?? term.step3();
 
-    // call Step 1(a)
+    // call Step 4
     term = term.exception(exceptions) ?? term.step4();
 
-    // call Step 1(a)
+    // call Step 5
     term = term.exception(exceptions) ?? term.step5();
 
     // replace all upper-case "Y"s with "y"
@@ -114,8 +114,9 @@ class Porter2Stemmer {
   /// Default exceptions used by [Porter2Stemmer].
   static const kExceptions = {
     'skis': 'ski',
-    'vehement': 'vehement',
-    'statement': 'statement',
+    'bye': 'bye',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
     'skies': 'sky',
     'dying': 'die',
     'lying': 'lie',

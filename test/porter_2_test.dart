@@ -10,9 +10,11 @@ void main() {
     /// Nothing to do here.
     setUp(() {});
 
+// FAILED: echoes => echoe (expected "echo")
+
     test('Porter2Stemmer: single', () {
-      final term = 'element ';
-      final expected = 'element ';
+      final term = 'geology';
+      final expected = 'geolog';
       final stem = term.stemPorter2();
       final failed = stem != expected;
       // expect(failed.isEmpty, true);
@@ -23,7 +25,6 @@ void main() {
     test('Porter2Stemmer: extension', () {
       final terms = Map<String, String>.from(vocabulary);
       final failed = _stem(terms);
-      // expect(failed.isEmpty, true);
       if (failed.isNotEmpty) {
         for (final fail in failed.entries) {
           print('FAILED: ${fail.key} => ${fail.value} (expected '

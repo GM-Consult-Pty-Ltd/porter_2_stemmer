@@ -9,7 +9,7 @@ All rights reserved.
 # porter_2_stemmer
 DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/), used for reducing a word to its word stem, base or root form.
 
-This implementation achieves 98.7% success rate on the sample [vocabulary](http://snowball.tartarus.org/algorithms/english/diffs.txt) (29,417 terms), improving with each version.
+The <latest_version> of `Porter2Stemmer` achieves 98.7% success rate on a sample [vocabulary](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) of 29,417 terms.
 
 ## What is the Porter Stemming Algorithm?
 
@@ -79,7 +79,7 @@ and call the stem method.
 ```dart
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
-/// Instantiates a [Porter2Stemmer] instance using custom a exception for
+/// Instantiates a [Porter2Stemmer] instance using a custom exception for
 /// the term "TSLA".
 ///
 /// Prints the terms and their stems.
