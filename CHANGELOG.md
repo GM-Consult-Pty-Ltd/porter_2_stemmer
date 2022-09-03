@@ -30,3 +30,7 @@ All rights reserved.
 ## 0.0.6
 
 - Improved accuracy to 98.7%
+
+## 0.0.7
+
+- Minor bug fix to README.md
