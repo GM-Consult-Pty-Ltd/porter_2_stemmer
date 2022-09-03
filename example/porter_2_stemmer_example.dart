@@ -17,10 +17,13 @@ void main() {
     'consignment'
   ];
 
-  /// Call the extension example.
+  /// A string extension is provided, and is the simplest way to get stemming
   extensionExample(terms);
 
-  /// Call the instance example.
+  /// To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value).
+  ///
+  /// The next example instantiates a Porter2Stemmer instance, and passes
+  /// in a custom exception for the term "TSLA".
   instanceExample(terms);
 }
 

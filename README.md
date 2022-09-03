@@ -7,17 +7,7 @@ All rights reserved.
 -->
 
 # porter_2_stemmer
-DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/), used for reducing a word to its word stem, base or root form.
-
-The <latest_version> of `Porter2Stemmer` achieves 98.7% success rate on a sample [vocabulary](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) of 29,417 terms.
-
-## What is the Porter Stemming Algorithm?
-
-The Porter Stemming Algorithm (or 'Porter stemmer') is a process for removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up information retrieval systems.
-
-The English (Porter2) stemming algorithm was developed as part of "Snowball", a small string processing language designed for creating stemming algorithms for use in information retrieval.
-
-The Porter 2 algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). 
+DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/english/stemmer.html), used for reducing a word to its word stem, base or root form.
 
 ## Install
 
@@ -59,22 +49,25 @@ void main() {
     'consignment'
   ];
 
-  /// iterate through the [terms] and print the stem for each term.
-  for (final term in terms) {
-    //
+  // print a heading
+  print('Example usage of Porter2Stemmer extension');
 
-    // get the stem for the [term] by calling the stem2Porter() extension method.
+  /// Iterate through the [terms] and print the stem for each term.
+  for (final term in terms) {
+    // Get the stem for the [term] by calling the stem2Porter() extension
+    // method.
     final stem = term.stemPorter2();
 
-    // print the [term => stem].
+    // Print the [term => stem].
     print('$term => $stem');
   }
 }
 
 ```
 
-Alternatively, instantiate a Porter2Stemmer instance, optionally passing your preferred exceptions,
-and call the stem method.
+To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value). 
+
+The next example instantiates a Porter2Stemmer instance, and passes in aa custom exception for the term "TSLA".
 
 ```dart
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
@@ -100,57 +93,116 @@ void main() {
     'consignment'
   ];
 
-  // preserve the default exceptions.
+  // print a heading
+  print('Example usage of Porter2Stemmer.stem method');
+
+  // Preserve the default exceptions.
   final exceptions = Map<String, String>.from(Porter2Stemmer.kExceptions);
 
-  // add a custom exception for "TSLA".
+  // Add a custom exception for "TSLA".
   exceptions['TSLA'] = 'tesla';
 
-  // instantiate the [Porter2Stemmer] instance using the custom [exceptions]
+  // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
   final stemmer = Porter2Stemmer(exceptions: exceptions);
 
-  /// iterate through the [terms] and print the stem for each term.
+  /// Iterate through the [terms] and print the stem for each term.
   for (final term in terms) {
-
-    // get the stem for the [term].
+    // Get the stem for the [term].
     final stem = stemmer.stem(term);
 
-    // print the [term => stem].
+    // Print the [term => stem].
     print('$term => $stem');
   }
 }
 
 ```
 
-To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value). The default exceptions are:
+## What is the Porter Stemming Algorithm?
+
+A stemmer is a process for removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up information retrieval systems.
+
+The English (Porter2) stemming algorithm implemented in `Porter2Stemmer` was developed as part of "Snowball", a small string processing language designed for creating stemming algorithms for use in information retrieval.
+
+The Porter Stemming Algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). 
+
+## Departures from Snowball implementation
+
+In this implementation of the English (Porter2) stemming algorithm:
+* all quotation marks and apostrophies are converted to a standard single quote character U+0027 (also ASCII hex 27); 
+* all leading and trailing quotation marks are stripped from the term before processing begins.
+* in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu").
+
+Terms that match the following criteria (after stripping quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:
+- terms that are in all-capitals, e.g. TSLA;
+- terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.
+
+This behaviour can be overriden by pre-processing text with a character filter to change terms to lower-case and strip out non-word characters.
+
+The default exceptions are:
+
 ```dart
-Default exceptions used by [Porter2Stemmer].
-static const kExceptions = {
-  'skis': 'ski',
-  'skies': 'sky',
-  'dying': 'die',
-  'lying': 'lie',
-  'tying': 'tie',
-  'idly': 'idl',
-  'gently': 'gentl',
-  'ugly': 'ugli',
-  'early': 'earli',
-  'only': 'onli',
-  'singly': 'singl',
-};
+
+  /// Collection of default exceptions used by [Porter2Stemmer].
+  static const kExceptions = {
+    'skis': 'ski',
+    'skies': 'sky',
+    'dying': 'die',
+    'lying': 'lie',
+    'tying': 'tie',
+    'idly': 'idl',
+    'gently': 'gentl',
+    'singly': 'singl',
+  };
+
+  /// Collection of terms that have no stem.
+  static const kInvariantExceptions = {
+    'sky': 'sky',
+    'bye': 'bye',
+    'ugly': 'ugly',
+    'early': 'early',
+    'only': 'only',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
+    'skye': 'skye',
+    'news': 'news',
+    'howe': 'howe',
+    'atlas': 'atlas',
+    'cosmos': 'cosmos',
+    'bias': 'bias',
+    'andes': 'andes',
+  };
+
+    /// Collection of terms that have no stem at the end of Step 1(a).
+  static const kStep1AExceptions = {
+    'inning': 'inning',
+    'proceed': 'proceed',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
+    'herring': 'herring',
+    'earring': 'earring',
+    'outing': 'outing',
+    'exceed': 'exceed',
+    'canning': 'canning',
+    'succeed': 'succeed',
+    'doing': 'do'
+  };
 ```
 
-## Quotation Marks, apostrophes and non-language terms
+## Validation
 
-This implementation:
-* converts all quotation marks and apostrophies to a standard single quote character U+0027 (also ASCII hex 27); and
-* strips all leading and trailing quotation marks from the term before processing begins.
+A validator test is included in the repository as part of the [test folder](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test). 
 
-  Terms that match the following criteria (after stripping quotation marks   and possessive apostrophy "s") re returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:
-  - terms that are in all-capitals, e.g. TSLA;
-  - terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys
+The 'Porter2Stemmer: VALIDATOR' test iterates through a hashmap of [terms](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) to expected [stems](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt) that
+contains 29,417 term/stem pairs.
 
-Terms may be converted to lowercase before processing if stemming of the all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.
+As of <latest_version>, the `Porter2Stemmer` achieves 99.66% accuracy when measured against the
+sample (Snowball) vocabulary. Taking into account the differences in implementation, this 
+increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:
+
+* "congeners" => "congener" (expected "congen");
+* "fluently" => "fluent" (expected "fluentli");
+* "harkye" => "harki" (expected "harky"); and
+* "lookye" => "looki" (expected "looky").
 
 ## Contributions
 

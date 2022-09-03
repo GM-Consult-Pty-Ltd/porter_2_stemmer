@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the exceptions property from the Porter2Stemmer class, for the Dart programming language.">
-  <title>exceptions property - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
+  <meta name="description" content="API docs for the step5 method from the Porter2Stemmer class, for the Dart programming language.">
+  <title>step5 method - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
 
 
   
@@ -32,9 +32,9 @@
     <li><a href="../../index.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-    <li class="self-crumb">exceptions property</li>
+    <li class="self-crumb">step5 method</li>
   </ol>
-  <div class="self-name">exceptions</div>
+  <div class="self-name">step5</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -45,29 +45,50 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-property">exceptions</span> property 
+<h1><span class="kind-method">step5</span> method 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
-        <section class="multi-line-signature">
-          <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>
-          <span class="name ">exceptions</span>
-          <div class="features">final</div>
+    <section class="multi-line-signature">
+      
 
-        </section>
-        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">step5</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="step5-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
 <section class="desc markdown">
-  <p>A hashmap of terms (keys) with their stem values that will be returned
-rather than being processed by the stemmer.</p>
-<p>The default is <a href="../../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">Porter2Stemmer.kExceptions</a>.</p>
+  <p>Search for the the following suffixes, and, if found:</p>
+<ul>
+<li>"e": delete if in R2, or in R1 and not preceded by a short
+syllable; or</li>
+<li>"l": delete if in R2 and preceded by an "l".</li>
+</ul>
 </section>
 
-        
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final Map&lt;String, String&gt; exceptions;
-
-</code></pre>
+  <pre class="language-dart"><code class="language-dart">String step5(String term) {
+  final e = exception(term);
+  if (e != null) return e;
+  final region1 = term.r1;
+  final region2 = term.r2;
+  if (region1 != null &amp;&amp; (term.endsWith(&#39;e&#39;) || term.endsWith(&#39;l&#39;))) {
+    final stub = term.substring(0, term.length - 1);
+    if (term.endsWith(&#39;e&#39;) &amp;&amp; !term.endsWith(&#39;ue&#39;)) {
+      return (region2 != null || !stub.endsWithShortSyllable) ? stub : term;
+    }
+    return ((region2 ?? &#39;&#39;).endsWith(&#39;l&#39;) &amp;&amp; stub.endsWith(&#39;l&#39;))
+        ? stub
+        : term;
+  }
+  return term;
+}</code></pre>
 </section>
 
 
@@ -84,7 +105,7 @@ rather than being processed by the stemmer.</p>
   <li><a href="../../index.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-  <li class="self-crumb">exceptions property</li>
+  <li class="self-crumb">step5 method</li>
 </ol>
 
 

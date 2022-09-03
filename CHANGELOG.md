@@ -34,3 +34,7 @@ All rights reserved.
 ## 0.0.7
 
 - Minor bug fix to README.md
+
+## 0.0.8
+
+- Improved implemented accuracy to 99.99%

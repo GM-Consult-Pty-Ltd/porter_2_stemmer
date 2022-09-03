@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the exceptions property from the Porter2Stemmer class, for the Dart programming language.">
-  <title>exceptions property - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
+  <meta name="description" content="API docs for the kStep2Suffixes constant from the Porter2Stemmer class, for the Dart programming language.">
+  <title>kStep2Suffixes constant - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
 
 
   
@@ -32,9 +32,9 @@
     <li><a href="../../index.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-    <li class="self-crumb">exceptions property</li>
+    <li class="self-crumb">kStep2Suffixes constant</li>
   </ol>
-  <div class="self-name">exceptions</div>
+  <div class="self-name">kStep2Suffixes</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -45,27 +45,49 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-property">exceptions</span> property 
+<h1><span class="kind-property">kStep2Suffixes</span> constant 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
         <section class="multi-line-signature">
           <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>
-          <span class="name ">exceptions</span>
-          <div class="features">final</div>
+          const <span class="name ">kStep2Suffixes</span>
+          
 
         </section>
         
 <section class="desc markdown">
-  <p>A hashmap of terms (keys) with their stem values that will be returned
-rather than being processed by the stemmer.</p>
-<p>The default is <a href="../../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">Porter2Stemmer.kExceptions</a>.</p>
+  <p>Suffix hasmap for Step 2.</p>
 </section>
 
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final Map&lt;String, String&gt; exceptions;
+  <pre class="language-dart"><code class="language-dart">static const kStep2Suffixes = {
+  &#39;ization&#39;: &#39;ize&#39;,
+  &#39;ational&#39;: &#39;ate&#39;,
+  &#39;fulness&#39;: &#39;ful&#39;,
+  &#39;ousness&#39;: &#39;ous&#39;,
+  &#39;iveness&#39;: &#39;ive&#39;,
+  &#39;tional&#39;: &#39;tion&#39;,
+  &#39;biliti&#39;: &#39;ble&#39;,
+  &#39;lessli&#39;: &#39;less&#39;,
+  &#39;entli&#39;: &#39;ent&#39;,
+  &#39;ation&#39;: &#39;ate&#39;,
+  &#39;alism&#39;: &#39;al&#39;,
+  &#39;aliti&#39;: &#39;al&#39;,
+  &#39;ousli&#39;: &#39;ous&#39;,
+  &#39;iviti&#39;: &#39;ive&#39;,
+  &#39;fulli&#39;: &#39;ful&#39;,
+  &#39;enci&#39;: &#39;ence&#39;,
+  &#39;anci&#39;: &#39;ance&#39;,
+  &#39;abli&#39;: &#39;able&#39;,
+  &#39;izer&#39;: &#39;ize&#39;,
+  &#39;ator&#39;: &#39;ate&#39;,
+  &#39;alli&#39;: &#39;al&#39;,
+  &#39;logi&#39;: &#39;log&#39;,
+  &#39;bli&#39;: &#39;ble&#39;,
+};
 
 </code></pre>
 </section>
@@ -84,7 +106,7 @@ rather than being processed by the stemmer.</p>
   <li><a href="../../index.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-  <li class="self-crumb">exceptions property</li>
+  <li class="self-crumb">kStep2Suffixes constant</li>
 </ol>
 
 

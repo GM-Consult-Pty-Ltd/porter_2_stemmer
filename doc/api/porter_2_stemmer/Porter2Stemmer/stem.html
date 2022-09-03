@@ -86,22 +86,22 @@ characters to stem the term parts separately.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String stem(String term) {
   &#47;&#47; change all forms of apostrophes and quotation marks to [&#39;]
-  term = term.normalizeQuotesAndApostrophes();
+  term = normalizeQuotesAndApostrophes(term);
 
   &#47;&#47; remove all enclosing quotation marks.
-  term = term.removeEnclosingQuotes();
+  term = removeEnclosingQuotes(term);
 
   &#47;&#47; remove trailing &quot;&#39;s&quot; (apostrophied s&#39;s).
-  term = term.stepZero();
+  term = step0(term);
 
-  &#47;&#47; look up any rule exceptions and return it if found.
-  &#47;&#47; return terms with no stem unchanged
-  var exception = term.exception(exceptions);
+  &#47;&#47; &#47;&#47; look up any rule exceptions and return it if found.
+  &#47;&#47; &#47;&#47; return terms with no stem unchanged
+  &#47;&#47; var e = exception(term);
 
-  &#47;&#47; return the exception if found
-  if (exception != null) {
-    return exception;
-  }
+  &#47;&#47; &#47;&#47; return the exception if found
+  &#47;&#47; if (e != null) {
+  &#47;&#47;   return e;
+  &#47;&#47; }
 
   &#47;&#47; return words in all caps unchanged.
   &#47;&#47; return words with non-word characters  (not [a-z, A-Z, &#39;, and -])
@@ -114,41 +114,41 @@ characters to stem the term parts separately.</p>
   term = term.toLowerCase();
 
   &#47;&#47; set initial y, or y after a vowel, to Y
-  term = term.exception(exceptions) ?? term.replaceYs();
+  term = replaceYs(term);
 
   &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step1A();
+  term = step1A(term);
 
   &#47;&#47; check for alghorithm exceptions at end of Step 1(a)
-  exception = term.exception(exceptions) ?? term.step1AException();
+  final e = step1AException(term);
 
   &#47;&#47; return the exception if found
-  if (exception != null) {
-    return exception;
+  if (e != null) {
+    return e;
   }
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step1B();
+  &#47;&#47; call Step 1ba)
+  term = step1B(term);
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step1C();
+  &#47;&#47; call Step 1(c)
+  term = step1C(term);
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step2();
+  &#47;&#47; call Step 2
+  term = step2(term);
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step3();
+  &#47;&#47; call Step 3
+  term = step3(term);
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step4();
+  &#47;&#47; call Step 4
+  term = step4(term);
 
-  &#47;&#47; call Step 1(a)
-  term = term.exception(exceptions) ?? term.step5();
+  &#47;&#47; call Step 5
+  term = step5(term);
 
   &#47;&#47; replace all upper-case &quot;Y&quot;s with &quot;y&quot;
-  term = term.exception(exceptions) ?? term.normalizeYs();
+  term = normalizeYs(term);
 
-  return term.exception(exceptions) ?? term;
+  return term;
 }</code></pre>
 </section>
 
@@ -185,8 +185,22 @@ characters to stem the term parts separately.</p>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../porter_2_stemmer/Porter2Stemmer-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/exception.html">exception</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/normalizeQuotesAndApostrophes.html">normalizeQuotesAndApostrophes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/normalizeYs.html">normalizeYs</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/removeEnclosingQuotes.html">removeEnclosingQuotes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/replaceYs.html">replaceYs</a></li>
     <li><a href="../../porter_2_stemmer/Porter2Stemmer/stem.html">stem</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step0.html">step0</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step1A.html">step1A</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step1AException.html">step1AException</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step1B.html">step1B</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step1C.html">step1C</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step2.html">step2</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step3.html">step3</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step4.html">step4</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2Stemmer/step5.html">step5</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../porter_2_stemmer/Porter2Stemmer-class.html#operators">Operators</a></li>
@@ -197,6 +211,16 @@ characters to stem the term parts separately.</p>
 
         <li class="section-title"><a href="../../porter_2_stemmer/Porter2Stemmer-class.html#constants">Constants</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">kExceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kRegion1Exceptions-constant.html">kRegion1Exceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/rNotVowels-constant.html">rNotVowels</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/rQuotes-constant.html">rQuotes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2Stemmer/rVowels-constant.html">rVowels</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -209,7 +233,7 @@ characters to stem the term parts separately.</p>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.7
+      0.0.8
   </span>
 
   

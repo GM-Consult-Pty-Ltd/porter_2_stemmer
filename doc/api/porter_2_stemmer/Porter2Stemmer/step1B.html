@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the exceptions property from the Porter2Stemmer class, for the Dart programming language.">
-  <title>exceptions property - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
+  <meta name="description" content="API docs for the step1B method from the Porter2Stemmer class, for the Dart programming language.">
+  <title>step1B method - Porter2Stemmer class - porter_2_stemmer library - Dart API</title>
 
 
   
@@ -32,9 +32,9 @@
     <li><a href="../../index.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
     <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-    <li class="self-crumb">exceptions property</li>
+    <li class="self-crumb">step1B method</li>
   </ol>
-  <div class="self-name">exceptions</div>
+  <div class="self-name">step1B</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -45,29 +45,73 @@
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
-<h1><span class="kind-property">exceptions</span> property 
+<h1><span class="kind-method">step1B</span> method 
     <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
-        <section class="multi-line-signature">
-          <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>
-          <span class="name ">exceptions</span>
-          <div class="features">final</div>
+    <section class="multi-line-signature">
+      
 
-        </section>
-        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">step1B</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="step1B-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
 <section class="desc markdown">
-  <p>A hashmap of terms (keys) with their stem values that will be returned
-rather than being processed by the stemmer.</p>
-<p>The default is <a href="../../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">Porter2Stemmer.kExceptions</a>.</p>
+  <p>Search for the longest among the following suffixes, and perform the
+action indicated.</p>
+<p>If the term ends in 'eed' or 'eedly', replace with 'ee' if the suffix is
+in (non-null) R1.</p>
+<p>If term ends in 'ed', 'edly',  'ing' or 'ingly' delete the suffix if
+the preceding word part contains a vowel, and after the deletion:</p>
+<ul>
+<li>if the word ends at, bl or iz add e (so luxuriat -&gt; luxuriate), or</li>
+<li>if the word ends with a double remove the last letter (so hopp -&gt; hop),
+or if the word is short, add e (so hop -&gt; hope)</li>
+</ul>
 </section>
 
-        
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final Map&lt;String, String&gt; exceptions;
-
-</code></pre>
+  <pre class="language-dart"><code class="language-dart">String step1B(String term) {
+  final e = exception(term);
+  if (e != null) return e;
+  final region1 = term.r1;
+  if ((term.endsWith(&#39;eed&#39;) || term.endsWith(&#39;eedly&#39;))) {
+    if (region1 != null &amp;&amp;
+        (region1.endsWith(&#39;eed&#39;) || region1.endsWith(&#39;eedly&#39;))) {
+      return term.replaceAll(RegExp(r&#39;(?&lt;=[a-z])(eed|eedly)(?=$)&#39;), &#39;ee&#39;);
+    }
+    return term;
+  }
+  if (term.endsWith(&#39;ed&#39;) ||
+      term.endsWith(&#39;ing&#39;) ||
+      term.endsWith(&#39;edly&#39;) ||
+      term.endsWith(&#39;ingly&#39;)) {
+    final stub = term.replaceSuffixes(kStep1BSuffixes);
+    if (RegExp(&#39;$rVowels+&#39;).allMatches(stub).isNotEmpty) {
+      if (stub.endsWith(&#39;at&#39;) ||
+          stub.endsWith(&#39;bl&#39;) ||
+          stub.endsWith(&#39;iz&#39;) ||
+          term.isShortWord) {
+        return &#39;${stub}e&#39;;
+      }
+      if (stub.endsWithDouble) {
+        return stub.substring(0, stub.length - 1);
+      }
+      if (stub.r1 == null &amp;&amp; stub.endsWithShortSyllable) {
+        return &#39;${stub}e&#39;;
+      }
+      return stub;
+    }
+  }
+  return term;
+}</code></pre>
 </section>
 
 
@@ -84,7 +128,7 @@ rather than being processed by the stemmer.</p>
   <li><a href="../../index.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
   <li><a href="../../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
-  <li class="self-crumb">exceptions property</li>
+  <li class="self-crumb">step1B method</li>
 </ol>
 
 

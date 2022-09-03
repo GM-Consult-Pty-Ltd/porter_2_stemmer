@@ -19,23 +19,6 @@ extension _StemmerExtension on String {
   /// word after gener, commun or arsen is removed from the beginning.
   static const kRegion1Exceptions = ['gener', 'commun', 'arsen'];
 
-  /// Look up the String in [kStep1AExceptions] and return the value or null.
-  ///
-  /// Used after [step1A] to deal with the exceptions in
-  /// [kStep1AExceptions.keys].
-  String? step1AException() => kStep1AExceptions[this];
-
-  /// If the String [isIdentifier], it is returned as an exception to
-  /// the algorithm.
-  ///
-  /// The String is looked up in the [kInvariantExceptions] and [exceptions]
-  /// hashmaps and the value (or null) is returned as an exception to
-  /// the algorithm.
-  String? exception(Map<String, String> exceptions) =>
-      kInvariantExceptions[this] ?? exceptions[this];
-
-//Iterable<String> invariantExceptions,
-
   /// Selector that matches any character not a letter, a hyphen
   /// or apostrophe.
   static const rEnglishNonWordChars = "[^a-zA-Z'-]+";
@@ -57,7 +40,8 @@ extension _StemmerExtension on String {
   String? get r1 {
     for (final x in kRegion1Exceptions) {
       if (startsWith(x)) {
-        return replaceFirst(x, '');
+        final retVal = replaceFirst(x, '');
+        return retVal.isEmpty ? null : retVal;
       }
     }
     return RegExp(r'(?<=(' + rVowels + rNotVowels + r'))\w+(?=$)')
@@ -77,203 +61,10 @@ extension _StemmerExtension on String {
     return region2;
   }
 
-  /// Set initial y, or y after a vowel, to Y.
-  ///
-  /// See note on vowel marking at
-  /// http://snowball.tartarus.org/texts/vowelmarking.html
-  String replaceYs() {
-    return replaceFirst(RegExp(r'^y'), 'Y')
-        .replaceAll(RegExp('(?<=$rVowels)(y)'), 'Y');
-  }
-
-  /// Set initial y, or y after a vowel, to Y.
-  ///
-  /// See note on vowel marking at
-  /// http://snowball.tartarus.org/texts/vowelmarking.html
-  String normalizeYs() => replaceAll('Y', 'y');
-
   /// Selector for all single or double quotation marks and apostrophes.
   static const rQuotes = '[\'"“”„‟’‘‛]';
 
-  /// Trims all quotation marks from start and end of String.
-  String removeEnclosingQuotes() => replaceAll(RegExp(r"(^'+)|('+(?=$))"), '');
-
-  /// Replace all forms of apostrophe or quotation mar with U+0027.
-  String normalizeQuotesAndApostrophes() => replaceAll(RegExp(rQuotes), "'");
-
-  /// Remove longest of "'", "'s" or "'s'" from end of term.
-  ///
-  /// The string instance must be in lower case.
-  ///
-  /// An apostrophe (') may be regarded as a letter. See note on apostrophes
-  /// in English (http://snowball.tartarus.org/texts/apostrophe.html).
-  String stepZero() => replaceAll(RegExp(r"(('s')|'|('s))(?=$)"), '');
-
-  /// Search for the longest among the following suffixes, and perform the action
-  /// indicated.
-  ///
-  /// - replace 'sses' with 'ss';
-  /// - replace 'ied' or 'ies' with 'i' if preceded by more than one letter,
-  ///   otherwise by ie (so ties -> tie, cries -> cri);
-  /// - delete 's'  if the preceding word part contains a vowel not
-  ///   immediately before the s (so gas and this retain the s, gaps and
-  ///   kiwis lose it);
-  /// - if the term ends in 'us' or 'ss' do nothing
-  ///
-  /// Following [step1A], leave the following invariant:
-  /// - ['inning', 'outing', 'canning', 'herring', 'earring', 'proceed',
-  ///   'exceed', 'succeed'].
-  String step1A() {
-    if (endsWith('sses')) {
-      return replaceSuffix('sses', 'ss');
-    }
-    if (endsWith('ied') || endsWith('ies')) {
-      final stub = substring(0, length - 3);
-      return stub.length > 1 ? '${stub}i' : '${stub}ie';
-    }
-    // if (endsWith('oes')) {
-    //   return replaceAll(r'oes(?=$)', 'o');
-    // }
-    if (endsWith('us') || endsWith('ss')) {
-      return this;
-    }
-    if (endsWith('s')) {
-      final stub = substring(0, length - 1);
-      final vowelcount = RegExp(rVowels).allMatches(stub).length;
-      // If last letter of stub is vowel return unchanged
-      if (RegExp(rVowels + r'(?=$)').allMatches(stub).isNotEmpty &&
-          vowelcount == 1) {
-        return this;
-      }
-      return RegExp(rVowels).allMatches(stub).isEmpty
-          ? this
-          : substring(0, length - 1);
-    }
-    return this;
-  }
-
-  /// Search for the longest among the following suffixes, and perform the
-  /// action indicated.
-  ///
-  /// If the term ends in 'eed' or 'eedly', replace with 'ee' if the suffix is
-  /// in (non-null) R1.
-  ///
-  /// If term ends in 'ed', 'edly',  'ing' or 'ingly' delete the suffix if
-  /// the preceding word part contains a vowel, and after the deletion:
-  /// - if the word ends at, bl or iz add e (so luxuriat -> luxuriate), or
-  /// - if the word ends with a double remove the last letter (so hopp -> hop),
-  ///   or if the word is short, add e (so hop -> hope)
-  String step1B() {
-    final region1 = r1;
-    if ((endsWith('eed') || endsWith('eedly'))) {
-      if (region1 != null &&
-          (region1.endsWith('eed') || region1.endsWith('eedly'))) {
-        return replaceAll(RegExp(r'(?<=[a-z])(eed|eedly)(?=$)'), 'ee');
-      }
-      return this;
-    }
-    if (endsWith('ed') ||
-        endsWith('ing') ||
-        endsWith('edly') ||
-        endsWith('ingly')) {
-      final stub = replaceSuffixes(kStep1BSuffixes);
-      if (RegExp('$rVowels+').allMatches(stub).isNotEmpty) {
-        if (stub.endsWith('at') ||
-            stub.endsWith('bl') ||
-            stub.endsWith('iz') ||
-            isShortWord) {
-          return '${stub}e';
-        }
-        if (stub.endsWithDouble) {
-          return stub.substring(0, stub.length - 1);
-        }
-        if (stub.r1 == null && stub.endsWithShortSyllable) {
-          return '${stub}e';
-        }
-        return stub;
-      }
-    }
-    return this;
-  }
-
   bool get isShortWord => r1 == null && endsWithShortSyllable;
-
-  static const kStep1BSuffixes = {
-    'ingly': '',
-    'edly': '',
-    'ing': '',
-    'ed': '',
-  };
-
-  /// Replace suffix y or Y by i if preceded by a non-vowel which is not the
-  /// first letter of the word (so cry -> cri, by -> by, say -> say
-  String step1C() => RegExp(r'(?<=\w)' + rNotVowels + r'(?=(ye|y|Y)$)')
-          .allMatches(this)
-          .isNotEmpty
-      ? replaceAll(RegExp(r'(y|Y|ye)(?=$)'), 'i')
-      : this;
-
-  /// Search for the longest among [kStep2Suffixes.keys], and, if found
-  /// and in [r1], replace with the corresponding value from [kStep2Suffixes].
-  String step2() {
-    final region1 = r1;
-    if (region1 != null) {
-      if (region1.endsWith('ogi') && endsWith('logi')) {
-        return replaceAll(RegExp(r'(logi)(?=$)'), 'log');
-      }
-      final stub = replaceSuffixes(kStep2Suffixes, r1);
-      if (stub.endsWith('li') && (stub.r1?.endsWith('li') ?? false)) {
-        return stub.replaceAll(RegExp(r'(?<=[cdeghkmnrt])(li)(?=$)'), '');
-      }
-      return stub;
-    }
-    return this;
-  }
-
-  /// Search for the longest among [kStep3Suffixes.keys], and, if found
-  /// and in [r1], replace with the corresponding value from [kStep3Suffixes].
-  ///
-  /// If the String ends with 'ative', delete the suffix it is in [r2].
-  String step3() => (r2 ?? '').endsWith('ative')
-      ? replaceSuffix('ative', '')
-      : r1 != null
-          ? replaceSuffixes(kStep3Suffixes, r1)
-          : this;
-
-  /// Search for the longest among [kStep4Suffixes.keys], and, if found
-  /// and in [r2], replace with the corresponding value from [kStep4Suffixes].
-  ///
-  /// If [r2] ends with 'ion', delete the suffix if preceded by 's' or 't'.
-  String step4() {
-    final region2 = r2;
-    if (region2 != null) {
-      if (region2.endsWith('ion') && (endsWith('sion') || endsWith('tion'))) {
-        return replaceSuffix('ion', '');
-      }
-      return replaceSuffixes(kStep4Suffixes, region2);
-    }
-
-    return this;
-  }
-
-  /// Search for the the following suffixes, and, if found:
-  /// - "e": delete if in [r2], or in [r1] and not preceded by a short
-  ///   syllable; or
-  /// - "l": delete if in [r2] and preceded by an "l".
-  String step5() {
-    final region1 = r1;
-    final region2 = r2;
-    if (region1 != null && (endsWith('e') || endsWith('l'))) {
-      final stub = substring(0, length - 1);
-      if (endsWith('e') && !endsWith('ue')) {
-        return (region2 != null || !stub.endsWithShortSyllable) ? stub : this;
-      }
-      return ((region2 ?? '').endsWith('l') && stub.endsWith('l'))
-          ? stub
-          : this;
-    }
-    return this;
-  }
 
   /// If the String ends with any of [suffixes.keys], replace the ending with
   /// [suffixes.values] by calling [replaceSuffix].
@@ -313,7 +104,7 @@ extension _StemmerExtension on String {
   /// Regular expression selector for characters that are vowels.
   static const rVowels = '[aeiouy]';
 
-  /// Regular expression selector for charactyers that are NOT vowels.
+  /// Regular expression selector for characters that are NOT vowels.
   ///
   /// As the term is in lowercase, this also selects all uppercase letters and,
   /// for that matter, any character not in ['a', 'e', 'i', 'o', 'u', 'y'].
@@ -325,92 +116,15 @@ extension _StemmerExtension on String {
   /// Regex string to match String that ends with [rDoubles].
   static const rDoubleEnd = r'(' + rDoubles + r')(?=$)';
 
-  /// Suffix hasmap for Step 2.
-  static const kStep2Suffixes = {
-    'ization': 'ize',
-    'ational': 'ate',
-    'fulness': 'ful',
-    'ousness': 'ous',
-    'iveness': 'ive',
-    'tional': 'tion',
-    'biliti': 'ble',
-    'lessli': 'less',
-    'entli': 'ent',
-    'ation': 'ate',
-    'alism': 'al',
-    'aliti': 'al',
-    'ousli': 'ous',
-    'iviti': 'ive',
-    'fulli': 'ful',
-    'enci': 'ence',
-    'anci': 'ance',
-    'abli': 'able',
-    'izer': 'ize',
-    'ator': 'ate',
-    'alli': 'al',
-    'logi': 'log',
-    'bli': 'ble',
-  };
-
-  /// Suffix hasmap for Step 3.
-  static const kStep3Suffixes = {
-    'ational': 'ate',
-    'tional': 'tion',
-    'alize': 'al',
-    'icate': 'ic',
-    'iciti': 'ic',
-    'ical': 'ic',
-    'ness': '',
-    'ful': '',
-  };
-
-  /// Suffix hasmap for Step 4.
-  static const kStep4Suffixes = {
-    'ement': '',
-    'ance': '',
-    'ence': '',
-    'able': '',
-    'ible': '',
-    'ment': '',
-    'sion': '',
-    'tion': '',
-    'ant': '',
-    'ent': '',
-    'ism': '',
-    'ate': '',
-    'iti': '',
-    'ous': '',
-    'ive': '',
-    'ize': '',
-    'al': '',
-    'er': '',
-    'ic': '',
-  };
-
-  /// Collection of terms that have no stem but do not fit the algorithm.
-  static const kStep1AExceptions = {
-    'inning': 'inning',
-    'proceed': 'proceed',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'herring': 'herring',
-    'earring': 'earring',
-    'outing': 'outing',
-    'exceed': 'exceed',
-    'canning': 'canning',
-    'succeed': 'succeed',
-    'doing': 'do'
-  };
-
-  /// Collection of terms that have no stem but do not fit the algorithm.
-  static const kInvariantExceptions = {
-    'sky': 'sky',
-    'skye': 'skye',
-    'news': 'news',
-    'howe': 'howe',
-    'atlas': 'atlas',
-    'cosmos': 'cosmos',
-    'bias': 'bias',
-    'andes': 'andes',
-  };
+  // /// Collection of terms that have no stem but do not fit the algorithm.
+  // static const kInvariantExceptions = {
+  //   'sky': 'sky',
+  //   'skye': 'skye',
+  //   'news': 'news',
+  //   'howe': 'howe',
+  //   'atlas': 'atlas',
+  //   'cosmos': 'cosmos',
+  //   'bias': 'bias',
+  //   'andes': 'andes',
+  // };
 }
