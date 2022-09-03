@@ -153,17 +153,16 @@ void main() {
 <h2 id="departures-from-snowball-implementation">Departures from Snowball implementation</h2>
 <p>Terms that match the following criteria (after stripping opening/closing quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
 <ul>
-<li>terms that are in all-capitals, e.g. TSLA;</li>
+<li>terms that are in all-capitals, e.g. TSLA; and</li>
 <li>terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.</li>
 </ul>
-<p>This behaviour can be overriden by pre-processing text with a character filter to change terms to lower-case and strip out non-word characters.</p>
+<p>This behaviour can be overriden by pre-processing text with a character filter that converts terms to lower-case and/or strips out non-word characters.</p>
 <p>In this implementation of the English (Porter2) stemming algorithm:</p>
 <ul>
 <li>all quotation marks and apostrophies are converted to a standard single quote character U+0027 (also ASCII hex 27);</li>
-<li>all leading and trailing quotation marks are stripped from the term before processing begins.</li>
-<li>in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu").</li>
-<li>the <code>exceptions</code> and <code>kInvariantExceptions</code> are checked after every step in the algorith
-to ensure exceptions are not missed at intermediate steps.</li>
+<li>all leading and trailing quotation marks are stripped from the term before processing begins;</li>
+<li>in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu"); and</li>
+<li>the <code>exceptions</code> and <code>kInvariantExceptions</code> are checked after every step in the algorith to ensure exceptions are not missed at intermediate steps.</li>
 </ul>
 <p>Additional default exceptions have been implemented as follows in the <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>:</p>
 <pre class="language-dart"><code class="language-dart">
@@ -214,11 +213,8 @@ to ensure exceptions are not missed at intermediate steps.</li>
 </code></pre>
 <h2 id="validation">Validation</h2>
 <p>A validator test is included in the repository as part of the <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test">test folder</a>.</p>
-<p>The 'Porter2Stemmer: VALIDATOR' test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that
-contains 29,417 term/stem pairs.</p>
-<p>As of <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the
-sample (Snowball) vocabulary. Taking into account the differences in implementation, this 
-increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:</p>
+<p>The 'Porter2Stemmer: VALIDATOR' test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that contains 29,417 term/stem pairs.</p>
+<p>As of <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:</p>
 <ul>
 <li>"congeners" =&gt; "congener" (expected "congen");</li>
 <li>"fluently" =&gt; "fluent" (expected "fluentli");</li>
@@ -276,7 +272,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.9
+      0.0.10
   </span>
 
   

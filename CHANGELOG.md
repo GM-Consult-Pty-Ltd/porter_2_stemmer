@@ -39,4 +39,9 @@ All rights reserved.
 
 ## 0.0.9
 
-- Code clean-up and changes to docs
+- Code clean-up
+- Changes to documentation
+
+## 0.0.10
+
+- Changes to docs
