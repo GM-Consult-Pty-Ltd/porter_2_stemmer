@@ -71,7 +71,11 @@ extension _StemmerExtension on String {
   /// Is equivalent to [r1?.r1].
   ///
   /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
-  String? get r2 => r1?.r1;
+  String? get r2 {
+    final region1 = r1;
+    final region2 = region1?.r1;
+    return region2;
+  }
 
   /// Set initial y, or y after a vowel, to Y.
   ///
@@ -158,16 +162,18 @@ extension _StemmerExtension on String {
   ///   or if the word is short, add e (so hop -> hope)
   String step1B() {
     final region1 = r1;
-    if (region1 != null &&
-        (region1.endsWith('eed') || region1.endsWith('eedly'))) {
-      return replaceAll(RegExp(r'(?<=[a-z])(eed|eedly)(?=$)'), 'ee');
+    if ((endsWith('eed') || endsWith('eedly'))) {
+      if (region1 != null &&
+          (region1.endsWith('eed') || region1.endsWith('eedly'))) {
+        return replaceAll(RegExp(r'(?<=[a-z])(eed|eedly)(?=$)'), 'ee');
+      }
+      return this;
     }
     if (endsWith('ed') ||
         endsWith('ing') ||
         endsWith('edly') ||
         endsWith('ingly')) {
-      final stub =
-          replaceAll(RegExp(r'(?<=[a-z])(ed|edly|ing|ingly)(?=$)'), '');
+      final stub = replaceSuffixes(kStep1BSuffixes);
       if (RegExp('$rVowels+').allMatches(stub).isNotEmpty) {
         if (stub.endsWith('at') || stub.endsWith('bl') || stub.endsWith('iz')) {
           return '${stub}e';
@@ -184,6 +190,13 @@ extension _StemmerExtension on String {
     return this;
   }
 
+  static const kStep1BSuffixes = {
+    'ingly': '',
+    'edly': '',
+    'ing': '',
+    'ed': '',
+  };
+
   /// Replace suffix y or Y by i if preceded by a non-vowel which is not the
   /// first letter of the word (so cry -> cri, by -> by, say -> say
   String step1C() =>
@@ -193,12 +206,22 @@ extension _StemmerExtension on String {
 
   /// Search for the longest among [kStep2Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep2Suffixes].
-  String step2() => r1 != null ? replaceSuffixes(kStep2Suffixes, r1) : this;
+  String step2() {
+    final region1 = r1;
+    if (region1 != null) {
+      final stub = replaceSuffixes(kStep2Suffixes, r1);
+      if (stub.endsWith('li')) {
+        return stub.replaceAll(RegExp(r'(?<=[cdeghkmnrt])(li)(?=$)'), '');
+      }
+      return stub;
+    }
+    return this;
+  }
 
   /// Search for the longest among [kStep3Suffixes.keys], and, if found
   /// and in [r1], replace with the corresponding value from [kStep3Suffixes].
   ///
-  /// If the String ends with 'ative', delete the suffix if [r2] is not null.
+  /// If the String ends with 'ative', delete the suffix it is in [r2].
   String step3() => (r2 ?? '').endsWith('ative')
       ? replaceSuffix('ative', '')
       : r1 != null
@@ -206,7 +229,7 @@ extension _StemmerExtension on String {
           : this;
 
   /// Search for the longest among [kStep4Suffixes.keys], and, if found
-  /// and in [r1], replace with the corresponding value from [kStep4Suffixes].
+  /// and in [r2], replace with the corresponding value from [kStep4Suffixes].
   ///
   /// If [r2] ends with 'ion', delete the suffix if preceded by 's' or 't'.
   String step4() {
@@ -312,16 +335,6 @@ extension _StemmerExtension on String {
     'alli': 'al',
     'logi': 'log',
     'bli': 'ble',
-    'cli': 'c',
-    'dli': 'd',
-    'eli': 'e',
-    'gli': 'g',
-    'hli': 'h',
-    'kli': 'k',
-    'mli': 'm',
-    'nli': 'n',
-    'rli': 'r',
-    'tli': 't',
   };
 
   /// Suffix hasmap for Step 3.
@@ -338,16 +351,15 @@ extension _StemmerExtension on String {
 
   /// Suffix hasmap for Step 4.
   static const kStep4Suffixes = {
-    'al': '',
+    'ement': '',
     'ance': '',
     'ence': '',
-    'er': '',
-    'ic': '',
     'able': '',
     'ible': '',
-    'ant': '',
-    'ement': '',
     'ment': '',
+    'sion': '',
+    'tion': '',
+    'ant': '',
     'ent': '',
     'ism': '',
     'ate': '',
@@ -355,8 +367,9 @@ extension _StemmerExtension on String {
     'ous': '',
     'ive': '',
     'ize': '',
-    'sion': '',
-    'tion': '',
+    'al': '',
+    'er': '',
+    'ic': '',
   };
 
   /// Collection of terms that have no stem but do not fit the algorithm.

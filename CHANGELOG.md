@@ -25,4 +25,8 @@ All rights reserved.
 
 ## 0.0.5
 
-- Bug fix, replaced "Y" with "y"
+- Improved accuracy to 97.1%
+
+## 0.0.6
+
+- Improved accuracy to 98.7%

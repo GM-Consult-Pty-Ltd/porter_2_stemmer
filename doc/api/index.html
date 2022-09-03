@@ -53,6 +53,8 @@ All rights reserved.
 -->
 <h1 id="porter_2_stemmer">porter_2_stemmer</h1>
 <p>DART implementation of the <a href="https://snowballstem.org/algorithms/">Porter Stemming Algorithm</a>, used for reducing a word to its word stem, base or root form.</p>
+<p>This implementation achieves 98.7% success rate when applied to the
+sample <a href="http://snowball.tartarus.org/algorithms/english/diffs.txt">vocabulary</a> of 29,417 terms. We are aiming to improve on this with each version.</p>
 <h2 id="what-is-the-porter-stemming-algorithm">What is the Porter Stemming Algorithm?</h2>
 <p>The Porter Stemming Algorithm (or 'Porter stemmer') is a process for removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up information retrieval systems.</p>
 <p>The English (Porter2) stemming algorithm was developed as part of "Snowball", a small string processing language designed for creating stemming algorithms for use in information retrieval.</p>
@@ -232,7 +234,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.5
+      0.0.6
   </span>
 
   

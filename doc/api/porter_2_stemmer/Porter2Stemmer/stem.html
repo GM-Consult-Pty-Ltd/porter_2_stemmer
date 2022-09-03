@@ -96,7 +96,9 @@ characters to stem the term parts separately.</p>
 
   &#47;&#47; look up any rule exceptions and return it if found.
   &#47;&#47; return terms with no stem unchanged
-  final exception = term.exception(exceptions);
+  var exception = term.exception(exceptions);
+
+  &#47;&#47; return the exception if found
   if (exception != null) {
     return exception;
   }
@@ -111,14 +113,42 @@ characters to stem the term parts separately.</p>
   &#47;&#47; convert the term to lowercase for processing
   term = term.toLowerCase();
 
-  &#47;&#47; start Porter2 algorithm.
-  term = term.replaceYs().step1A();
+  &#47;&#47; set initial y, or y after a vowel, to Y
+  term = term.exception(exceptions) ?? term.replaceYs();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step1A();
 
   &#47;&#47; check for alghorithm exceptions at end of Step 1(a)
-  return term.step1AException() ??
+  exception = term.exception(exceptions) ?? term.step1AException();
 
-      &#47;&#47; continue with Step 1(b) through to to Step 5 and return result.
-      term.step1B().step1C().step2().step3().step4().step5();
+  &#47;&#47; return the exception if found
+  if (exception != null) {
+    return exception;
+  }
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step1B();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step1C();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step2();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step3();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step4();
+
+  &#47;&#47; call Step 1(a)
+  term = term.exception(exceptions) ?? term.step5();
+
+  &#47;&#47; replace all upper-case &quot;Y&quot;s with &quot;y&quot;
+  term = term.exception(exceptions) ?? term.normalizeYs();
+
+  return term.exception(exceptions) ?? term;
 }</code></pre>
 </section>
 
@@ -179,7 +209,7 @@ characters to stem the term parts separately.</p>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.5
+      0.0.6
   </span>
 
   

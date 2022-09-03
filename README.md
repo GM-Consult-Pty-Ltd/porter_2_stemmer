@@ -9,6 +9,9 @@ All rights reserved.
 # porter_2_stemmer
 DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/), used for reducing a word to its word stem, base or root form.
 
+This implementation achieves 98.7% success rate when applied to the
+sample [vocabulary](http://snowball.tartarus.org/algorithms/english/diffs.txt) of 29,417 terms. We are aiming to improve on this with each version.
+
 ## What is the Porter Stemming Algorithm?
 
 The Porter Stemming Algorithm (or 'Porter stemmer') is a process for removing the commoner morphological and inflexional endings from words in English. Its main use is as part of a term normalisation process that is usually done when setting up information retrieval systems.

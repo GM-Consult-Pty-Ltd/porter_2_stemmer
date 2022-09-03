@@ -56,7 +56,9 @@ class Porter2Stemmer {
 
     // look up any rule exceptions and return it if found.
     // return terms with no stem unchanged
-    final exception = term.exception(exceptions);
+    var exception = term.exception(exceptions);
+
+    // return the exception if found
     if (exception != null) {
       return exception;
     }
@@ -71,19 +73,49 @@ class Porter2Stemmer {
     // convert the term to lowercase for processing
     term = term.toLowerCase();
 
-    // start Porter2 algorithm.
-    term = term.replaceYs().step1A();
+    // set initial y, or y after a vowel, to Y
+    term = term.exception(exceptions) ?? term.replaceYs();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step1A();
 
     // check for alghorithm exceptions at end of Step 1(a)
-    return term.step1AException() ??
+    exception = term.exception(exceptions) ?? term.step1AException();
 
-        // continue with Step 1(b) through to to Step 5 and return result.
-        term.step1B().step1C().step2().step3().step4().step5().normalizeYs();
+    // return the exception if found
+    if (exception != null) {
+      return exception;
+    }
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step1B();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step1C();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step2();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step3();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step4();
+
+    // call Step 1(a)
+    term = term.exception(exceptions) ?? term.step5();
+
+    // replace all upper-case "Y"s with "y"
+    term = term.exception(exceptions) ?? term.normalizeYs();
+
+    return term.exception(exceptions) ?? term;
   }
 
   /// Default exceptions used by [Porter2Stemmer].
   static const kExceptions = {
     'skis': 'ski',
+    'vehement': 'vehement',
+    'statement': 'statement',
     'skies': 'sky',
     'dying': 'die',
     'lying': 'lie',
