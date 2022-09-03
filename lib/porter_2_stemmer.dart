@@ -1,5 +1,9 @@
 // BSD 3-Clause License
-// Copyright ©2022, GM Consult (Pty) Ltd. All rights reserved
+// Copyright (c) 2022, GM Consult Pty Ltd
+// All rights reserved.
+
+// Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
+// Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 /// DART implementation of the Porter Stemming Algorithm
 /// (see https://snowballstem.org/algorithms/), used for reducing a word to

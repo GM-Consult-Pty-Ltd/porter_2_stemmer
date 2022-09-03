@@ -1,8 +1,9 @@
 // BSD 3-Clause License
 // Copyright (c) 2022, GM Consult Pty Ltd
-// Copyright (c) 2001, Dr Martin Porter,
-// Copyright (c) 2002, Richard Boulton.
 // All rights reserved.
+
+// Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
+// Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 part 'stemmer.extension.dart';
 
@@ -45,198 +46,27 @@ class Porter2Stemmer {
   /// all-capitals terms is desired. Split terms that contain non-word
   /// characters to stem the term parts separately.
   String stem(String term) {
+    //
+
     // change all forms of apostrophes and quotation marks to [']
-    term = normalizeQuotesAndApostrophes(term);
+    // remove all enclosing quotation marks,
+    // then call step 0.
+    term = step0(removeEnclosingQuotes(normalizeQuotesAndApostrophes(term)));
 
-    // remove all enclosing quotation marks.
-    term = removeEnclosingQuotes(term);
-
-    // remove trailing "'s" (apostrophied s's).
-    term = step0(term);
-
-    // // look up any rule exceptions and return it if found.
-    // // return terms with no stem unchanged
-    // var e = exception(term);
-
-    // // return the exception if found
-    // if (e != null) {
-    //   return e;
-    // }
-
-    // return words in all caps unchanged.
-    // return words with non-word characters  (not [a-z, A-Z, ', and -])
-    // unchanged
+    // check if word is identifier and return if true
     if (term.isIdentifier) {
       return term;
     }
+    // call Step 1(a) after converting to lower-case and performing
+    // y-substitution.
+    term = step1A(replaceYs(term.toLowerCase()));
 
-    // convert the term to lowercase for processing
-    term = term.toLowerCase();
-
-    // set initial y, or y after a vowel, to Y
-    term = replaceYs(term);
-
-    // call Step 1(a)
-    term = step1A(term);
-
-    // check for alghorithm exceptions at end of Step 1(a)
-    final e = step1AException(term);
-
-    // return the exception if found
-    if (e != null) {
-      return e;
-    }
-
-    // call Step 1ba)
-    term = step1B(term);
-
-    // call Step 1(c)
-    term = step1C(term);
-
-    // call Step 2
-    term = step2(term);
-
-    // call Step 3
-    term = step3(term);
-
-    // call Step 4
-    term = step4(term);
-
-    // call Step 5
-    term = step5(term);
-
-    // replace all upper-case "Y"s with "y"
-    term = normalizeYs(term);
-
-    return term;
+    // check for exceptions at end of Step 1(a) and return if found
+    return step1AException(term) ??
+        // else, call steps 1(b) through 5
+        // then replace all upper-case "Y"s with "y"
+        normalizeYs(step5(step4(step3(step2(step1C(step1B(term)))))));
   }
-
-  /// Collection of default exceptions used by [Porter2Stemmer].
-  static const kExceptions = {
-    'skis': 'ski',
-    'skies': 'sky',
-    'dying': 'die',
-    'lying': 'lie',
-    'tying': 'tie',
-    'idly': 'idl',
-    'gently': 'gentl',
-    'singly': 'singl',
-  };
-
-  /// Collection of terms that have no stem at the end of Step 1(a).
-  static const kStep1AExceptions = {
-    'inning': 'inning',
-    'proceed': 'proceed',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'herring': 'herring',
-    'earring': 'earring',
-    'outing': 'outing',
-    'exceed': 'exceed',
-    'canning': 'canning',
-    'succeed': 'succeed',
-    'doing': 'do'
-  };
-
-  /// Collection of terms that have no stem but do not fit the algorithm.
-  static const kInvariantExceptions = {
-    'sky': 'sky',
-    'bye': 'bye',
-    'ugly': 'ugly',
-    'early': 'early',
-    'only': 'only',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'skye': 'skye',
-    'news': 'news',
-    'howe': 'howe',
-    'atlas': 'atlas',
-    'cosmos': 'cosmos',
-    'bias': 'bias',
-    'andes': 'andes',
-  };
-
-  /// Suffix hasmap for Step 1B.
-  static const kStep1BSuffixes = {
-    'ingly': '',
-    'edly': '',
-    'ing': '',
-    'ed': '',
-  };
-
-  /// Suffix hasmap for Step 2.
-  static const kStep2Suffixes = {
-    'ization': 'ize',
-    'ational': 'ate',
-    'fulness': 'ful',
-    'ousness': 'ous',
-    'iveness': 'ive',
-    'tional': 'tion',
-    'biliti': 'ble',
-    'lessli': 'less',
-    'entli': 'ent',
-    'ation': 'ate',
-    'alism': 'al',
-    'aliti': 'al',
-    'ousli': 'ous',
-    'iviti': 'ive',
-    'fulli': 'ful',
-    'enci': 'ence',
-    'anci': 'ance',
-    'abli': 'able',
-    'izer': 'ize',
-    'ator': 'ate',
-    'alli': 'al',
-    'logi': 'log',
-    'bli': 'ble',
-  };
-
-  /// Suffix hasmap for Step 3.
-  static const kStep3Suffixes = {
-    'ational': 'ate',
-    'tional': 'tion',
-    'alize': 'al',
-    'icate': 'ic',
-    'iciti': 'ic',
-    'ical': 'ic',
-    'ness': '',
-    'ful': '',
-  };
-
-  /// Suffix hasmap for Step 4.
-  static const kStep4Suffixes = {
-    'ement': '',
-    'ance': '',
-    'ence': '',
-    'able': '',
-    'ible': '',
-    'ment': '',
-    'sion': '',
-    'tion': '',
-    'ant': '',
-    'ent': '',
-    'ism': '',
-    'ate': '',
-    'iti': '',
-    'ous': '',
-    'ive': '',
-    'ize': '',
-    'al': '',
-    'er': '',
-    'ic': '',
-  };
-
-  /// Regular expression selector for characters that are vowels.
-  static const rVowels = _StemmerExtension.rVowels;
-
-  /// Selector for all single or double quotation marks and apostrophes.
-  static const rQuotes = _StemmerExtension.rQuotes;
-
-  /// Regular expression selector for characters that are NOT vowels.
-  ///
-  /// As the term is in lowercase, this also selects all uppercase letters and,
-  /// for that matter, any character not in ('a', 'e', 'i', 'o', 'u', 'y').
-  static const rNotVowels = _StemmerExtension.rNotVowels;
 
   /// Set initial y, or y after a vowel, to Y.
   ///
@@ -462,16 +292,136 @@ class Porter2Stemmer {
   String? exception(String term) =>
       exceptions[term] ?? kInvariantExceptions[term];
 
-  /// Words starting with any of the following have a different R1 to
-  /// the algorithm.
-  ///
-  /// If the words begins with  (gener, commun or arsen), R1 is the remainder of the
-  /// word after gener, commun or arsen is removed from the beginning.
-  static const kRegion1Exceptions = ['gener', 'commun', 'arsen'];
-
   /// Look up the String in [kStep1AExceptions] and return the value or null.
   ///
   /// Used after [step1A] to deal with the exceptions in [kStep1AExceptions].
   String? step1AException(String term) => kStep1AExceptions[term];
   //
+
+  /// Collection of default exceptions used by [Porter2Stemmer].
+  static const kExceptions = {
+    'skis': 'ski',
+    'skies': 'sky',
+    'dying': 'die',
+    'lying': 'lie',
+    'tying': 'tie',
+    'idly': 'idl',
+    'gently': 'gentl',
+    'singly': 'singl',
+  };
+
+  /// Collection of terms that have no stem at the end of Step 1(a).
+  static const kStep1AExceptions = {
+    'inning': 'inning',
+    'proceed': 'proceed',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
+    'herring': 'herring',
+    'earring': 'earring',
+    'outing': 'outing',
+    'exceed': 'exceed',
+    'canning': 'canning',
+    'succeed': 'succeed',
+    'doing': 'do'
+  };
+
+  /// Collection of terms that have no stem but do not fit the algorithm.
+  static const kInvariantExceptions = {
+    'sky': 'sky',
+    'bye': 'bye',
+    'ugly': 'ugly',
+    'early': 'early',
+    'only': 'only',
+    'goodbye': 'goodbye',
+    'commune': 'commune',
+    'skye': 'skye',
+    'news': 'news',
+    'howe': 'howe',
+    'atlas': 'atlas',
+    'cosmos': 'cosmos',
+    'bias': 'bias',
+    'andes': 'andes',
+  };
+
+  /// Suffix hasmap for Step 1B.
+  static const kStep1BSuffixes = {
+    'ingly': '',
+    'edly': '',
+    'ing': '',
+    'ed': '',
+  };
+
+  /// Suffix hasmap for Step 2.
+  static const kStep2Suffixes = {
+    'ization': 'ize',
+    'ational': 'ate',
+    'fulness': 'ful',
+    'ousness': 'ous',
+    'iveness': 'ive',
+    'tional': 'tion',
+    'biliti': 'ble',
+    'lessli': 'less',
+    'entli': 'ent',
+    'ation': 'ate',
+    'alism': 'al',
+    'aliti': 'al',
+    'ousli': 'ous',
+    'iviti': 'ive',
+    'fulli': 'ful',
+    'enci': 'ence',
+    'anci': 'ance',
+    'abli': 'able',
+    'izer': 'ize',
+    'ator': 'ate',
+    'alli': 'al',
+    'logi': 'log',
+    'bli': 'ble',
+  };
+
+  /// Suffix hasmap for Step 3.
+  static const kStep3Suffixes = {
+    'ational': 'ate',
+    'tional': 'tion',
+    'alize': 'al',
+    'icate': 'ic',
+    'iciti': 'ic',
+    'ical': 'ic',
+    'ness': '',
+    'ful': '',
+  };
+
+  /// Suffix hasmap for Step 4.
+  static const kStep4Suffixes = {
+    'ement': '',
+    'ance': '',
+    'ence': '',
+    'able': '',
+    'ible': '',
+    'ment': '',
+    'sion': '',
+    'tion': '',
+    'ant': '',
+    'ent': '',
+    'ism': '',
+    'ate': '',
+    'iti': '',
+    'ous': '',
+    'ive': '',
+    'ize': '',
+    'al': '',
+    'er': '',
+    'ic': '',
+  };
+
+  /// Regular expression selector for characters that are vowels.
+  static const rVowels = _StemmerExtension.rVowels;
+
+  /// Selector for all single or double quotation marks and apostrophes.
+  static const rQuotes = _StemmerExtension.rQuotes;
+
+  /// Regular expression selector for characters that are NOT vowels.
+  ///
+  /// As the term is in lowercase, this also selects all uppercase letters and,
+  /// for that matter, any character not in ('a', 'e', 'i', 'o', 'u', 'y').
+  static const rNotVowels = _StemmerExtension.rNotVowels;
 }

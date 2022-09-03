@@ -56,7 +56,7 @@ All rights reserved.
 <h2 id="install">Install</h2>
 <p>In the <code>pubspec.yaml</code> of your flutter project, add the following dependency:</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
-  porter_2_stemmer: &lt;latest_version&gt;
+  porter_2_stemmer: [latest version](https://pub.dev/packages/porter_2_stemmer/changelog)
 </code></pre>
 <p>In your library add the following import:</p>
 <pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
@@ -151,19 +151,21 @@ void main() {
 <p>The English (Porter2) stemming algorithm implemented in <code>Porter2Stemmer</code> was developed as part of "Snowball", a small string processing language designed for creating stemming algorithms for use in information retrieval.</p>
 <p>The Porter Stemming Algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.</p>
 <h2 id="departures-from-snowball-implementation">Departures from Snowball implementation</h2>
-<p>In this implementation of the English (Porter2) stemming algorithm:</p>
-<ul>
-<li>all quotation marks and apostrophies are converted to a standard single quote character U+0027 (also ASCII hex 27);</li>
-<li>all leading and trailing quotation marks are stripped from the term before processing begins.</li>
-<li>in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu").</li>
-</ul>
-<p>Terms that match the following criteria (after stripping quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
+<p>Terms that match the following criteria (after stripping opening/closing quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
 <ul>
 <li>terms that are in all-capitals, e.g. TSLA;</li>
 <li>terms that contain any non-word characters (anything other than letters, apostrophes and hyphens), e.g. apple.com, alibaba:xnys.</li>
 </ul>
 <p>This behaviour can be overriden by pre-processing text with a character filter to change terms to lower-case and strip out non-word characters.</p>
-<p>The default exceptions are:</p>
+<p>In this implementation of the English (Porter2) stemming algorithm:</p>
+<ul>
+<li>all quotation marks and apostrophies are converted to a standard single quote character U+0027 (also ASCII hex 27);</li>
+<li>all leading and trailing quotation marks are stripped from the term before processing begins.</li>
+<li>in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu").</li>
+<li>the <code>exceptions</code> and <code>kInvariantExceptions</code> are checked after every step in the algorith
+to ensure exceptions are not missed at intermediate steps.</li>
+</ul>
+<p>Additional default exceptions have been implemented as follows in the <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>:</p>
 <pre class="language-dart"><code class="language-dart">
   /// Collection of default exceptions used by [Porter2Stemmer].
   static const kExceptions = {
@@ -214,7 +216,7 @@ void main() {
 <p>A validator test is included in the repository as part of the <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test">test folder</a>.</p>
 <p>The 'Porter2Stemmer: VALIDATOR' test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that
 contains 29,417 term/stem pairs.</p>
-<p>As of &lt;latest_version&gt;, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the
+<p>As of <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the
 sample (Snowball) vocabulary. Taking into account the differences in implementation, this 
 increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:</p>
 <ul>
@@ -223,12 +225,8 @@ increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:</p>
 <li>"harkye" =&gt; "harki" (expected "harky"); and</li>
 <li>"lookye" =&gt; "looki" (expected "looky").</li>
 </ul>
-<h2 id="contributions">Contributions</h2>
-<p>Feel free to contribute to this project:</p>
-<ul>
-<li>If you find a bug or want a feature, but don't know how to fix/implement it, please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.</li>
-<li>If you fixed a bug or implemented a feature, please send a <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/pulls">pull request</a>.</li>
-</ul>
+<h2 id="issues">Issues</h2>
+<p>If you find a bug please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.</p>
 <p>This project is a supporting package for a revenue project that has priority call on resources, so please be patient if we don't respond immediately to issues or pull requests.</p>
 </section>
 
@@ -278,7 +276,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.8
+      0.0.9
   </span>
 
   

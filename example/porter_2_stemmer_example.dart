@@ -1,3 +1,7 @@
+// BSD 3-Clause License
+// Copyright (c) 2022, GM Consult Pty Ltd
+// All rights reserved.
+
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
 void main() {

@@ -1,12 +1,13 @@
 # BSD 3-Clause License
 # Copyright (c) 2022, GM Consult Pty Ltd
-# Copyright (c) 2001, Dr Martin Porter,
-# Copyright (c) 2002, Richard Boulton.
 # All rights reserved.
+
+# Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
+# Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 name: porter_2_stemmer
 description: DART implementation of the Porter stemming algorithm, used for reducing a word to its word stem, base or root form.
-version: 0.0.8
+version: 0.0.9
 repository: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer
 homepage: https://github.com/GM-Consult-Pty-Ltd
 issue_tracker: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues

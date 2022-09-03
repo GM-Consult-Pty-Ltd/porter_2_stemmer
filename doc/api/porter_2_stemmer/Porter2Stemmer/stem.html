@@ -85,70 +85,26 @@ characters to stem the term parts separately.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String stem(String term) {
+  &#47;&#47;
+
   &#47;&#47; change all forms of apostrophes and quotation marks to [&#39;]
-  term = normalizeQuotesAndApostrophes(term);
+  &#47;&#47; remove all enclosing quotation marks,
+  &#47;&#47; then call step 0.
+  term = step0(removeEnclosingQuotes(normalizeQuotesAndApostrophes(term)));
 
-  &#47;&#47; remove all enclosing quotation marks.
-  term = removeEnclosingQuotes(term);
-
-  &#47;&#47; remove trailing &quot;&#39;s&quot; (apostrophied s&#39;s).
-  term = step0(term);
-
-  &#47;&#47; &#47;&#47; look up any rule exceptions and return it if found.
-  &#47;&#47; &#47;&#47; return terms with no stem unchanged
-  &#47;&#47; var e = exception(term);
-
-  &#47;&#47; &#47;&#47; return the exception if found
-  &#47;&#47; if (e != null) {
-  &#47;&#47;   return e;
-  &#47;&#47; }
-
-  &#47;&#47; return words in all caps unchanged.
-  &#47;&#47; return words with non-word characters  (not [a-z, A-Z, &#39;, and -])
-  &#47;&#47; unchanged
+  &#47;&#47; check if word is identifier and return if true
   if (term.isIdentifier) {
     return term;
   }
+  &#47;&#47; call Step 1(a) after converting to lower-case and performing
+  &#47;&#47; y-substitution.
+  term = step1A(replaceYs(term.toLowerCase()));
 
-  &#47;&#47; convert the term to lowercase for processing
-  term = term.toLowerCase();
-
-  &#47;&#47; set initial y, or y after a vowel, to Y
-  term = replaceYs(term);
-
-  &#47;&#47; call Step 1(a)
-  term = step1A(term);
-
-  &#47;&#47; check for alghorithm exceptions at end of Step 1(a)
-  final e = step1AException(term);
-
-  &#47;&#47; return the exception if found
-  if (e != null) {
-    return e;
-  }
-
-  &#47;&#47; call Step 1ba)
-  term = step1B(term);
-
-  &#47;&#47; call Step 1(c)
-  term = step1C(term);
-
-  &#47;&#47; call Step 2
-  term = step2(term);
-
-  &#47;&#47; call Step 3
-  term = step3(term);
-
-  &#47;&#47; call Step 4
-  term = step4(term);
-
-  &#47;&#47; call Step 5
-  term = step5(term);
-
-  &#47;&#47; replace all upper-case &quot;Y&quot;s with &quot;y&quot;
-  term = normalizeYs(term);
-
-  return term;
+  &#47;&#47; check for exceptions at end of Step 1(a) and return if found
+  return step1AException(term) ??
+      &#47;&#47; else, call steps 1(b) through 5
+      &#47;&#47; then replace all upper-case &quot;Y&quot;s with &quot;y&quot;
+      normalizeYs(step5(step4(step3(step2(step1C(step1B(term)))))));
 }</code></pre>
 </section>
 
@@ -212,7 +168,6 @@ characters to stem the term parts separately.</p>
         <li class="section-title"><a href="../../porter_2_stemmer/Porter2Stemmer-class.html#constants">Constants</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">kExceptions</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2Stemmer/kRegion1Exceptions-constant.html">kRegion1Exceptions</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
           <li><a href="../../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
@@ -233,7 +188,7 @@ characters to stem the term parts separately.</p>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      0.0.8
+      0.0.9
   </span>
 
   
