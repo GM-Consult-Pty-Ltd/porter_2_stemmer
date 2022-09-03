@@ -82,6 +82,12 @@ extension _StemmerExtension on String {
         .replaceAll(RegExp('(?<=$rVowels)(y)'), 'Y');
   }
 
+  /// Set initial y, or y after a vowel, to Y.
+  ///
+  /// See note on vowel marking at
+  /// http://snowball.tartarus.org/texts/vowelmarking.html
+  String normalizeYs() => replaceAll('Y', 'y');
+
   /// Selector for all single or double quotation marks and apostrophes.
   static const rQuotes = '[\'"“”„‟’‘‛]';
 
@@ -227,7 +233,7 @@ extension _StemmerExtension on String {
       }
       return ((r2 ?? '').endsWith('l') && stub.endsWith('l')) ? stub : this;
     }
-    return replaceAll(RegExp(r'(?<=[a-zY])(Y)'), 'y');
+    return this;
   }
 
   /// If the String ends with any of [suffixes.keys], replace the ending with

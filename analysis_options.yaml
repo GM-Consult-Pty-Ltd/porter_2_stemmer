@@ -20,7 +20,7 @@ linter:
 
 analyzer:
   exclude: 
-    # - test/vocabulary.dart
+    - test/data/**
   language:
     # strict-casts: true
     # strict-raw-types: true    

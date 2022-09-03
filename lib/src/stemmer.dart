@@ -78,7 +78,7 @@ class Porter2Stemmer {
     return term.step1AException() ??
 
         // continue with Step 1(b) through to to Step 5 and return result.
-        term.step1B().step1C().step2().step3().step4().step5();
+        term.step1B().step1C().step2().step3().step4().step5().normalizeYs();
   }
 
   /// Default exceptions used by [Porter2Stemmer].
