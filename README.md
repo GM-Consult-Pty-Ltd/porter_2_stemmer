@@ -134,7 +134,7 @@ Terms that match the following criteria (after stripping opening/closing quotati
 This behaviour can be overriden by pre-processing text with a character filter that converts terms to lower-case and/or strips out non-word characters.
 
 In this implementation of the English (Porter2) stemming algorithm:
-* all quotation marks and apostrophies are converted to a standard single quote character U+0027 (also ASCII hex 27); 
+* all quotation marks and apostrophies are converted to the standard single quote character U+0027; 
 * all leading and trailing quotation marks are stripped from the term before processing begins;
 * in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu"); and
 * the `exceptions` and `kInvariantExceptions` are checked after every step in the algorith to ensure exceptions are not missed at intermediate steps.
@@ -191,11 +191,11 @@ Additional default exceptions have been implemented as follows in the [latest ve
 
 ## Validation
 
-A validator test is included in the repository as part of the [test folder](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test). 
+A validator test is included in the repository [test folder](https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test). 
 
-The 'Porter2Stemmer: VALIDATOR' test iterates through a hashmap of [terms](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) to expected [stems](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt) that contains 29,417 term/stem pairs.
+The <Porter2Stemmer: VALIDATOR> test iterates through a hashmap of [terms](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) to expected [stems](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt) that contains 29,417 term/stem pairs.
 
-As of [latest version](https://pub.dev/packages/porter_2_stemmer/changelog), the `Porter2Stemmer` achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4/29,417 terms. The failed stems are:
+As of version 0.0.9, the `Porter2Stemmer` achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:
 
 * "congeners" => "congener" (expected "congen");
 * "fluently" => "fluent" (expected "fluentli");
