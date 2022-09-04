@@ -44,4 +44,8 @@ All rights reserved.
 
 ## 0.0.10
 
-- Changes to docs
+- Changes to documentation
+
+## 0.0.11
+
+- Changes to documentation
