@@ -49,3 +49,7 @@ All rights reserved.
 ## 0.0.11
 
 - Changes to documentation
+
+## 0.0.12
+
+- Changes to documentation
