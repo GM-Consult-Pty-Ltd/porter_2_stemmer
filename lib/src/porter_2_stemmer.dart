@@ -5,7 +5,7 @@
 // Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
-part 'stemmer.extension.dart';
+part 'porter_2_stemmer.extension.dart';
 
 /// DART implementation of the Porter Stemming Algorithm
 /// (see https://snowballstem.org/algorithms/), used for reducing a word to
