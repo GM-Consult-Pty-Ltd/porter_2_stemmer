@@ -40,7 +40,7 @@ class Porter2Stemmer {
   ///
   /// Terms that match a key in [exceptions] (after stripping quotation marks
   /// and possessive apostrophy "s") are stemmed by returning the corresponding
-  /// value from [exceptions.]
+  /// value from [exceptions].
   ///
   /// Terms may be converted to lowercase before processing if stemming of
   /// all-capitals terms is desired. Split terms that contain non-word

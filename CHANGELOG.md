@@ -4,52 +4,79 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
-## 0.0.1
+### 1.0.0+2
 
-- Initial version.
-
-## 0.0.2
-
-- Minor change to handling of exceptions to algorithm.
+- **STABLE RELEASE CANDIATE**
 - Updated documentation.
 
-## 0.0.3
+### 1.0.0+1
 
-- Updated examples.
+- **STABLE RELEASE CANDIATE**
+- Updated documentation.
 
-## 0.0.4
+### 1.0.0
 
-- Updated examples.
+- **STABLE RELEASE CANDIATE**
+- Updated documentation.
 
-## 0.0.5
+### 0.0.12
 
-- Improved accuracy to 97.1%
+- **PRE-RELEASE**
+- Updated documentation.
 
-## 0.0.6
+### 0.0.11
 
-- Improved accuracy to 98.7%
+- **PRE-RELEASE**
+- Updated documentation.
 
-## 0.0.7
+### 0.0.10
 
-- Minor bug fix to README.md
+- **PRE-RELEASE**
+- Updated documentation.
 
-## 0.0.8
+### 0.0.9
 
+- **PRE-RELEASE**
+- Code clean-up
+- Updated documentation.
+
+### 0.0.8
+
+- **PRE-RELEASE**
 - Improved implemented accuracy to 99.99%
 
-## 0.0.9
+### 0.0.7
 
-- Code clean-up
-- Changes to documentation
+- **PRE-RELEASE**
+- Updated documentation.
 
-## 0.0.10
+### 0.0.6
 
-- Changes to documentation
+- **PRE-RELEASE**
+- Improved accuracy to 98.7%
 
-## 0.0.11
+### 0.0.5
 
-- Changes to documentation
+- **PRE-RELEASE**
+- Improved accuracy to 97.1%
 
-## 0.0.12
+### 0.0.4
 
-- Changes to documentation
+- **PRE-RELEASE**
+- Updated examples.
+
+### 0.0.3
+
+- **PRE-RELEASE**
+- Updated examples.
+
+### 0.0.2
+
+- **PRE-RELEASE, BREAKING CHANGES**
+- BREAKING CHANGE: Changed handling of exceptions to algorithm.
+- Updated documentation.
+
+### 0.0.1
+
+- **PRE-RELEASE**
+- Initial version.

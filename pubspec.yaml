@@ -7,7 +7,7 @@
 
 name: porter_2_stemmer
 description: DART implementation of the Porter stemming algorithm, used for reducing a word to its word stem, base or root form.
-version: 0.0.12
+version: 1.0.0+2
 repository: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer
 homepage: https://github.com/GM-Consult-Pty-Ltd
 issue_tracker: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues
