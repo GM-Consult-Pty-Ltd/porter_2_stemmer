@@ -4,6 +4,11 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
+### 1.0.0+4
+
+- **STABLE RELEASE CANDIDATE**
+- Updated exports.
+
 ### 1.0.0+3
 
 - **STABLE RELEASE CANDIDATE**

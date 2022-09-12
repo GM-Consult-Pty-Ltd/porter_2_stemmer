@@ -7,7 +7,7 @@
 
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-part of 'stemmer.dart';
+part of 'porter_2_stemmer.dart';
 
 /// Private extension functions on [String] called by [Porter2Stemmer].
 extension _StemmerExtension on String {
