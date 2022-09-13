@@ -53,72 +53,21 @@ All rights reserved.
 -->
 <h1 id="porter_2_stemmer">porter_2_stemmer</h1>
 <p>DART implementation of the <a href="https://snowballstem.org/algorithms/english/stemmer.html">Porter Stemming Algorithm</a>, used for reducing a word to its word stem, base or root form.</p>
-<h2 id="objective">Objective</h2>
-<p>The objective of this package is to provide an English language <code>stemmer</code> utility class and string extension by implementing the English (Porter2) stemming algorithm.</p>
-<p>The Porter Stemming Algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.</p>
-<p>The design of the package is consistent with <a href="https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf">information retrieval theory</a>.</p>
-<p>As of version 1.0.0, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.</p>
-<h2 id="definitions">Definitions</h2>
-<p>The following definitions are used throughout the <a href="https://pub.dev/documentation/text_indexing/latest/">documentation</a>:</p>
+<p>Skip to section:</p>
 <ul>
-<li><code>corpus</code>- the collection of <code>documents</code> for which an <code>index</code> is maintained.</li>
-<li><code>document</code> - a record in the <code>corpus</code>, that has a unique identifier (<code>docId</code>) in the <code>corpus</code>'s primary key and that contains one or more text fields that are indexed.</li>
-<li><code>lemmatizer</code> - lemmatisation (or lemmatization) in linguistics is the process of grouping together the inflected forms of a word so they can be analysed as a single item, identified by the word's lemma, or dictionary form (from <a href="https://en.wikipedia.org/wiki/Lemmatisation">Wikipedia</a>).</li>
-<li><code>Porter2 stemming algorithm</code> - a English language <code>stemmer</code> developed as part of <a href="https://snowballstem.org/">"Snowball"</a>, a small string processing language designed for creating stemming algorithms for use in information retrieval.</li>
-<li><code>term</code> - a word or phrase that is indexed from the <code>corpus</code>. The <code>term</code> may differ from the actual word used in the corpus depending on the <code>tokenizer</code> used.</li>
-<li><code>stemmer</code> -  stemming is the process of reducing inflected (or sometimes derived) words to their word stem, base or root form—generally a written word form (from <a href="https://en.wikipedia.org/wiki/Stemming">Wikipedia</a>).</li>
-<li><code>text</code> - the indexable content of a <code>document</code>.</li>
-<li><code>token</code> - representation of a <code>term</code> in a text source returned by a <code>tokenizer</code>. The token may include information about the <code>term</code> such as its position(s) in the text or frequency of occurrence.</li>
-<li><code>tokenizer</code> - a function that returns a collection of <code>token</code>s from <code>text</code>, after applying a character filter, <code>term</code> filter, <code>stemmer</code> and / or <code>lemmatizer</code>.</li>
-<li><code>vocabulary</code> - the collection of <code>terms</code> indexed from the <code>corpus</code>.</li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#issues">Issues</a></li>
 </ul>
-<h2 id="implementation">Implementation</h2>
-<p>This package provides the <code>Porter2Stemmer</code>, an English language <code>stemmer</code> utility class and the  <code>Porter2StemmerExtension</code> String extension.</p>
-<h3 id="class-porter2stemmerstemporter2">class <code>Porter2Stemmer.stemPorter2</code></h3>
-<p>The <code>Porter2Stemmer</code> class exposes the <code>Porter2Stemmer.stem</code> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>. Each of the five stemmer steps is implemented as public function that takes a term as parameter and returns a manipulated String after applying the step algorithm. The steps may therefore be overriden in sub-classes.</p>
-<p>Terms that match the following criteria (after stripping quotation marks and possessive apostrophy "s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
-<ul>
-<li>terms that are in all-capitals, e.g. TSLA;</li>
-<li>terms that contain any non-word characters (anything other than letters,  apostrophes and hyphens), e.g. apple.com, alibaba:xnys</li>
-</ul>
-<p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy "s") are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
-<p>Terms may be converted to lowercase before processing if stemming of all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.</p>
-<p>The algorithm steps are described fully <a href="https://snowballstem.org/algorithms/english/stemmer.html">here</a>.</p>
-<h3 id="extension-porter2stemmerextension-on-string">extension <code>Porter2StemmerExtension</code> on <code>String</code></h3>
-<p>The <code>Porter2StemmerExtension</code> extension provides an extension method <code>String.stemPorter2</code> that reduces a term to its word stem, base or root form using the <code>Porter2 (English) stemming algorithm</code>.</p>
-<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <code>Porter2Stemmer.kExceptions</code>.</p>
-<p>This extension method is a shortcut to <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> method.</p>
-<h2 id="usage">Usage</h2>
-<p>A String extension is provided, and is the simplest way to get stemming.</p>
-<pre class="language-dart"><code class="language-dart">final stem = term.stemPorter2();
-</code></pre>
-<p>To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value).</p>
-<p>The code below instantiates a Porter2Stemmer instance, passing in a custom exception for the term "TSLA".</p>
-<pre class="language-dart"><code class="language-dart">
-  // Preserve the default exceptions.
-  final exceptions = Map&lt;String, String&gt;.from(Porter2Stemmer.kExceptions);
-
-  // Add a custom exception for "TSLA".
-  exceptions['TSLA'] = 'tesla';
-
-  // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
-  final stemmer = Porter2Stemmer(exceptions: exceptions);
-
-  // Get the stem for the [term].
-  final stem = stemmer.stem(term);
-
-</code></pre>
-<h3 id="install">Install</h3>
-<p>In the <code>pubspec.yaml</code> of your flutter project, add the following dependency:</p>
-<pre class="language-yaml"><code class="language-yaml">dependencies:
-  porter_2_stemmer: ^1.0.0
-</code></pre>
-<p>In your library add the following import:</p>
-<pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
-</code></pre>
-<h3 id="examples">Examples</h3>
-<p><a href="https://pub.dev/packages/porter_2_stemmer/example">Examples</a> are provided for both the extension method and the class method with custom exceptions.</p>
-<h2 id="departures-from-snowball-implementation">Departures from Snowball implementation</h2>
+<h2 id="overview">Overview</h2>
+<p>This library is a DART implementation of the popular <a href="https://snowballstem.org/algorithms/english/stemmer.html">"Porter" English stemming algorithm</a> for use in information retrieval applications. It exports the <a href="#porter2stemmer-class">Porter2Stemmer</a> class, and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension,</p>
+<p>The Porter stemming algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.</p>
+<p>As of version 1.0.0, the <a href="#porter2stemmer-class">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.</p>
+<p>Refer to the <a href="#references">references</a> to learn more about the theory behind information retrieval systems.</p>
+<h3 id="departures-from-snowball-implementation">Departures from Snowball implementation</h3>
 <p>Terms that match the following criteria (after stripping opening/closing quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
 <ul>
 <li>terms that are in all-capitals, e.g. TSLA; and</li>
@@ -179,28 +128,86 @@ All rights reserved.
     'doing': 'do'
   };
 </code></pre>
-<h2 id="validation">Validation</h2>
+<h3 id="validation">Validation</h3>
 <p>A validator test is included in the repository <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test">test folder</a>.</p>
 <p>The <code>Porter2Stemmer: VALIDATOR</code> test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that contains 29,417 term/stem pairs.</p>
-<p>As of version 1.0.0, the <code>Porter2Stemmer</code> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:</p>
+<p>As of version 1.0.0, the <a href="#porter2stemmer-class">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:</p>
 <ul>
 <li>"congeners" =&gt; "congener" (expected "congen");</li>
 <li>"fluently" =&gt; "fluent" (expected "fluentli");</li>
 <li>"harkye" =&gt; "harki" (expected "harky"); and</li>
 <li>"lookye" =&gt; "looki" (expected "looky").</li>
 </ul>
-<h2 id="issues">Issues</h2>
-<p>If you find a bug please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.</p>
-<p>This project is a supporting package for a revenue project that has priority call on resources, so please be patient if we don't respond immediately to issues or pull requests.</p>
+<h2 id="api">API</h2>
+<p>The <a href="https://pub.dev/documentation/porter_2_stemmer/latest/">API</a> exposes the <a href="#porter2stemmer-class">Porter2Stemmer class</a>, an English language <code>stemmer</code> utility class and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension.</p>
+<h3 id="porter2stemmer-class">Porter2Stemmer Class</h3>
+<p>The <code>Porter2Stemmer</code> class exposes the <code>Porter2Stemmer.stem</code> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>. Each of the five stemmer steps is implemented as public function that takes a term as parameter and returns a manipulated String after applying the step algorithm. The steps may therefore be overriden in sub-classes.</p>
+<p>Terms that match the following criteria (after stripping quotation marks and possessive apostrophy "s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
+<ul>
+<li>terms that are in all-capitals, e.g. TSLA;</li>
+<li>terms that contain any non-word characters (anything other than letters,  apostrophes and hyphens), e.g. apple.com, alibaba:xnys</li>
+</ul>
+<p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy <code>'s</code>) are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
+<p>Terms may be converted to lowercase before processing if stemming of all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.</p>
+<p>The algorithm steps are described fully <a href="https://snowballstem.org/algorithms/english/stemmer.html">here</a>.</p>
+<h3 id="porter2stemmerextension-extension">Porter2StemmerExtension Extension</h3>
+<p>The <code>Porter2StemmerExtension</code> extension provides an extension method <code>String.stemPorter2</code> that reduces a term to its word stem, base or root form using the <code>Porter2 (English) stemming algorithm</code>.</p>
+<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <code>Porter2Stemmer.kExceptions</code>.</p>
+<p>This extension method is a shortcut to <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> method.</p>
+<h2 id="usage">Usage</h2>
+<p>In the <code>pubspec.yaml</code> of your flutter project, add the following dependency:</p>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  porter_2_stemmer: ^1.0.0
+</code></pre>
+<p>In your library add the following import:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+</code></pre>
+<p>A String extension is provided, and is the simplest way to get stemming.</p>
+<pre class="language-dart"><code class="language-dart">final stem = term.stemPorter2();
+</code></pre>
+<p>To implement custom exceptions to the algorithm, provide the exceptions parameter (a hashmap of String:String) that provides the term (key) and its stem (value).</p>
+<p>The code below instantiates a Porter2Stemmer instance, passing in a custom exception for the term "TSLA".</p>
+<pre class="language-dart"><code class="language-dart">
+  // Preserve the default exceptions.
+  final exceptions = Map&lt;String, String&gt;.from(Porter2Stemmer.kExceptions);
+
+  // Add a custom exception for "TSLA".
+  exceptions['TSLA'] = 'tesla';
+
+  // Instantiate the [Porter2Stemmer] instance using the custom [exceptions]
+  final stemmer = Porter2Stemmer(exceptions: exceptions);
+
+  // Get the stem for the [term].
+  final stem = stemmer.stem(term);
+
+</code></pre>
+<p><a href="https://pub.dev/packages/porter_2_stemmer/example">Examples</a> are provided for both the extension method and the class method with custom exceptions.</p>
+<h2 id="definitions">Definitions</h2>
+<p>The following definitions are used throughout the <a href="https://pub.dev/documentation/text_indexing/latest/">documentation</a>:</p>
+<ul>
+<li><code>corpus</code>- the collection of <code>documents</code> for which an <code>index</code> is maintained.</li>
+<li><code>document</code> - a record in the <code>corpus</code>, that has a unique identifier (<code>docId</code>) in the <code>corpus</code>'s primary key and that contains one or more text fields that are indexed.</li>
+<li><code>lemmatizer</code> - lemmatisation (or lemmatization) in linguistics is the process of grouping together the inflected forms of a word so they can be analysed as a single item, identified by the word's lemma, or dictionary form (from <a href="https://en.wikipedia.org/wiki/Lemmatisation">Wikipedia</a>).</li>
+<li><code>Porter2 stemming algorithm</code> - a English language <code>stemmer</code> developed as part of <a href="https://snowballstem.org/">"Snowball"</a>, a small string processing language designed for creating stemming algorithms for use in information retrieval.</li>
+<li><code>term</code> - a word or phrase that is indexed from the <code>corpus</code>. The <code>term</code> may differ from the actual word used in the corpus depending on the <code>tokenizer</code> used.</li>
+<li><code>stemmer</code> -  stemming is the process of reducing inflected (or sometimes derived) words to their word stem, base or root form—generally a written word form (from <a href="https://en.wikipedia.org/wiki/Stemming">Wikipedia</a>).</li>
+<li><code>text</code> - the indexable content of a <code>document</code>.</li>
+<li><code>token</code> - representation of a <code>term</code> in a text source returned by a <code>tokenizer</code>. The token may include information about the <code>term</code> such as its position(s) in the text or frequency of occurrence.</li>
+<li><code>tokenizer</code> - a function that returns a collection of <code>token</code>s from <code>text</code>, after applying a character filter, <code>term</code> filter, <code>stemmer</code> and / or <code>lemmatizer</code>.</li>
+<li><code>vocabulary</code> - the collection of <code>terms</code> indexed from the <code>corpus</code>.</li>
+</ul>
 <h2 id="references">References</h2>
 <ul>
-<li><a href="https://snowballstem.org/algorithms/english/stemmer.html">Porter, Dr Martin and Boulton, Richard, 2002, "<em>The English (Porter2) stemming algorithm</em>", snowballstem.org/</a></li>
-<li><a href="https://nlp.stanford.edu/IR-book/pdf/irbookprint.pdf">Manning, Raghavan and Schütze, "<em>Introduction to Information Retrieval</em>", Cambridge University Press. 2008</a></li>
-<li><a href="https://www.cl.cam.ac.uk/teaching/1516/InfoRtrv/">University of Cambridge, 2016 "<em>Information Retrieval</em>", course notes, Dr Ronan Cummins</a></li>
+<li><a href="https://snowballstem.org/algorithms/english/stemmer.html">Porter, Dr Martin and Boulton, Richard, 2002, "<em>The English (Porter2) stemming algorithm</em>", Snowball, 2002</a></li>
+<li><a href="https://nlp.stanford.edu/IR-book/pdf/irbookprint.pdf">Manning, Raghavan and Schütze, "<em>Introduction to Information Retrieval</em>", Cambridge University Press, 2008</a></li>
+<li><a href="https://www.cl.cam.ac.uk/teaching/1516/InfoRtrv/">University of Cambridge, 2016 "<em>Information Retrieval</em>", course notes, Dr Ronan Cummins, 2016</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Inverted_index">Wikipedia (1), "<em>Inverted Index</em>", from Wikipedia, the free encyclopedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Lemmatisation">Wikipedia (2), "<em>Lemmatisation</em>", from Wikipedia, the free encyclopedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Stemming">Wikipedia (3), "<em>Stemming</em>", from Wikipedia, the free encyclopedia</a></li>
 </ul>
+<h2 id="issues">Issues</h2>
+<p>If you find a bug please fill an <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues">issue</a>.</p>
+<p>This project is a supporting package for a revenue project that has priority call on resources, so please be patient if we don't respond immediately to issues or pull requests.</p>
 </section>
 
 
@@ -249,7 +256,7 @@ its word stem, base or root form.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      1.0.0+2
+      1.0.0+5
   </span>
 
   
