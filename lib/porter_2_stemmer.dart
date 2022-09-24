@@ -4,9 +4,7 @@
 // Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
-/// DART implementation of the Porter Stemming Algorithm
-/// (see https://snowballstem.org/algorithms/), used for reducing a word to
-/// its word stem, base or root form.
+/// Reduce a word to its root form using the Porter English stemming algorithm.
 library porter_2_stemmer;
 
 export 'src/porter_2_stemmer_extension.dart';

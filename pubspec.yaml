@@ -6,7 +6,7 @@
 # Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 name: porter_2_stemmer
-description: DART implementation of the Porter stemming algorithm, used for reducing a word to its word stem, base or root form.
+description: Reduce a word to its root form using the Porter English stemming algorithm.
 version: 1.0.0+6
 repository: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer
 homepage: https://github.com/GM-Consult-Pty-Ltd
