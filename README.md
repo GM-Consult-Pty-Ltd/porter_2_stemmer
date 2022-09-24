@@ -6,7 +6,8 @@ Copyright (c) 2002, Richard Boulton.
 All rights reserved. 
 -->
 
-# porter_2_stemmer
+[![GM Consult Pty Ltd](https://raw.githubusercontent.com/GM-Consult-Pty-Ltd/porter_2_stemmer/main/assets/images/porter_2_stemmer.png?raw=true "GM Consult Pty Ltd")](https://github.com/GM-Consult-Pty-Ltd)
+## **Reduce a word to its root form using the Porter English stemming algorithm**
 
 DART implementation of the [Porter Stemming Algorithm](https://snowballstem.org/algorithms/english/stemmer.html), used for reducing a word to its word stem, base or root form.
 
