@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the replaceYs method from the Porter2StemmerMixin class, for the Dart programming language.">
+  <title>replaceYs method - Porter2StemmerMixin class - porter_2_stemmer library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">porter_2_stemmer</a></li>
+    <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a></li>
+    <li class="self-crumb">replaceYs method</li>
+  </ol>
+  <div class="self-name">replaceYs</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">replaceYs</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">replaceYs</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="replaceYs-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Set initial y, or y after a vowel, to Y.</p>
+<p>See note on vowel marking at
+<a href="http://snowball.tartarus.org/texts/vowelmarking.html">http://snowball.tartarus.org/texts/vowelmarking.html</a></p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">String replaceYs(String term) {
+  final e = exception(term);
+  if (e != null) return e;
+  return term
+      .replaceFirst(RegExp(r&#39;^y&#39;), &#39;Y&#39;)
+      .replaceAll(RegExp(&#39;(?&lt;=${_StemmerExtension.rVowels})(y)&#39;), &#39;Y&#39;);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">porter_2_stemmer</a></li>
+  <li><a href="../../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
+  <li><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a></li>
+  <li class="self-crumb">replaceYs method</li>
+</ol>
+
+
+    <h5>Porter2StemmerMixin class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#constructors">Constructors</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/Porter2StemmerMixin.html">Porter2StemmerMixin</a></li>
+
+
+    <li class="section-title">
+      <a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="../../porter_2_stemmer/Porter2Stemmer/exceptions.html">exceptions</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/invariantExceptions.html">invariantExceptions</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1AExceptions.html">step1AExceptions</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1BSuffixes.html">step1BSuffixes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step2Suffixes.html">step2Suffixes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step3Suffixes.html">step3Suffixes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step4Suffixes.html">step4Suffixes</a></li>
+
+    <li class="section-title"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/exception.html">exception</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/normalizeQuotesAndApostrophes.html">normalizeQuotesAndApostrophes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/normalizeYs.html">normalizeYs</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/removeEnclosingQuotes.html">removeEnclosingQuotes</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/replaceYs.html">replaceYs</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/stem.html">stem</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step0.html">step0</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1A.html">step1A</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1AException.html">step1AException</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1B.html">step1B</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step1C.html">step1C</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step2.html">step2</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step3.html">step3</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step4.html">step4</a></li>
+    <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/step5.html">step5</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+        <li class="section-title"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#constants">Constants</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rNotVowels-constant.html">rNotVowels</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rQuotes-constant.html">rQuotes</a></li>
+          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rVowels-constant.html">rVowels</a></li>
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    porter_2_stemmer
+      2.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

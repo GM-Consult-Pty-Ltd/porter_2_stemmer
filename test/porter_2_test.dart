@@ -6,6 +6,7 @@
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+import 'package:porter_2_stemmer/src/porter_2_stemmer.dart';
 import 'data/vocabulary.dart';
 import 'package:test/test.dart';
 
@@ -43,8 +44,8 @@ void main() {
       failedStems.removeWhere((key, value) =>
           value.endsWith('ue') ||
           Porter2Stemmer.kExceptions[key] != null ||
-          Porter2Stemmer.kInvariantExceptions[key] != null ||
-          Porter2Stemmer.kStep1AExceptions[key] != null);
+          Porter2StemmerMixin.kInvariantExceptions[key] != null ||
+          Porter2StemmerMixin.kStep1AExceptions[key] != null);
       accuracy =
           ((terms.length - failedStems.length) / terms.length * 10000).round() /
               100;

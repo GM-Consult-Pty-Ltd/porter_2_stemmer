@@ -5,7 +5,6 @@
 // Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
-
 /// Sample vocabulary from http://snowball.tartarus.org/algorithms/english/diffs.txt
 const vocabulary = {
   "'": '',

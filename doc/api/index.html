@@ -53,6 +53,7 @@ All rights reserved.
 -->
 <p><a href="https://github.com/GM-Consult-Pty-Ltd"><img src="https://raw.githubusercontent.com/GM-Consult-Pty-Ltd/porter_2_stemmer/main/assets/images/porter_2_stemmer.png?raw=true" alt="GM Consult Pty Ltd" title="GM Consult Pty Ltd"></a></p>
 <h2 id="reduce-a-word-to-its-root-form-using-the-porter-english-stemming-algorithm"><strong>Reduce a word to its root form using the Porter English stemming algorithm</strong></h2>
+<p><em>Version 2.0.0 BREAKING CHANGES. The algorithm implementation has been moved to the <a href="#porter2stemmermixin">Porter2StemmerMixin</a>. The <a href="#porter2stemmer-interface">Porter2Stemmer</a> is now an interface with a factory constructor. Please extend the <a href="#porter2stemmerbase-class">Porter2StemmerBase</a> implementation class in stead of the <a href="#porter2stemmer-interface">Porter2Stemmer</a> interface.</em></p>
 <p>DART implementation of the <a href="https://snowballstem.org/algorithms/english/stemmer.html">Porter Stemming Algorithm</a>, used for reducing a word to its word stem, base or root form.</p>
 <p>Skip to section:</p>
 <ul>
@@ -80,55 +81,46 @@ All rights reserved.
 <li>all quotation marks and apostrophies are converted to the standard single quote character U+0027;</li>
 <li>all leading and trailing quotation marks are stripped from the term before processing begins;</li>
 <li>in Step 5, the trailing "e" is not removed from stems that end in "ue". For example, "tongues" is stemmed as tongue (strict implementation returns "tongu") and "picturesque" is returned unchanged rather than stemmed to "picturesqu"); and</li>
-<li>the <code>exceptions</code> and <code>kInvariantExceptions</code> are checked after every step in the algorith to ensure exceptions are not missed at intermediate steps.</li>
+<li>the <code>exceptions</code> and <code>kInvariantExceptions</code> are checked after every step in the algorithm to ensure exceptions are not missed at intermediate steps.</li>
 </ul>
 <p>Additional default exceptions have been implemented as follows in the <a href="https://pub.dev/packages/porter_2_stemmer/changelog">latest version</a>:</p>
-<pre class="language-dart"><code class="language-dart">
-  /// Collection of default exceptions used by [Porter2Stemmer].
-  static const kExceptions = {
-    'skis': 'ski',
-    'skies': 'sky',
-    'dying': 'die',
-    'lying': 'lie',
-    'tying': 'tie',
-    'idly': 'idl',
-    'gently': 'gentl',
-    'singly': 'singl',
-  };
-
-  /// Collection of terms that have no stem.
-  static const kInvariantExceptions = {
-    'sky': 'sky',
-    'bye': 'bye',
-    'ugly': 'ugly',
-    'early': 'early',
-    'only': 'only',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'skye': 'skye',
-    'news': 'news',
-    'howe': 'howe',
-    'atlas': 'atlas',
-    'cosmos': 'cosmos',
-    'bias': 'bias',
-    'andes': 'andes',
-  };
-
-    /// Collection of terms that have no stem at the end of Step 1(a).
-  static const kStep1AExceptions = {
-    'inning': 'inning',
-    'proceed': 'proceed',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'herring': 'herring',
-    'earring': 'earring',
-    'outing': 'outing',
-    'exceed': 'exceed',
-    'canning': 'canning',
-    'succeed': 'succeed',
-    'doing': 'do'
-  };
-</code></pre>
+<ul>
+<li>
+<p>Terms that have no stem:
+{
+'sky': 'sky',
+'bye': 'bye',
+'ugly': 'ugly',
+'early': 'early',
+'only': 'only',
+'goodbye': 'goodbye',
+'commune': 'commune',
+'skye': 'skye',
+'news': 'news',
+'howe': 'howe',
+'atlas': 'atlas',
+'cosmos': 'cosmos',
+'bias': 'bias',
+'andes': 'andes'
+}</p>
+</li>
+<li>
+<p>Terms that have no stem at the end of Step 1(a):
+{
+'inning': 'inning',
+'proceed': 'proceed',
+'goodbye': 'goodbye',
+'commune': 'commune',
+'herring': 'herring',
+'earring': 'earring',
+'outing': 'outing',
+'exceed': 'exceed',
+'canning': 'canning',
+'succeed': 'succeed',
+'doing': 'do'
+}</p>
+</li>
+</ul>
 <h3 id="validation">Validation</h3>
 <p>A validator test is included in the repository <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test">test folder</a>.</p>
 <p>The <code>Porter2Stemmer: VALIDATOR</code> test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that contains 29,417 term/stem pairs.</p>
@@ -141,8 +133,20 @@ All rights reserved.
 </ul>
 <h2 id="api">API</h2>
 <p>The <a href="https://pub.dev/documentation/porter_2_stemmer/latest/">API</a> exposes the <a href="#porter2stemmer-class">Porter2Stemmer class</a>, an English language <code>stemmer</code> utility class and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension.</p>
-<h3 id="porter2stemmer-class">Porter2Stemmer Class</h3>
-<p>The <code>Porter2Stemmer</code> class exposes the <code>Porter2Stemmer.stem</code> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>. Each of the five stemmer steps is implemented as public function that takes a term as parameter and returns a manipulated String after applying the step algorithm. The steps may therefore be overriden in sub-classes.</p>
+<h3 id="porter2stemmer-interface">Porter2Stemmer interface</h3>
+<p>The <a href="porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> interface exposes the <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>.</p>
+<p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy <code>'s</code>) are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
+<p>The default exceptions used by <a href="porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> are:
+  { 'skis': 'ski',
+    'skies': 'sky',
+    'dying': 'die',
+    'lying': 'lie',
+    'tying': 'tie',
+    'idly': 'idl',
+    'gently': 'gentl',
+    'singly': 'singl' }</p>
+<h3 id="porter2stemmermixin">Porter2StemmerMixin</h3>
+<p>Each of the five stemmer steps is implemented as a public function that takes a term as parameter and returns a manipulated String after applying the step algorithm. The steps may therefore be overriden in sub-classes.</p>
 <p>Terms that match the following criteria (after stripping quotation marks and possessive apostrophy "s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
 <ul>
 <li>terms that are in all-capitals, e.g. TSLA;</li>
@@ -151,9 +155,11 @@ All rights reserved.
 <p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy <code>'s</code>) are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
 <p>Terms may be converted to lowercase before processing if stemming of all-capitals terms is desired. Split terms that contain non-word characters to stem the term parts separately.</p>
 <p>The algorithm steps are described fully <a href="https://snowballstem.org/algorithms/english/stemmer.html">here</a>.</p>
-<h3 id="porter2stemmerextension-extension">Porter2StemmerExtension Extension</h3>
-<p>The <code>Porter2StemmerExtension</code> extension provides an extension method <code>String.stemPorter2</code> that reduces a term to its word stem, base or root form using the <code>Porter2 (English) stemming algorithm</code>.</p>
-<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <code>Porter2Stemmer.kExceptions</code>.</p>
+<h3 id="porter2stemmerbase-class">Porter2StemmerBase class</h3>
+<p>The <code>Porter2StemmerBase</code> class is an implementation class that mixes in the <a href="#porter2stemmermixin">Porter2StemmerMixin</a>. A const constructor is provided for sub classes.</p>
+<h3 id="porter2stemmerextension">Porter2StemmerExtension</h3>
+<p>The <a href="porter_2_stemmer/Porter2StemmerExtension.html">Porter2StemmerExtension</a>provides an extension method <code>String.stemPorter2</code> that reduces a term to its word stem, base or root form using the <code>Porter2 (English) stemming algorithm</code>.</p>
+<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <a href="porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">Porter2Stemmer.kExceptions</a>.</p>
 <p>This extension method is a shortcut to <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> method.</p>
 <h2 id="usage">Usage</h2>
 <p>In the <code>pubspec.yaml</code> of your flutter project, add the following dependency:</p>
@@ -255,7 +261,7 @@ All rights reserved.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      1.0.0+6
+      2.0.0
   </span>
 
   

@@ -31,7 +31,7 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">porter_2_stemmer</a></li>
     <li><a href="../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
-    <li class="self-crumb">Porter2Stemmer class</li>
+    <li class="self-crumb">Porter2Stemmer abstract class</li>
   </ol>
   <div class="self-name">Porter2Stemmer</div>
   <form class="search navbar-right" role="search">
@@ -57,6 +57,23 @@ its word stem, base or root form.</p>
 </section>
 
 
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+        
+
+        <dt>Implementers</dt>
+        <dd><ul class="comma-separated clazz-relationships">
+          <li><a href="../porter_2_stemmer/Porter2StemmerBase-class.html">Porter2StemmerBase</a></li>
+          <li><a href="../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a></li>
+        </ul></dd>
+
+
+        
+      </dl>
+    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
@@ -67,8 +84,8 @@ its word stem, base or root form.</p>
           <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/Porter2Stemmer.html">Porter2Stemmer</a></span><span class="signature">(<span class="parameter" id="-param-exceptions">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">exceptions</span>}</span>)</span>
         </dt>
         <dd>
-          Instantiates a const <a href="../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> instance.
-            <div class="constructor-modifier features">const</div>
+          
+            <div class="constructor-modifier features">factory</div>
         </dd>
     </dl>
   </section>
@@ -85,7 +102,7 @@ its word stem, base or root form.</p>
 <dd>
   A hashmap of terms (keys) with their stem values that will be returned
 rather than being processed by the stemmer.
-  <div class="features">final</div>
+  <div class="features">read-only</div>
 
 </dd>
 
@@ -120,46 +137,6 @@ rather than being processed by the stemmer.
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
-        <dt id="exception" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/exception.html">exception</a></span><span class="signature">(<wbr><span class="parameter" id="exception-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
-  </span>
-  
-
-</dt>
-<dd>
-  If the String <code>term.isIdentifier]</code>, it is returned as an exception to
-the algorithm.
-  
-
-</dd>
-
-        <dt id="normalizeQuotesAndApostrophes" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/normalizeQuotesAndApostrophes.html">normalizeQuotesAndApostrophes</a></span><span class="signature">(<wbr><span class="parameter" id="normalizeQuotesAndApostrophes-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Replace all forms of apostrophe or quotation mar with U+0027.
-  
-
-</dd>
-
-        <dt id="normalizeYs" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/normalizeYs.html">normalizeYs</a></span><span class="signature">(<wbr><span class="parameter" id="normalizeYs-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Set initial y, or y after a vowel, to Y.
-  
-
-</dd>
-
         <dt id="noSuchMethod" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
@@ -173,32 +150,6 @@ the algorithm.
 
 </dd>
 
-        <dt id="removeEnclosingQuotes" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/removeEnclosingQuotes.html">removeEnclosingQuotes</a></span><span class="signature">(<wbr><span class="parameter" id="removeEnclosingQuotes-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Trims all quotation marks from start and end of String.
-  
-
-</dd>
-
-        <dt id="replaceYs" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/replaceYs.html">replaceYs</a></span><span class="signature">(<wbr><span class="parameter" id="replaceYs-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Set initial y, or y after a vowel, to Y.
-  
-
-</dd>
-
         <dt id="stem" class="callable">
   <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/stem.html">stem</a></span><span class="signature">(<wbr><span class="parameter" id="stem-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
@@ -208,130 +159,7 @@ the algorithm.
 </dt>
 <dd>
   Reduces the String to its word stem, base or root form using the
-<a href="../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> English language stemming algorithm.
-  
-
-</dd>
-
-        <dt id="step0" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step0.html">step0</a></span><span class="signature">(<wbr><span class="parameter" id="step0-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Remove longest of "'", "'s" or "'s'" from end of term.
-  
-
-</dd>
-
-        <dt id="step1A" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step1A.html">step1A</a></span><span class="signature">(<wbr><span class="parameter" id="step1A-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the longest among the following suffixes, and perform the action
-indicated.
-  
-
-</dd>
-
-        <dt id="step1AException" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step1AException.html">step1AException</a></span><span class="signature">(<wbr><span class="parameter" id="step1AException-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
-  </span>
-  
-
-</dt>
-<dd>
-  Look up the String in <a href="../porter_2_stemmer/Porter2Stemmer/kStep1AExceptions-constant.html">kStep1AExceptions</a> and return the value or null.
-  
-
-</dd>
-
-        <dt id="step1B" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step1B.html">step1B</a></span><span class="signature">(<wbr><span class="parameter" id="step1B-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the longest among the following suffixes, and perform the
-action indicated.
-  
-
-</dd>
-
-        <dt id="step1C" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step1C.html">step1C</a></span><span class="signature">(<wbr><span class="parameter" id="step1C-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Replace suffix y or Y by i if preceded by a non-vowel which is not the
-first letter of the word (so cry -&gt; cri, by -&gt; by, say -&gt; say
-  
-
-</dd>
-
-        <dt id="step2" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step2.html">step2</a></span><span class="signature">(<wbr><span class="parameter" id="step2-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the longest key in <a href="../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a>, and, if found
-and in R1, replace with the corresponding value from <a href="../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a>.
-  
-
-</dd>
-
-        <dt id="step3" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step3.html">step3</a></span><span class="signature">(<wbr><span class="parameter" id="step3-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the longest key in <a href="../porter_2_stemmer/Porter2Stemmer/kStep3Suffixes-constant.html">kStep3Suffixes</a>, and, if found
-and in R1, replace with the corresponding value from <a href="../porter_2_stemmer/Porter2Stemmer/kStep3Suffixes-constant.html">kStep3Suffixes</a>.
-  
-
-</dd>
-
-        <dt id="step4" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step4.html">step4</a></span><span class="signature">(<wbr><span class="parameter" id="step4-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the longest key in <a href="../porter_2_stemmer/Porter2Stemmer/kStep4Suffixes-constant.html">kStep4Suffixes</a>, and, if found
-and in R2, replace with the corresponding value from <a href="../porter_2_stemmer/Porter2Stemmer/kStep4Suffixes-constant.html">kStep4Suffixes</a>.
-  
-
-</dd>
-
-        <dt id="step5" class="callable">
-  <span class="name"><a href="../porter_2_stemmer/Porter2Stemmer/step5.html">step5</a></span><span class="signature">(<wbr><span class="parameter" id="step5-param-term"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">term</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Search for the the following suffixes, and, if found:
+<a href="../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a> English language stemming algorithm.
   
 
 </dd>
@@ -387,146 +215,11 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 
 </dt>
 <dd>
-  Collection of default exceptions used by <a href="../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a>.
+  Collection of default exceptions used by <a href="../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a>.
   
 
   <div>
     <span class="signature"><code>{&#39;skis&#39; : &#39;ski&#39;, &#39;skies&#39; : &#39;sky&#39;, &#39;dying&#39; : &#39;die&#39;, &#39;lying&#39; : &#39;lie&#39;, &#39;tying&#39; : &#39;tie&#39;, &#39;idly&#39; : &#39;idl&#39;, &#3…</code></span>
-  </div>
-</dd>
-
-        <dt id="kInvariantExceptions" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kInvariantExceptions-constant.html">kInvariantExceptions</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Collection of terms that have no stem but do not fit the algorithm.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;sky&#39; : &#39;sky&#39;, &#39;bye&#39; : &#39;bye&#39;, &#39;ugly&#39; : &#39;ugly&#39;, &#39;early&#39; : &#39;early&#39;, &#39;only&#39; : &#39;only&#39;, &#39;goodbye&#39; : &#39;goodbye&#39…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep1AExceptions" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kStep1AExceptions-constant.html">kStep1AExceptions</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Collection of terms that have no stem at the end of Step 1(a).
-  
-
-  <div>
-    <span class="signature"><code>{&#39;inning&#39; : &#39;inning&#39;, &#39;proceed&#39; : &#39;proceed&#39;, &#39;goodbye&#39; : &#39;goodbye&#39;, &#39;commune&#39; : &#39;commune&#39;, &#39;herring&#39; : &#39;herring&#39;, &#39;e…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep1BSuffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 1B.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ingly&#39; : &#39;&#39;, &#39;edly&#39; : &#39;&#39;, &#39;ing&#39; : &#39;&#39;, &#39;ed&#39; : &#39;&#39;}</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep2Suffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 2.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ization&#39; : &#39;ize&#39;, &#39;ational&#39; : &#39;ate&#39;, &#39;fulness&#39; : &#39;ful&#39;, &#39;ousness&#39; : &#39;ous&#39;, &#39;iveness&#39; : &#39;ive&#39;, &#39;tional&#39; : &#39;…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep3Suffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kStep3Suffixes-constant.html">kStep3Suffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 3.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ational&#39; : &#39;ate&#39;, &#39;tional&#39; : &#39;tion&#39;, &#39;alize&#39; : &#39;al&#39;, &#39;icate&#39; : &#39;ic&#39;, &#39;iciti&#39; : &#39;ic&#39;, &#39;ical&#39; : &#39;ic&#39;, &#…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep4Suffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/kStep4Suffixes-constant.html">kStep4Suffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 4.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ement&#39; : &#39;&#39;, &#39;ance&#39; : &#39;&#39;, &#39;ence&#39; : &#39;&#39;, &#39;able&#39; : &#39;&#39;, &#39;ible&#39; : &#39;&#39;, &#39;ment&#39; : &#39;&#39;, &#39;sion&#39; : &#39;&#…</code></span>
-  </div>
-</dd>
-
-        <dt id="rNotVowels" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/rNotVowels-constant.html">rNotVowels</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Regular expression selector for characters that are NOT vowels.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rNotVowels</code></span>
-  </div>
-</dd>
-
-        <dt id="rQuotes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/rQuotes-constant.html">rQuotes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Selector for all single or double quotation marks and apostrophes.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rQuotes</code></span>
-  </div>
-</dd>
-
-        <dt id="rVowels" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2Stemmer/rVowels-constant.html">rVowels</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Regular expression selector for characters that are vowels.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rVowels</code></span>
   </div>
 </dd>
 
@@ -545,7 +238,7 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
   <li><a href="../index.html">porter_2_stemmer</a></li>
   <li><a href="../porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
-  <li class="self-crumb">Porter2Stemmer class</li>
+  <li class="self-crumb">Porter2Stemmer abstract class</li>
 </ol>
 
 
@@ -553,6 +246,8 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
     <ol>
   <li class="section-title"><a href="../porter_2_stemmer/porter_2_stemmer-library.html#classes">Classes</a></li>
   <li><a href="../porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a></li>
+  <li><a href="../porter_2_stemmer/Porter2StemmerBase-class.html">Porter2StemmerBase</a></li>
+  <li><a href="../porter_2_stemmer/Porter2StemmerMixin-class.html">Porter2StemmerMixin</a></li>
 
   <li class="section-title"><a href="../porter_2_stemmer/porter_2_stemmer-library.html#extensions">Extensions</a></li>
   <li><a href="../porter_2_stemmer/Porter2StemmerExtension.html">Porter2StemmerExtension</a></li>
@@ -582,22 +277,8 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../porter_2_stemmer/Porter2Stemmer-class.html#instance-methods">Methods</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/exception.html">exception</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/normalizeQuotesAndApostrophes.html">normalizeQuotesAndApostrophes</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/normalizeYs.html">normalizeYs</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/removeEnclosingQuotes.html">removeEnclosingQuotes</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/replaceYs.html">replaceYs</a></li>
     <li><a href="../porter_2_stemmer/Porter2Stemmer/stem.html">stem</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step0.html">step0</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step1A.html">step1A</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step1AException.html">step1AException</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step1B.html">step1B</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step1C.html">step1C</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step2.html">step2</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step3.html">step3</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step4.html">step4</a></li>
-    <li><a href="../porter_2_stemmer/Porter2Stemmer/step5.html">step5</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../porter_2_stemmer/Porter2Stemmer-class.html#operators">Operators</a></li>
@@ -608,15 +289,6 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 
         <li class="section-title"><a href="../porter_2_stemmer/Porter2Stemmer-class.html#constants">Constants</a></li>
           <li><a href="../porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">kExceptions</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/rNotVowels-constant.html">rNotVowels</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/rQuotes-constant.html">rQuotes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2Stemmer/rVowels-constant.html">rVowels</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -626,7 +298,7 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      1.0.0+6
+      2.0.0
   </span>
 
   
