@@ -23,11 +23,11 @@ Skip to section:
 
 ## Overview
 
-This library is a DART implementation of the popular ["Porter" English stemming algorithm](https://snowballstem.org/algorithms/english/stemmer.html) for use in information retrieval applications. It exports the [Porter2Stemmer](#porter2stemmer-class) class, and the  [Porter2StemmerExtension](#porter2stemmerextension-extension) String extension,
+This library is a DART implementation of the popular ["Porter" English stemming algorithm](https://snowballstem.org/algorithms/english/stemmer.html) for use in information retrieval applications. It exports the [Porter2Stemmer](#porter2stemmer-interface) class, and the  [Porter2StemmerExtension](#porter2stemmerextension-extension) String extension,
 
 The Porter stemming algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the [BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause). 
 
-As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-class) achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.
+As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-interface) achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.
 
 Refer to the [references](#references) to learn more about the theory behind information retrieval systems.
 
@@ -86,7 +86,7 @@ A validator test is included in the repository [test folder](https://github.com/
 
 The `Porter2Stemmer: VALIDATOR` test iterates through a hashmap of [terms](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt) to expected [stems](https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt) that contains 29,417 term/stem pairs.
 
-As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-class) achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:
+As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-interface) achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:
 
 * "congeners" => "congener" (expected "congen");
 * "fluently" => "fluent" (expected "fluentli");
@@ -95,15 +95,15 @@ As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-class) achieves 
 
 ## API
 
-The [API](https://pub.dev/documentation/porter_2_stemmer/latest/) exposes the [Porter2Stemmer class](#porter2stemmer-class), an English language `stemmer` utility class and the  [Porter2StemmerExtension](#porter2stemmerextension-extension) String extension.
+The [API](https://pub.dev/documentation/porter_2_stemmer/latest/) exposes the [Porter2Stemmer class](#porter2stemmer-interface), an English language `stemmer` utility class and the  [Porter2StemmerExtension](#porter2stemmerextension-extension) String extension.
 
 ### Porter2Stemmer interface
 
-The [Porter2Stemmer] interface exposes the [Porter2Stemmer.stem] function that reduces a term to its word stem, base or root form by stepping through the five steps of the `Porter2 (English) stemming algorithm`.
+The `Porter2Stemmer` interface exposes the `Porter2Stemmer.stem` function that reduces a term to its word stem, base or root form by stepping through the five steps of the `Porter2 (English) stemming algorithm`.
 
 Terms that match a key in `Porter2Stemmer.exceptions` (after stripping quotation marks and possessive apostrophy `'s`) are stemmed by returning the corresponding value from `Porter2Stemmer.exceptions`.
 
-The default exceptions used by [Porter2Stemmer] are:
+The default exceptions used by `Porter2Stemmer` are:
   { 'skis': 'ski',
     'skies': 'sky',
     'dying': 'die',
@@ -135,9 +135,9 @@ The `Porter2StemmerBase` class is an implementation class that mixes in the [Por
 
 The [Porter2StemmerExtension]provides an extension method `String.stemPorter2` that reduces a term to its word stem, base or root form using the `Porter2 (English) stemming algorithm`.
 
-Pass the `exceptions` parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const [Porter2Stemmer.kExceptions].
+Pass the `exceptions` parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const `Porter2Stemmer.kExceptions`.
 
-This extension method is a shortcut to [Porter2Stemmer.stem] method.
+This extension method is a shortcut to `Porter2Stemmer.stem` method.
 
 ## Usage
 

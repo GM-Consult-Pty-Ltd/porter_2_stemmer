@@ -4,6 +4,14 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
+### 2.0.0-2
+**BREAKING CHANGES**
+
+- `Porter2Stemmer` changed to abstract interface with a factory constructor to remove algorithm implementation from the interface.
+- Implementation of the `Porter2Stemmer` moved to the `Porter2StemmerBase` abstract class. Extend `Porter2StemmerBase` instead of `Porter2Stemmer`.
+
+Updated dependencies, tests, examples and documentation.
+
 ### 2.0.0-1
 **BREAKING CHANGES**
 

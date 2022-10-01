@@ -65,9 +65,9 @@ All rights reserved.
 <li><a href="#issues">Issues</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
-<p>This library is a DART implementation of the popular <a href="https://snowballstem.org/algorithms/english/stemmer.html">"Porter" English stemming algorithm</a> for use in information retrieval applications. It exports the <a href="#porter2stemmer-class">Porter2Stemmer</a> class, and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension,</p>
+<p>This library is a DART implementation of the popular <a href="https://snowballstem.org/algorithms/english/stemmer.html">"Porter" English stemming algorithm</a> for use in information retrieval applications. It exports the <a href="#porter2stemmer-interface">Porter2Stemmer</a> class, and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension,</p>
 <p>The Porter stemming algorithm is Copyright (c) 2001, Dr Martin Porter and Copyright (c) 2002, Richard Boulton and licensed under the <a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.</p>
-<p>As of version 1.0.0, the <a href="#porter2stemmer-class">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.</p>
+<p>As of version 1.0.0, the <a href="#porter2stemmer-interface">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms.</p>
 <p>Refer to the <a href="#references">references</a> to learn more about the theory behind information retrieval systems.</p>
 <h3 id="departures-from-snowball-implementation">Departures from Snowball implementation</h3>
 <p>Terms that match the following criteria (after stripping opening/closing quotation marks and the possessive apostrophy "'s") are returned unchanged as they are considered to be acronyms, identifiers or non-language terms that have a specific meaning:</p>
@@ -124,7 +124,7 @@ All rights reserved.
 <h3 id="validation">Validation</h3>
 <p>A validator test is included in the repository <a href="https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/tree/main/test">test folder</a>.</p>
 <p>The <code>Porter2Stemmer: VALIDATOR</code> test iterates through a hashmap of <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/voc.txt">terms</a> to expected <a href="https://raw.githubusercontent.com/snowballstem/snowball-data/master/english/output.txt">stems</a> that contains 29,417 term/stem pairs.</p>
-<p>As of version 1.0.0, the <a href="#porter2stemmer-class">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:</p>
+<p>As of version 1.0.0, the <a href="#porter2stemmer-interface">Porter2Stemmer class</a> achieves 99.66% accuracy when measured against the sample (Snowball) vocabulary. Taking into account the differences in implementation, this increases to 99.99%, or failure of 4 out of 29,417 terms. The failed stems are:</p>
 <ul>
 <li>"congeners" =&gt; "congener" (expected "congen");</li>
 <li>"fluently" =&gt; "fluent" (expected "fluentli");</li>
@@ -132,11 +132,11 @@ All rights reserved.
 <li>"lookye" =&gt; "looki" (expected "looky").</li>
 </ul>
 <h2 id="api">API</h2>
-<p>The <a href="https://pub.dev/documentation/porter_2_stemmer/latest/">API</a> exposes the <a href="#porter2stemmer-class">Porter2Stemmer class</a>, an English language <code>stemmer</code> utility class and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension.</p>
+<p>The <a href="https://pub.dev/documentation/porter_2_stemmer/latest/">API</a> exposes the <a href="#porter2stemmer-interface">Porter2Stemmer class</a>, an English language <code>stemmer</code> utility class and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension.</p>
 <h3 id="porter2stemmer-interface">Porter2Stemmer interface</h3>
-<p>The <a href="porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> interface exposes the <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>.</p>
+<p>The <code>Porter2Stemmer</code> interface exposes the <code>Porter2Stemmer.stem</code> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>.</p>
 <p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy <code>'s</code>) are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
-<p>The default exceptions used by <a href="porter_2_stemmer/Porter2Stemmer-class.html">Porter2Stemmer</a> are:
+<p>The default exceptions used by <code>Porter2Stemmer</code> are:
   { 'skis': 'ski',
     'skies': 'sky',
     'dying': 'die',
@@ -159,8 +159,8 @@ All rights reserved.
 <p>The <code>Porter2StemmerBase</code> class is an implementation class that mixes in the <a href="#porter2stemmermixin">Porter2StemmerMixin</a>. A const constructor is provided for sub classes.</p>
 <h3 id="porter2stemmerextension">Porter2StemmerExtension</h3>
 <p>The <a href="porter_2_stemmer/Porter2StemmerExtension.html">Porter2StemmerExtension</a>provides an extension method <code>String.stemPorter2</code> that reduces a term to its word stem, base or root form using the <code>Porter2 (English) stemming algorithm</code>.</p>
-<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <a href="porter_2_stemmer/Porter2Stemmer/kExceptions-constant.html">Porter2Stemmer.kExceptions</a>.</p>
-<p>This extension method is a shortcut to <a href="porter_2_stemmer/Porter2Stemmer/stem.html">Porter2Stemmer.stem</a> method.</p>
+<p>Pass the <code>exceptions</code> parameter (a hashmap of String:String) to apply custom exceptions to the algorithm. The default exceptions are the static const <code>Porter2Stemmer.kExceptions</code>.</p>
+<p>This extension method is a shortcut to <code>Porter2Stemmer.stem</code> method.</p>
 <h2 id="usage">Usage</h2>
 <p>In the <code>pubspec.yaml</code> of your flutter project, add the following dependency:</p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
@@ -261,7 +261,7 @@ All rights reserved.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0
+      2.0.0-2
   </span>
 
   
