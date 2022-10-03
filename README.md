@@ -97,7 +97,7 @@ As of version 1.0.0, the [Porter2Stemmer class](#porter2stemmer-interface) achie
 
 The [API](https://pub.dev/documentation/porter_2_stemmer/latest/) exposes the [Porter2Stemmer class](#porter2stemmer-interface), an English language `stemmer` utility class and the  [Porter2StemmerExtension](#porter2stemmerextension-extension) String extension.
 
- We use an `interface > implementation mixin > base-class > implementation class pattern`:
+We use an `interface > implementation mixin > base-class > implementation class pattern`:
 * the `interface` is an abstract class that exposes fields and methods but contains no implementation code. The `interface` may expose a factory constructor that returns an `implementation class` instance;
 * the `implementation mixin` implements the `interface` class methods, but not the input fields;
 * the `base-class` is an abstract class with the `implementation mixin` and exposes a default, unnamed generative const constructor for sub-classes. The intention is that `implementation classes` extend the `base class`, overriding the `interface` input fields with final properties passed in via a const generative constructor; and
