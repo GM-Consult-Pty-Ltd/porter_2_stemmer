@@ -133,6 +133,13 @@ All rights reserved.
 </ul>
 <h2 id="api">API</h2>
 <p>The <a href="https://pub.dev/documentation/porter_2_stemmer/latest/">API</a> exposes the <a href="#porter2stemmer-interface">Porter2Stemmer class</a>, an English language <code>stemmer</code> utility class and the  <a href="#porter2stemmerextension-extension">Porter2StemmerExtension</a> String extension.</p>
+<p>We use an <code>interface &gt; implementation mixin &gt; base-class &gt; implementation class pattern</code>:</p>
+<ul>
+<li>the <code>interface</code> is an abstract class that exposes fields and methods but contains no implementation code. The <code>interface</code> may expose a factory constructor that returns an <code>implementation class</code> instance;</li>
+<li>the <code>implementation mixin</code> implements the <code>interface</code> class methods, but not the input fields;</li>
+<li>the <code>base-class</code> is an abstract class with the <code>implementation mixin</code> and exposes a default, unnamed generative const constructor for sub-classes. The intention is that <code>implementation classes</code> extend the <code>base class</code>, overriding the <code>interface</code> input fields with final properties passed in via a const generative constructor; and</li>
+<li>the class naming convention for this pattern is <code>"Interface" &gt; "InterfaceMixin" &gt; "InterfaceBase"</code>.</li>
+</ul>
 <h3 id="porter2stemmer-interface">Porter2Stemmer interface</h3>
 <p>The <code>Porter2Stemmer</code> interface exposes the <code>Porter2Stemmer.stem</code> function that reduces a term to its word stem, base or root form by stepping through the five steps of the <code>Porter2 (English) stemming algorithm</code>.</p>
 <p>Terms that match a key in <code>Porter2Stemmer.exceptions</code> (after stripping quotation marks and possessive apostrophy <code>'s</code>) are stemmed by returning the corresponding value from <code>Porter2Stemmer.exceptions</code>.</p>
@@ -261,7 +268,7 @@ All rights reserved.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0-2
+      2.0.0-3
   </span>
 
   
