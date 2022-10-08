@@ -6,7 +6,6 @@
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
-import 'package:porter_2_stemmer/src/porter_2_stemmer.dart';
 import 'data/vocabulary.dart';
 import 'package:test/test.dart';
 

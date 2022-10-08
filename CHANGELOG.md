@@ -4,25 +4,37 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
+### 2.0.0
+**BREAKING CHANGES**
+
+#### *Breaking changes*
+* `Porter2Stemmer` changed to abstract interface with a factory constructor to remove algorithm implementation from the interface.
+* Implementation of the `Porter2Stemmer` moved to the `Porter2StemmerBase` abstract class. Extend `Porter2StemmerBase` instead of `Porter2Stemmer`.
+
+#### *Updated*
+* Dependencies.
+* Tests.
+* Examples.
+* Documentation.  
+
 ### 2.0.0-3
 
-#### Updated
+#### *Updated*
 * Documentation.  
 
 ### 2.0.0-2
 
-#### Updated
+#### *Updated*
 * Documentation.  
 
 ### 2.0.0-1
 **BREAKING CHANGES**
 
-#### Breaking Changes
+#### *Breaking changes*
 * `Porter2Stemmer` changed to abstract interface with a factory constructor to remove algorithm implementation from the interface.
 * Implementation of the `Porter2Stemmer` moved to the `Porter2StemmerBase` abstract class. Extend `Porter2StemmerBase` instead of `Porter2Stemmer`.
 
-#### Updated
-* #### Updated
+#### *Updated*
 * Dependencies.
 * Tests.
 * Examples.
@@ -31,7 +43,7 @@ All rights reserved.
 ### 1.1.0
 **PREVIEW of BREAKING CHANGES in UPCOMING VERSION 2.0.0**
 
-#### Updated
+#### *Updated*
 * Dependencies.
 * Tests.
 * Examples.
@@ -39,86 +51,86 @@ All rights reserved.
 
 ### 1.0.0+6
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 1.0.0+5
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 1.0.0+4
 
-#### Updated
+#### *Updated*
 * Updated exports.
 
 ### 1.0.0+3
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 1.0.0+2
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 1.0.0+1
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 1.0.0
 **STABLE RELEASE**
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.12
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.11
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.10
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.9
 **PRE-RELEASE**
 * Code clean-up
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.8
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Improved implemented accuracy to 99.99%
 
 ### 0.0.7
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.6
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Improved accuracy to 98.7%
 
 ### 0.0.5
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Improved accuracy to 97.1%
 
 ### 0.0.4
@@ -128,19 +140,19 @@ All rights reserved.
 ### 0.0.3
 **PRE-RELEASE**
 
-#### Updated
+#### *Updated*
 * Updated examples.
 
 ### 0.0.2 
 **PRE-RELEASE, BREAKING CHANGES**
 
-#### Breaking Changes
+#### *Breaking changes*
 * Changed handling of exceptions to algorithm.
 
-#### Updated
+#### *Updated*
 * Documentation.
 
 ### 0.0.1
 **PRE-RELEASE**
 
-Initial version.
+* Initial version.
