@@ -6,7 +6,7 @@ Copyright (c) 2002, Richard Boulton.
 All rights reserved. 
 -->
 
-[![GM Consult Pty Ltd](https://raw.githubusercontent.com/GM-Consult-Pty-Ltd/porter_2_stemmer/main/assets/images/porter_2_stemmer.png?raw=true "GM Consult Pty Ltd")](https://github.com/GM-Consult-Pty-Ltd)
+[![GM Consult Pty Ltd](https://raw.githubusercontent.com/GM-Consult-Pty-Ltd/porter_2_stemmer/main/dev/images/porter_2_stemmer.png?raw=true "GM Consult Pty Ltd")](https://github.com/GM-Consult-Pty-Ltd)
 ## **Reduce a word to its root form using the Porter English stemming algorithm**
 
 *Version 2.0.0 BREAKING CHANGES. The algorithm implementation has been moved to the [Porter2StemmerMixin](#porter2stemmermixin). The [Porter2Stemmer](#porter2stemmer-interface) is now an interface with a factory constructor. Please extend the [Porter2StemmerBase](#porter2stemmerbase-class) implementation class in stead of the [Porter2Stemmer](#porter2stemmer-interface) interface.*
