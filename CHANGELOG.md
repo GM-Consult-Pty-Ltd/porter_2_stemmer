@@ -4,22 +4,16 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
-### 3.0.0+1
-**BREAKING CHANGES**
-
-#### *Breaking changes*
-* All constants moved from `Porter2Stemmer` and `Porter2StemmerMixin` to `Porter2StemmerConstants`.
-
-#### *New*
-* New mini library `constants`.
-* New mini library `extensions`.
+### 3.0.0+2
 
 #### *Updated*
 * Dependencies.
-* Tests.
-* Examples.
-* Documentation.  
 
+### 3.0.0+1
+**BREAKING CHANGES**
+
+#### *Updated*
+* Dependencies.
 
 
 ### 3.0.0

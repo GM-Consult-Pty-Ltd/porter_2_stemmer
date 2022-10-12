@@ -10,4 +10,4 @@
 /// Also provides stemming extensions.
 library extensions;
 
-export 'src/porter_2_stemmer_extension.dart' show Porter2StemmerExtension;
+export 'src/porter_2_stemmer_extension.dart' show Porter2StemmerExtensions;
