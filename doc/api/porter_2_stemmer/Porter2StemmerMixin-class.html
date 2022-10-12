@@ -465,51 +465,6 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
     <h2>Constants</h2>
 
     <dl class="properties">
-        <dt id="kInvariantExceptions" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kInvariantExceptions-constant.html">kInvariantExceptions</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Collection of terms that have no stem but do not fit the algorithm.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;sky&#39; : &#39;sky&#39;, &#39;bye&#39; : &#39;bye&#39;, &#39;ugly&#39; : &#39;ugly&#39;, &#39;early&#39; : &#39;early&#39;, &#39;only&#39; : &#39;only&#39;, &#39;goodbye&#39; : &#39;goodbye&#39…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep1AExceptions" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep1AExceptions-constant.html">kStep1AExceptions</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Collection of terms that have no stem at the end of Step 1(a).
-  
-
-  <div>
-    <span class="signature"><code>{&#39;inning&#39; : &#39;inning&#39;, &#39;proceed&#39; : &#39;proceed&#39;, &#39;goodbye&#39; : &#39;goodbye&#39;, &#39;commune&#39; : &#39;commune&#39;, &#39;herring&#39; : &#39;herring&#39;, &#39;e…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep1BSuffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 1B.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ingly&#39; : &#39;&#39;, &#39;edly&#39; : &#39;&#39;, &#39;ing&#39; : &#39;&#39;, &#39;ed&#39; : &#39;&#39;}</code></span>
-  </div>
-</dd>
-
         <dt id="kStep2Suffixes" class="constant">
     <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep2Suffixes-constant.html">kStep2Suffixes</a></span>
   <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
@@ -522,81 +477,6 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 
   <div>
     <span class="signature"><code>{&#39;ization&#39; : &#39;ize&#39;, &#39;ational&#39; : &#39;ate&#39;, &#39;fulness&#39; : &#39;ful&#39;, &#39;ousness&#39; : &#39;ous&#39;, &#39;iveness&#39; : &#39;ive&#39;, &#39;tional&#39; : &#39;…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep3Suffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep3Suffixes-constant.html">kStep3Suffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 3.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ational&#39; : &#39;ate&#39;, &#39;tional&#39; : &#39;tion&#39;, &#39;alize&#39; : &#39;al&#39;, &#39;icate&#39; : &#39;ic&#39;, &#39;iciti&#39; : &#39;ic&#39;, &#39;ical&#39; : &#39;ic&#39;, &#…</code></span>
-  </div>
-</dd>
-
-        <dt id="kStep4Suffixes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep4Suffixes-constant.html">kStep4Suffixes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  
-
-</dt>
-<dd>
-  Suffix hasmap for Step 4.
-  
-
-  <div>
-    <span class="signature"><code>{&#39;ement&#39; : &#39;&#39;, &#39;ance&#39; : &#39;&#39;, &#39;ence&#39; : &#39;&#39;, &#39;able&#39; : &#39;&#39;, &#39;ible&#39; : &#39;&#39;, &#39;ment&#39; : &#39;&#39;, &#39;sion&#39; : &#39;&#…</code></span>
-  </div>
-</dd>
-
-        <dt id="rNotVowels" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/rNotVowels-constant.html">rNotVowels</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Regular expression selector for characters that are NOT vowels.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rNotVowels</code></span>
-  </div>
-</dd>
-
-        <dt id="rQuotes" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/rQuotes-constant.html">rQuotes</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Selector for all single or double quotation marks and apostrophes.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rQuotes</code></span>
-  </div>
-</dd>
-
-        <dt id="rVowels" class="constant">
-    <span class="name "><a href="../porter_2_stemmer/Porter2StemmerMixin/rVowels-constant.html">rVowels</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Regular expression selector for characters that are vowels.
-  
-
-  <div>
-    <span class="signature"><code>_StemmerExtension.rVowels</code></span>
   </div>
 </dd>
 
@@ -628,6 +508,7 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 
   <li class="section-title"><a href="../porter_2_stemmer/porter_2_stemmer-library.html#extensions">Extensions</a></li>
   <li><a href="../porter_2_stemmer/Porter2StemmerExtension.html">Porter2StemmerExtension</a></li>
+  <li><a href="../porter_2_stemmer/Porter2StemmerExtensions.html">Porter2StemmerExtensions</a></li>
 
 
 
@@ -685,15 +566,7 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 
 
         <li class="section-title"><a href="../porter_2_stemmer/Porter2StemmerMixin-class.html#constants">Constants</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
           <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/rNotVowels-constant.html">rNotVowels</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/rQuotes-constant.html">rQuotes</a></li>
-          <li><a href="../porter_2_stemmer/Porter2StemmerMixin/rVowels-constant.html">rVowels</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -703,7 +576,7 @@ and in R2, replace with the corresponding value from <a href="../porter_2_stemme
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0
+      3.0.0
   </span>
 
   

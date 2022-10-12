@@ -2,6 +2,9 @@
 // Copyright (c) 2022, GM Consult Pty Ltd
 // All rights reserved.
 
+import 'porter_2_stemmer_constants.dart';
+import 'porter_2_stemmer_extension.dart';
+
 // Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
@@ -13,25 +16,13 @@ abstract class Porter2Stemmer {
 
   ///
   factory Porter2Stemmer({Map<String, String>? exceptions}) =>
-      _Porter2StemmerImpl(exceptions ?? Porter2Stemmer.kExceptions);
+      _Porter2StemmerImpl(exceptions ?? Porter2StemmerConstants.kExceptions);
 
   /// A hashmap of terms (keys) with their stem values that will be returned
   /// rather than being processed by the stemmer.
   ///
-  /// The default is [Porter2Stemmer.kExceptions].
+  /// The default is [Porter2StemmerConstants.kExceptions].
   Map<String, String> get exceptions;
-
-  /// Collection of default exceptions used by [Porter2StemmerMixin].
-  static const kExceptions = {
-    'skis': 'ski',
-    'skies': 'sky',
-    'dying': 'die',
-    'lying': 'lie',
-    'tying': 'tie',
-    'idly': 'idl',
-    'gently': 'gentl',
-    'singly': 'singl',
-  };
 
   /// Reduces the String to its word stem, base or root form using the
   /// [Porter2StemmerMixin] English language stemming algorithm.
@@ -54,7 +45,7 @@ class _Porter2StemmerImpl with Porter2StemmerMixin implements Porter2Stemmer {
   ///
   /// Parameter [exceptions] is a hashmap of terms (keys) with their stem
   /// values that will be returned rather than processing the term. The default
-  /// exceptions are [Porter2StemmerMixin.kExceptions].
+  /// exceptions are [Porter2StemmerConstants.kExceptions].
   const _Porter2StemmerImpl(this.exceptions);
 }
 
@@ -122,7 +113,7 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
     if (e != null) return e;
     return term
         .replaceFirst(RegExp(r'^y'), 'Y')
-        .replaceAll(RegExp('(?<=${_StemmerExtension.rVowels})(y)'), 'Y');
+        .replaceAll(RegExp('(?<=${Porter2StemmerConstants.rVowels})(y)'), 'Y');
   }
 
   /// Set initial y, or y after a vowel, to Y.
@@ -137,7 +128,7 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
 
   /// Replace all forms of apostrophe or quotation mar with U+0027.
   String normalizeQuotesAndApostrophes(String term) =>
-      term.replaceAll(RegExp(rQuotes), "'");
+      term.replaceAll(RegExp(Porter2StemmerConstants.rQuotes), "'");
 
   /// Remove longest of "'", "'s" or "'s'" from end of term.
   ///
@@ -184,13 +175,16 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
     }
     if (term.endsWith('s')) {
       final stub = term.substring(0, term.length - 1);
-      final vowelcount = RegExp(rVowels).allMatches(stub).length;
+      final vowelcount =
+          RegExp(Porter2StemmerConstants.rVowels).allMatches(stub).length;
       // If last letter of stub is vowel return unchanged
-      if (RegExp(rVowels + r'(?=$)').allMatches(stub).isNotEmpty &&
+      if (RegExp(Porter2StemmerConstants.rVowels + r'(?=$)')
+              .allMatches(stub)
+              .isNotEmpty &&
           vowelcount == 1) {
         return term;
       }
-      return RegExp(rVowels).allMatches(stub).isEmpty
+      return RegExp(Porter2StemmerConstants.rVowels).allMatches(stub).isEmpty
           ? term
           : term.substring(0, term.length - 1);
     }
@@ -224,7 +218,9 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
         term.endsWith('edly') ||
         term.endsWith('ingly')) {
       final stub = term.replaceSuffixes(step1BSuffixes);
-      if (RegExp('$rVowels+').allMatches(stub).isNotEmpty) {
+      if (RegExp('${Porter2StemmerConstants.rVowels}+')
+          .allMatches(stub)
+          .isNotEmpty) {
         if (stub.endsWith('at') ||
             stub.endsWith('bl') ||
             stub.endsWith('iz') ||
@@ -248,7 +244,9 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
   String step1C(String term) {
     final e = exception(term);
     if (e != null) return e;
-    return RegExp(r'(?<=\w)' + rNotVowels + r'(?=(ye|y|Y)$)')
+    return RegExp(r'(?<=\w)' +
+                Porter2StemmerConstants.rNotVowels +
+                r'(?=(ye|y|Y)$)')
             .allMatches(term)
             .isNotEmpty
         ? term.replaceAll(RegExp(r'(y|Y|ye)(?=$)'), 'i')
@@ -344,54 +342,16 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
   //
 
   /// Collection of terms that have no stem at the end of Step 1(a).
-  Map<String, String> get step1AExceptions => kStep1AExceptions;
-
-  /// Collection of terms that have no stem at the end of Step 1(a).
-  static const kStep1AExceptions = {
-    'inning': 'inning',
-    'proceed': 'proceed',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'herring': 'herring',
-    'earring': 'earring',
-    'outing': 'outing',
-    'exceed': 'exceed',
-    'canning': 'canning',
-    'succeed': 'succeed',
-    'doing': 'do'
-  };
+  Map<String, String> get step1AExceptions =>
+      Porter2StemmerConstants.kStep1AExceptions;
 
   /// Collection of terms that have no stem but do not fit the algorithm.
-  Map<String, String> get invariantExceptions => kInvariantExceptions;
-
-  /// Collection of terms that have no stem but do not fit the algorithm.
-  static const kInvariantExceptions = {
-    'sky': 'sky',
-    'bye': 'bye',
-    'ugly': 'ugly',
-    'early': 'early',
-    'only': 'only',
-    'goodbye': 'goodbye',
-    'commune': 'commune',
-    'skye': 'skye',
-    'news': 'news',
-    'howe': 'howe',
-    'atlas': 'atlas',
-    'cosmos': 'cosmos',
-    'bias': 'bias',
-    'andes': 'andes',
-  };
+  Map<String, String> get invariantExceptions =>
+      Porter2StemmerConstants.kInvariantExceptions;
 
   /// Suffix hasmap for Step 1B.
-  static const kStep1BSuffixes = {
-    'ingly': '',
-    'edly': '',
-    'ing': '',
-    'ed': '',
-  };
-
-  /// Suffix hasmap for Step 1B.
-  Map<String, String> get step1BSuffixes => kStep1BSuffixes;
+  Map<String, String> get step1BSuffixes =>
+      Porter2StemmerConstants.kStep1BSuffixes;
 
   /// Suffix hasmap for Step 2.
   Map<String, String> get step2Suffixes => kStep2Suffixes;
@@ -424,116 +384,34 @@ abstract class Porter2StemmerMixin implements Porter2Stemmer {
   };
 
   /// Suffix hasmap for Step 3.
-  Map<String, String> get step3Suffixes => kStep3Suffixes;
-
-  /// Suffix hasmap for Step 3.
-  static const kStep3Suffixes = {
-    'ational': 'ate',
-    'tional': 'tion',
-    'alize': 'al',
-    'icate': 'ic',
-    'iciti': 'ic',
-    'ical': 'ic',
-    'ness': '',
-    'ful': '',
-  };
+  Map<String, String> get step3Suffixes =>
+      Porter2StemmerConstants.kStep3Suffixes;
 
   /// Suffix hasmap for Step 4.
-  Map<String, String> get step4Suffixes => kStep4Suffixes;
+  Map<String, String> get step4Suffixes =>
+      Porter2StemmerConstants.kStep4Suffixes;
+}
 
-  /// Suffix hasmap for Step 4.
-  static const kStep4Suffixes = {
-    'ement': '',
-    'ance': '',
-    'ence': '',
-    'able': '',
-    'ible': '',
-    'ment': '',
-    'sion': '',
-    'tion': '',
-    'ant': '',
-    'ent': '',
-    'ism': '',
-    'ate': '',
-    'iti': '',
-    'ous': '',
-    'ive': '',
-    'ize': '',
-    'al': '',
-    'er': '',
-    'ic': '',
-  };
+/// Extends [String] to provide the [stemPorter2] method.
+extension Porter2StemmerExtension on String {
+  //
 
-  /// Regular expression selector for characters that are vowels.
-  static const rVowels = _StemmerExtension.rVowels;
-
-  /// Selector for all single or double quotation marks and apostrophes.
-  static const rQuotes = _StemmerExtension.rQuotes;
-
-  /// Regular expression selector for characters that are NOT vowels.
+  /// Reduces the String to its word stem, base or root form.
+  /// using the [Porter2Stemmer] English language stemming algorithm.
   ///
-  /// As the term is in lowercase, this also selects all uppercase letters and,
-  /// for that matter, any character not in ('a', 'e', 'i', 'o', 'u', 'y').
-  static const rNotVowels = _StemmerExtension.rNotVowels;
+  /// To implement custom exceptions to the algorithm, provide [exceptions]
+  /// where the key is the term and the value is its stem (value).
+  ///
+  /// The default exceptions are [Porter2StemmerConstants.kExceptions].
+  ///
+  /// This is a shortcut to [Porter2Stemmer.stem] function.
+  String stemPorter2([Map<String, String>? exceptions]) =>
+      Porter2Stemmer(exceptions: exceptions).stem(this);
 }
 
 /// Private extension functions on [String] called by [Porter2StemmerMixin].
 extension _StemmerExtension on String {
   //
-
-  /// Words starting with any of the following have a different [r1] to
-  /// the algorithm.
-  ///
-  /// If the words begins with  (gener, commun or arsen), R1 is the remainder of the
-  /// word after gener, commun or arsen is removed from the beginning.
-  static const kRegion1Exceptions = ['gener', 'commun', 'arsen'];
-
-  /// Selector that matches any character not a letter, a hyphen
-  /// or apostrophe.
-  static const rEnglishNonWordChars = "[^a-zA-Z'-]+";
-
-  /// Returns true if:
-  /// - the String is all aupper case (e.g. TSLA); or
-  /// - the lowercase version of the String contains any [rEnglishNonWordChars].
-  bool get isIdentifier =>
-      toUpperCase() == this ||
-      RegExp(rEnglishNonWordChars).allMatches(this).isNotEmpty;
-
-  /// The region after the first non-vowel following a vowel, or the end of
-  /// the word if there is no such non-vowel.
-  ///
-  /// If the words begins gener, commun or arsen, [r1] is the remainder of the
-  /// word after gener, commun or arsen is removed from the beginning.
-  ///
-  /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
-  String? get r1 {
-    for (final x in kRegion1Exceptions) {
-      if (startsWith(x)) {
-        final retVal = replaceFirst(x, '');
-        return retVal.isEmpty ? null : retVal;
-      }
-    }
-    return RegExp(r'(?<=(' + rVowels + rNotVowels + r'))\w+(?=$)')
-        .firstMatch(this)
-        ?.group(0);
-  }
-
-  /// The region after the first non-vowel following a vowel in [r1], or the
-  /// end of the word if there is no such non-vowel.
-  ///
-  /// Is equivalent to [r1?.r1].
-  ///
-  /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
-  String? get r2 {
-    final region1 = r1;
-    final region2 = region1?.r1;
-    return region2;
-  }
-
-  /// Selector for all single or double quotation marks and apostrophes.
-  static const rQuotes = '[\'"“”„‟’‘‛]';
-
-  bool get isShortWord => r1 == null && endsWithShortSyllable;
 
   /// If the String ends with any of [suffixes.keys], replace the ending with
   /// [suffixes.values] by calling [replaceSuffix].
@@ -556,32 +434,4 @@ extension _StemmerExtension on String {
   /// [replacement].
   String replaceSuffix(String suffix, String replacement) =>
       replaceAll(RegExp('$suffix\$'), replacement);
-
-  /// Returns true if the String's last syllable:
-  /// - is a vowel followed by a non-vowel other than w, x or Y and preceded
-  ///   by a non-vowel, or
-  /// - is a vowel at the beginning of the word followed by a non-vowel.
-  bool get endsWithShortSyllable =>
-      RegExp('(?<=$rNotVowels)$rVowels(?=[^aeiouywxY]\$)')
-          .allMatches(this)
-          .isNotEmpty ||
-      RegExp('^$rVowels(?=[^aeiouy]\$)').allMatches(this).isNotEmpty;
-// '^' + rVowels + r'(?=' + rNotVowels + r'$)'
-  /// Returns true if the String ends with any of [rDoubles].
-  bool get endsWithDouble => RegExp(rDoubleEnd).allMatches(this).isNotEmpty;
-
-  /// Regular expression selector for characters that are vowels.
-  static const rVowels = '[aeiouy]';
-
-  /// Regular expression selector for characters that are NOT vowels.
-  ///
-  /// As the term is in lowercase, this also selects all uppercase letters and,
-  /// for that matter, any character not in ['a', 'e', 'i', 'o', 'u', 'y'].
-  static const rNotVowels = '[^aeiouy]';
-
-  /// Regular expression selector for double consonants.
-  static const rDoubles = 'bb|dd|ff|gg|mm|nn|pp|rr|tt';
-
-  /// Regex string to match String that ends with [rDoubles].
-  static const rDoubleEnd = r'(' + rDoubles + r')(?=$)';
 }

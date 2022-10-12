@@ -2,6 +2,7 @@
 // Copyright (c) 2022, GM Consult Pty Ltd
 // All rights reserved.
 
+import 'package:porter_2_stemmer/constants.dart';
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
 
 void main() {
@@ -65,7 +66,8 @@ void instanceExample(Iterable<String> terms) {
   print('Example usage of [Porter2Stemmer.stem] method');
 
   // Preserve the default exceptions.
-  final exceptions = Map<String, String>.from(Porter2Stemmer.kExceptions);
+  final exceptions =
+      Map<String, String>.from(Porter2StemmerConstants.kExceptions);
 
   // Add a custom exception for "TSLA".
   exceptions['TSLA'] = 'tesla';

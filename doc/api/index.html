@@ -174,7 +174,15 @@ All rights reserved.
   porter_2_stemmer: ^1.0.0
 </code></pre>
 <p>In your library add the following import:</p>
-<pre class="language-dart"><code class="language-dart">import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+<pre class="language-dart"><code class="language-dart">// Import the `Porter2Stemmer` class as well as 
+// the String extension `term.stemPorter2()`
+import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+// Optionally, import the stemmer's implementation extensions
+import 'package:porter_2_stemmer/extensions.dart';
+
+// Optionally, import the stemmer's implementation constants
+import 'package:porter_2_stemmer/constants.dart';
 </code></pre>
 <p>A String extension is provided, and is the simplest way to get stemming.</p>
 <pre class="language-dart"><code class="language-dart">final stem = term.stemPorter2();
@@ -228,6 +236,21 @@ All rights reserved.
       <section class="summary">
           <h2>Libraries</h2>
         <dl>
+          <dt id="constants">
+  <span class="name"><a href="constants/constants-library.html">constants</a></span> 
+
+</dt>
+<dd>All the constants used by the Porter2Stemmer implementation classes.
+</dd>
+
+          <dt id="extensions">
+  <span class="name"><a href="extensions/extensions-library.html">extensions</a></span> 
+
+</dt>
+<dd>Reduce a word to its root form using the Porter English stemming algorithm
+using a String extension.
+</dd>
+
           <dt id="porter_2_stemmer">
   <span class="name"><a href="porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></span> 
 
@@ -255,6 +278,8 @@ All rights reserved.
     <h5 class="hidden-xs"><span class="package-name">porter_2_stemmer</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
+      <li><a href="constants/constants-library.html">constants</a></li>
+      <li><a href="extensions/extensions-library.html">extensions</a></li>
       <li><a href="porter_2_stemmer/porter_2_stemmer-library.html">porter_2_stemmer</a></li>
 </ol>
 
@@ -268,7 +293,7 @@ All rights reserved.
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0
+      3.0.0
   </span>
 
   

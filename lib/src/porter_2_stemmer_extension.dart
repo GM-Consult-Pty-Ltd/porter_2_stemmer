@@ -5,23 +5,75 @@
 // Porter stemmer algorithm is Copyright (c) 2001, Dr Martin Porter, and
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
-import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+import 'porter_2_stemmer.dart';
+import 'porter_2_stemmer_constants.dart';
 
-/// Extends [String] to provide the [stemPorter2] method.
-extension Porter2StemmerExtension on String {
+/// Implementation extensions on [String] for [Porter2StemmerMixin].
+extension Porter2StemmerExtensions on String {
   //
 
-  /// Reduces the String to its word stem, base or root form.
-  /// using the [Porter2Stemmer] English language stemming algorithm.
+  /// The region after the first non-vowel following a vowel, or the end of
+  /// the word if there is no such non-vowel.
   ///
-  /// To implement custom exceptions to the algorithm, provide [exceptions]
-  /// where the key is the term and the value is its stem (value).
+  /// If the words begins gener, commun or arsen, [r1] is the remainder of the
+  /// word after gener, commun or arsen is removed from the beginning.
   ///
-  /// The default exceptions are [Porter2Stemmer.kExceptions].
+  /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
+  String? get r1 {
+    for (final x in Porter2StemmerConstants.kRegion1Exceptions) {
+      if (startsWith(x)) {
+        final retVal = replaceFirst(x, '');
+        return retVal.isEmpty ? null : retVal;
+      }
+    }
+    return RegExp(r'(?<=(' +
+            Porter2StemmerConstants.rVowels +
+            Porter2StemmerConstants.rNotVowels +
+            r'))\w+(?=$)')
+        .firstMatch(this)
+        ?.group(0);
+  }
+
+  /// The region after the first non-vowel following a vowel in [r1], or the
+  /// end of the word if there is no such non-vowel.
   ///
-  /// This is a shortcut to [Porter2Stemmer.stem] function.
-  String stemPorter2([Map<String, String>? exceptions]) =>
-      Porter2Stemmer(exceptions: exceptions).stem(this);
+  /// Is equivalent to `r1?.r1`.
+  ///
+  /// See note on R1 and R2  http://snowball.tartarus.org/texts/r1r2.html.
+  String? get r2 {
+    final region1 = r1;
+    final region2 = region1?.r1;
+    return region2;
+  }
+
+  /// Returns true if the String's last syllable:
+  /// - is a vowel followed by a non-vowel other than w, x or Y and preceded
+  ///   by a non-vowel, or
+  /// - is a vowel at the beginning of the word followed by a non-vowel.
+  bool get endsWithShortSyllable =>
+      RegExp('(?<=${Porter2StemmerConstants.rNotVowels})${Porter2StemmerConstants.rVowels}(?=[^aeiouywxY]\$)')
+          .allMatches(this)
+          .isNotEmpty ||
+      RegExp('^${Porter2StemmerConstants.rVowels}(?=[^aeiouy]\$)')
+          .allMatches(this)
+          .isNotEmpty;
+
+  /// Returns true if the String ends with any of
+  /// [Porter2StemmerConstants.rDoubles].
+  bool get endsWithDouble =>
+      RegExp(Porter2StemmerConstants.rDoubleEnd).allMatches(this).isNotEmpty;
+
+  /// Returns true if:
+  /// - the String is all aupper case (e.g. TSLA); or
+  /// - the lowercase version of the String contains any [Porter2StemmerConstants.rEnglishNonWordChars].
+  bool get isIdentifier =>
+      toUpperCase() == this ||
+      RegExp(Porter2StemmerConstants.rEnglishNonWordChars)
+          .allMatches(this)
+          .isNotEmpty;
+
+  /// Returns true if [r1] is null and [endsWithShortSyllable] is true.
+  bool get isShortWord => r1 == null && endsWithShortSyllable;
 
   //
 }

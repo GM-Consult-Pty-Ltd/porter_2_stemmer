@@ -72,7 +72,9 @@ first letter of the word (so cry -&gt; cri, by -&gt; by, say -&gt; say</p>
   <pre class="language-dart"><code class="language-dart">String step1C(String term) {
   final e = exception(term);
   if (e != null) return e;
-  return RegExp(r&#39;(?&lt;=\w)&#39; + rNotVowels + r&#39;(?=(ye|y|Y)$)&#39;)
+  return RegExp(r&#39;(?&lt;=\w)&#39; +
+              Porter2StemmerConstants.rNotVowels +
+              r&#39;(?=(ye|y|Y)$)&#39;)
           .allMatches(term)
           .isNotEmpty
       ? term.replaceAll(RegExp(r&#39;(y|Y|ye)(?=$)&#39;), &#39;i&#39;)
@@ -144,15 +146,7 @@ first letter of the word (so cry -&gt; cri, by -&gt; by, say -&gt; say</p>
 
 
         <li class="section-title"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#constants">Constants</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
           <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rNotVowels-constant.html">rNotVowels</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rQuotes-constant.html">rQuotes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rVowels-constant.html">rVowels</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -165,7 +159,7 @@ first letter of the word (so cry -&gt; cri, by -&gt; by, say -&gt; say</p>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0
+      3.0.0
   </span>
 
   

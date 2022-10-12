@@ -6,6 +6,7 @@
 // Copyright (c) 2002, Richard Boulton, all rights reserved.
 
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+import 'package:porter_2_stemmer/constants.dart';
 import 'data/vocabulary.dart';
 import 'package:test/test.dart';
 
@@ -42,9 +43,9 @@ void main() {
       print('STRICT ACCURACY: $accuracy%');
       failedStems.removeWhere((key, value) =>
           value.endsWith('ue') ||
-          Porter2Stemmer.kExceptions[key] != null ||
-          Porter2StemmerMixin.kInvariantExceptions[key] != null ||
-          Porter2StemmerMixin.kStep1AExceptions[key] != null);
+          Porter2StemmerConstants.kExceptions[key] != null ||
+          Porter2StemmerConstants.kInvariantExceptions[key] != null ||
+          Porter2StemmerConstants.kStep1AExceptions[key] != null);
       accuracy =
           ((terms.length - failedStems.length) / terms.length * 10000).round() /
               100;
@@ -64,7 +65,8 @@ void main() {
     //
 
     // Preserve the default exceptions.
-    final exceptions = Map<String, String>.from(Porter2Stemmer.kExceptions);
+    final exceptions =
+        Map<String, String>.from(Porter2StemmerConstants.kExceptions);
 
     // Add a custom exception for "TSLA".
     exceptions['TSLA'] = 'tesla';

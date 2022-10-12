@@ -101,13 +101,16 @@ kiwis lose it);</li>
   }
   if (term.endsWith(&#39;s&#39;)) {
     final stub = term.substring(0, term.length - 1);
-    final vowelcount = RegExp(rVowels).allMatches(stub).length;
+    final vowelcount =
+        RegExp(Porter2StemmerConstants.rVowels).allMatches(stub).length;
     &#47;&#47; If last letter of stub is vowel return unchanged
-    if (RegExp(rVowels + r&#39;(?=$)&#39;).allMatches(stub).isNotEmpty &amp;&amp;
+    if (RegExp(Porter2StemmerConstants.rVowels + r&#39;(?=$)&#39;)
+            .allMatches(stub)
+            .isNotEmpty &amp;&amp;
         vowelcount == 1) {
       return term;
     }
-    return RegExp(rVowels).allMatches(stub).isEmpty
+    return RegExp(Porter2StemmerConstants.rVowels).allMatches(stub).isEmpty
         ? term
         : term.substring(0, term.length - 1);
   }
@@ -179,15 +182,7 @@ kiwis lose it);</li>
 
 
         <li class="section-title"><a href="../../porter_2_stemmer/Porter2StemmerMixin-class.html#constants">Constants</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kInvariantExceptions-constant.html">kInvariantExceptions</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1AExceptions-constant.html">kStep1AExceptions</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep1BSuffixes-constant.html">kStep1BSuffixes</a></li>
           <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep2Suffixes-constant.html">kStep2Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep3Suffixes-constant.html">kStep3Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/kStep4Suffixes-constant.html">kStep4Suffixes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rNotVowels-constant.html">rNotVowels</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rQuotes-constant.html">rQuotes</a></li>
-          <li><a href="../../porter_2_stemmer/Porter2StemmerMixin/rVowels-constant.html">rVowels</a></li>
 </ol>
 
   </div><!--/.sidebar-offcanvas-->
@@ -200,7 +195,7 @@ kiwis lose it);</li>
 <footer>
   <span class="no-break">
     porter_2_stemmer
-      2.0.0
+      3.0.0
   </span>
 
   

@@ -158,7 +158,15 @@ dependencies:
 In your library add the following import:
 
 ```dart
+// Import the `Porter2Stemmer` class as well as 
+// the String extension `term.stemPorter2()`
 import 'package:porter_2_stemmer/porter_2_stemmer.dart';
+
+// Optionally, import the stemmer's implementation extensions
+import 'package:porter_2_stemmer/extensions.dart';
+
+// Optionally, import the stemmer's implementation constants
+import 'package:porter_2_stemmer/constants.dart';
 ```
 
 A String extension is provided, and is the simplest way to get stemming.
