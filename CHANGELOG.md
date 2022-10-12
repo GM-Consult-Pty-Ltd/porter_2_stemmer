@@ -4,6 +4,14 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
+### 3.0.1
+
+#### *Big fixes*
+* Fixed handling of accented vowels.
+
+#### *Updated*
+* Tests.
+
 ### 3.0.0+2
 
 #### *Updated*

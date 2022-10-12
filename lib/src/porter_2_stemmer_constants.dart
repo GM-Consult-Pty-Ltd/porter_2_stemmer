@@ -60,17 +60,17 @@ abstract class Porter2StemmerConstants {
   };
 
   /// Regular expression selector for characters that are vowels.
-  static const rVowels = '[aeiouy]';
+  static const rVowels = '[aeiouyà-æè-ðò-öø-ÿ]';
 
   /// Regular expression selector for characters that are NOT vowels.
   ///
   /// As the term is in lowercase, this also selects all uppercase letters and,
   /// for that matter, any character not in `['a', 'e', 'i', 'o', 'u', 'y']`.
-  static const rNotVowels = '[^aeiouy]';
+  static const rNotVowels = '[^aeiouyà-æè-ðò-öø-ÿ]';
 
   /// Selector that matches any character not a letter, a hyphen
   /// or apostrophe.
-  static const rEnglishNonWordChars = "[^a-zA-Z'-]+";
+  static const rEnglishNonWordChars = r"[^a-zA-ZÀ-öø-ÿ'\-]+";
 
   /// Words starting with any of the following have a different Region 1 to
   /// the algorithm.

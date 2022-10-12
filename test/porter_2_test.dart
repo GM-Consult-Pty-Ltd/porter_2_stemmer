@@ -28,6 +28,16 @@ void main() {
           '"$expected")');
     });
 
+    test('Porter2Stemmer: accented', () {
+      final term = 'cobbledpavé';
+      final expected = 'cobbledpavé';
+      final stem = term.stemPorter2();
+      final failed = stem != expected;
+      // expect(failed.isEmpty, true);
+      print('${failed ? 'FAIL' : 'PASS'}: $term => $stem (expected '
+          '"$expected")');
+    });
+
     test('Porter2Stemmer: VALIDATOR', () {
       final terms = Map<String, String>.from(vocabulary);
       final failedStems = <String, String>{};
