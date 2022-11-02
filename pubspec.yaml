@@ -7,7 +7,7 @@
 
 name: porter_2_stemmer
 description: Reduce a word to its root form using the Porter English stemming algorithm.
-version: 3.0.1
+version: 3.0.2
 repository: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer
 homepage: https://github.com/GM-Consult-Pty-Ltd
 issue_tracker: https://github.com/GM-Consult-Pty-Ltd/porter_2_stemmer/issues

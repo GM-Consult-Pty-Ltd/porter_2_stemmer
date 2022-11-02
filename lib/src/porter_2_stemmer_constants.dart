@@ -86,7 +86,7 @@ abstract class Porter2StemmerConstants {
   static const rDoubleEnd = r'(' + rDoubles + r')(?=$)';
 
   /// Selector for all single or double quotation marks and apostrophes.
-  static const rQuotes = '[\'"“”„‟’‘‛]';
+  static const rQuotes = '[\'"“”„‟’‘‛]+';
 
   /// Suffix hasmap for Step 3.
   static const kStep3Suffixes = {

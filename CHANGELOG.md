@@ -4,6 +4,12 @@ Copyright (c) 2022, GM Consult Pty Ltd
 All rights reserved. 
 -->
 
+### 3.0.2
+
+#### *Updated*
+* Dependencies.
+* Documentation.  
+
 ### 3.0.1
 
 #### *Big fixes*
@@ -22,7 +28,6 @@ All rights reserved.
 
 #### *Updated*
 * Dependencies.
-
 
 ### 3.0.0
 **BREAKING CHANGES**
